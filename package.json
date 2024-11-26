@@ -1,7 +1,7 @@
 {
   "Note": "This is a dummy package.json file to prevent accidental installation or running of packages in the wrong location",
   "scripts": {
-    "dev": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
+    "dev": "npm run dev --prefix frontend & npm run dev --prefix api",
     "start": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
     "build": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
     "lint": "echo 'You are in the wrong directory. cd to api or frontend folder to run this command'",
