@@ -49,6 +49,7 @@ export function FeedPage() {
     const token = localStorage.getItem("token");
     const newPost = await createPost(postInfo, userId, token)
     setPosts((prev) => [newPost.post, ...prev])
+    localStorage.setItem('token', newPost.token)
   }
 
   return (

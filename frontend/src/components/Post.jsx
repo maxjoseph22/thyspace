@@ -11,6 +11,7 @@ function Post({ post, setPosts }) {
       })
       return [...newArray]
     })
+    localStorage.setItem('token', postToRemove.token)
   }
   return (
     <div className="post">
