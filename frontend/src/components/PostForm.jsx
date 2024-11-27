@@ -8,9 +8,11 @@ const PostForm = ({submitPost}) => {
     }
 
     return (
-        <form onSubmit={(e) => {
-            e.preventDefault()
-            submitPost(postContent)
+        <form 
+            className="post-form"
+            onSubmit={(e) => {
+                e.preventDefault()
+                submitPost(postContent)
         }}>
             <label>Create Post</label>
             <textarea

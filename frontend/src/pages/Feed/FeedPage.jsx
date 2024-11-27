@@ -6,6 +6,7 @@ import { createPost, getPosts } from "../../services/posts";
 import LogoutButton from "../../components/LogoutButton";
 import PostContainer from "../../components/PostContainer";
 import PostForm from "../../components/PostForm";
+import './FeedPage.css'
 
 export function FeedPage() {
   const [posts, setPosts] = useState([]);

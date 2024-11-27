@@ -38,3 +38,21 @@ export async function createPost(postInfo, userId, token) {
   const data = await response.json();
   return data;
 }
+
+export async function deletePost(postId, token) {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await fetch(`${BACKEND_URL}/posts/${postId}`, requestOptions);
+
+  if (response.status !== 202) {
+    throw new Error("Unable to create post");
+  }
+
+  const data = await response.json()
+  return data
+}
