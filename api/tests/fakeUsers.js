@@ -160,4 +160,4 @@ const fakeUsers = [
     }
   ];
 
-  module.exports {fakeUserOne, fakeUserTwo, fakeUserThree, fakeUsers}
+  module.exports = {fakeUserOne, fakeUserTwo, fakeUserThree, fakeUsers}

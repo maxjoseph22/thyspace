@@ -1,27 +1,39 @@
 require("../mongodb_helper");
 const Alliance = require("../../models/alliance")
 const User = require("../../models/user")
+const { fakeUserOne, fakeUserTwo, fakeUserThree } = require("../fakeUsers")
 
 
 describe("Alliance model", () => {
+    let userOne;
+    let userTwo;
+    let userThree;
+    
     beforeEach(async () => {
         await Alliance.deleteMany({});
+        await User.deleteMany({})
+        userOne = await new User(fakeUserOne).save();
+        userTwo = await new User(fakeUserTwo).save();
       });
 
-    it('instantiates with two unique user ids', async () => {
-        const fakeUserOne = await new User({
-            email: "mickymouse@getmail.com", 
-            password: "1234typr%",
-        }).save();
-
-        const fakeUserTwo = await new User({
-            email: "minniemouse@getmail.com", 
-            password: "1234typr%",
-        }).save();
-
-        const alliance = new Alliance({userOne: fakeUserOne._id, userTwo: fakeUserTwo._id})
-        expect(alliance.userOne).toEqual(fakeUserOne._id);
-        expect(alliance.userTwo).toEqual(fakeUserTwo._id);
+    it('correctly creates fake user', async () => {
+        expect(userOne.username).toEqual(fakeUserOne.username)
     })
+
+    it('instantiates with both sender and receiver ids', async () => {
+        const alliance = new Alliance({ sender: userOne._id, receiver: userTwo._id });
+        expect(alliance.sender).toEqual(userOne._id);
+        expect(alliance.receiver).toEqual(userTwo._id)
+   
+    })
+
+    it('instantiates with pending status', async () => {
+        const alliance = new Alliance({ sender: userOne._id, receiver: userTwo._id });
+        expect(alliance.status).toEqual('Pending')
+    })
+
+
+
+
     // it('instantiates with Tom')
 })
