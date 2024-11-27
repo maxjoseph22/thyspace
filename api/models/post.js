@@ -8,7 +8,7 @@ const PostSchema = new mongoose.Schema({
   image: {type: String},
   likes: [],
   comments: []
-});
+}, {timestamps: true});
 
 // We use the Schema to create the Post model. Models are classes which we can
 // use to construct entries in our Database.
