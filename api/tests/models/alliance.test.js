@@ -1,11 +1,11 @@
 require("../mongodb_helper");
-const Connection = require("../../models/connection")
+const Alliance = require("../../models/alliance")
 const User = require("../../models/user")
 
 
-describe("Connection model", () => {
+describe("Alliance model", () => {
     beforeEach(async () => {
-        await Connection.deleteMany({});
+        await Alliance.deleteMany({});
       });
 
     it('instantiates with two unique user ids', async () => {
@@ -19,9 +19,9 @@ describe("Connection model", () => {
             password: "1234typr%",
         }).save();
 
-        const connection = new Connection({userOne: fakeUserOne._id, userTwo: fakeUserTwo._id})
-        expect(connection.userOne).toEqual(fakeUserOne._id);
-        expect(connection.userTwo).toEqual(fakeUserTwo._id);
+        const alliance = new Alliance({userOne: fakeUserOne._id, userTwo: fakeUserTwo._id})
+        expect(alliance.userOne).toEqual(fakeUserOne._id);
+        expect(alliance.userTwo).toEqual(fakeUserTwo._id);
     })
     // it('instantiates with Tom')
 })
