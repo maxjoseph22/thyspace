@@ -10,11 +10,11 @@ describe("/users", () => {
     await User.deleteMany({});
   });
 
-  describe("POST, when email and password are provided", () => {
+  describe("POST, when email, password username and location are provided", () => {
     test("the response code is 201", async () => {
       const response = await request(app)
         .post("/users")
-        .send({ email: "poppy@email.com", password: "1234" });
+        .send({ email: "poppy@email.com", password: "password", username: "Poppy", location: "London" });
 
       expect(response.statusCode).toBe(201);
     });
