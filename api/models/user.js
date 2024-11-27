@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const { Schema, Types} = mongoose;
 
-const UserSchema = new mongoose.Schema({
+
+const UserSchema = new Schema({
   createdAt: {type: Date, default: Date.now()},
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
@@ -9,8 +11,8 @@ const UserSchema = new mongoose.Schema({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   profilePicture: {type: String, default: ""},
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  friends: [{ type: Types.ObjectId, ref: "User" }],
+  posts: [{ type: Types.ObjectId, ref: "Post" }],
 });
 
 const User = mongoose.model("User", UserSchema);
