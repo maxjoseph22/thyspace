@@ -29,6 +29,9 @@ describe("/posts", () => {
     user = new User({
       email: "post-test@test.com",
       password: "12345678",
+      username: 'Something',
+      firstname: 'testFirst',
+      lastname: 'testSecond'
     });
     await user.save();
     await Post.deleteMany({});
@@ -131,9 +134,9 @@ describe("/posts", () => {
       const posts = response.body.posts;
       const firstPost = posts[0];
       const secondPost = posts[1];
-
-      expect(firstPost.message).toEqual("howdy!");
-      expect(secondPost.message).toEqual("hola!");
+      
+      expect(firstPost.message).toEqual("hola!");
+      expect(secondPost.message).toEqual("howdy!");
     });
 
     test("returns a new token", async () => {
