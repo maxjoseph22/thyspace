@@ -2,7 +2,7 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 async function getAllPosts(req, res) {
-  const posts = await Post.find();
+  const posts = await Post.find().sort({createdAt: - 1});
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: posts, token: token });
 }
@@ -18,11 +18,9 @@ async function createPost(req, res) {
 async function updatePost(req, res){ 
   const {id} = req.params;
   const post = await Post.findByIdAndUpdate(id, {$set: req.body}, {new: true});
- 
+
   const newToken = generateToken(req.user_id);
   res.status(202).json({post: post, token: newToken});
- 
-
 }
 
 async function deletePost(req, res){
