@@ -1,5 +1,10 @@
-function Post(props) {
-  return <article key={props.post._id}>{props.post.message}</article>;
+function Post({ post, setPost }) {
+
+  return (
+    <div>
+      {post.message}
+    </div>
+  )
 }
 
 export default Post;
