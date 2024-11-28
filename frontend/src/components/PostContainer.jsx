@@ -15,7 +15,7 @@ const PostContainer = ({ posts, setPosts }) => {
         posts[index] = response.post;
         // rerendering
         setPosts([...posts]);
-      }
+    }
 
     return (
         <div> 

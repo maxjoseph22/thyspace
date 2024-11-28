@@ -37,48 +37,77 @@ function Post({ post, setPosts, sendUpdate }) {
         setUpdateInput(e.target.value);
     }
 
+    const convertDate = () => {
+        const date = new Date(post.createdAt)
+        date.toISOString().substring(0, 10);
+        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}`: date.getMinutes()}`
+    }
+
+    const checkIfEdited = () => {
+        return post.createdAt === post.updatedAt
+    }
+
     // renders the post, with conditional rendering of Update and Delete buttons
     return (
         <div className="post">
-        {
-            update ?
-            <input
-            value={updateInput}
-            onChange={handleUpdateInput}/>
-            :
-            <div className="post-display">
-                <div className="userInfo-on-post">
-                    <p>{post.user_id.username}</p>
-                    <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
+            <div className="whole-post">
+            <div className="post-header">
+                <div className="user-info">
+                    <div className="picture">
+                        <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
+                    </div>
+                    <div className="username-date">
+                        <p className="post-username">{post.user_id.username}</p>
+                        <p className="post-date">{convertDate()}</p>
+                    </div>
                 </div>
-                <div className="post-message">
-                    <p>{post.message}</p>
-                </div>
-            </div>
-        }
-        {
-            createdByCurrentUser() ?
-            <div className="post-btns-containter">
-            {
-                update ?
-                <button
-                onClick={() => { 
-                    sendUpdate(post._id, updateInput);
-                    setUpdate(false)}}>Submit</button>
-                :
-                <div className="post-btns">
-                    <button
-                    onClick={() => {setUpdate(true)}}>
-                    Update</button>
-                <button
-                onClick={removePost}
-                >Delete</button>
-                </div>
+                {createdByCurrentUser() ?
+                        (update ?
+                        <div className="post-btns">
+                            <button
+                            onClick={() => { 
+                                sendUpdate(post._id, updateInput);
+                                setUpdate(false)}}>Submit</button>
+                            <button
+                            onClick={() => {
+                                setUpdateInput(post.message)
+                                setUpdate(false)
+                            }}
+                            >Undo</button>
+                        </div>
+                        :
+                        <div className="post-btns">
+                            <button
+                            onClick={() => {setUpdate(true)}}>
+                            Update</button>
+                            <button
+                            onClick={removePost}
+                            >Delete</button>
+                            </div>)
+                    :
+                    null
             }
             </div>
-            :
-            null
-        }
+            <div className="post-main-content">
+                <div className="main-content-header">
+                    <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
+                </div>
+                <div className="main-content">
+                    {update ? 
+                    <input
+                    value={updateInput}
+                    onChange={handleUpdateInput}/>
+                    :
+                    <p>{post.message}</p>}
+                </div>
+            </div>
+            <div className="post-int-btns">
+                <button>Like</button>
+                <button>Comment</button>
+            </div>
+            <div className="post-cmts"></div>
+
+        </div>
         </div>
     )
 }
