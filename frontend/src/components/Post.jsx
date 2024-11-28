@@ -37,6 +37,16 @@ function Post({ post, setPosts, sendUpdate }) {
         setUpdateInput(e.target.value);
     }
 
+    const convertDate = () => {
+        const date = new Date(post.createdAt)
+        date.toISOString().substring(0, 10);
+        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}`: date.getMinutes()}`
+    }
+
+    const checkIfEdited = () => {
+        return post.createdAt === post.updatedAt
+    }
+
     // renders the post, with conditional rendering of Update and Delete buttons
     return (
         <div className="post">
@@ -53,6 +63,14 @@ function Post({ post, setPosts, sendUpdate }) {
                 </div>
                 <div className="post-message">
                     <p>{post.message}</p>
+                </div>
+                <div>
+                    <div>
+                    {checkIfEdited() ? null: 'Edited'}
+                    </div>
+                    <div>
+                    {convertDate()}
+                    </div>
                 </div>
             </div>
         }
