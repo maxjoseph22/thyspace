@@ -45,7 +45,7 @@ export function FeedPage() {
   return (
     <>
     <NavBar />
-      <h2>Posts</h2>
+      <h2>Feed</h2>
       <div className="feed" role="feed">
         <PostForm submitPost={submitPost}/>
         {posts.length > 0 && <PostContainer posts={posts} setPosts={setPosts}/>}
