@@ -71,10 +71,9 @@ describe('/alliances', () => {
                 .send({ sender: userOne._id, receiver: userTwo._id })
             expect(responseOne.body.alliance.sender).toEqual(userOne._id.toString())
             expect(responseOne.body.alliance.receiver).toEqual(userTwo._id.toString())
-            // const allianceId = responseOne.body.alliance._id
+        
             const receiverId = responseOne.body.alliance.receiver
 
-            
             const responseTwo = await request(app)
                 .post(`/alliances/${receiverId}/cancel`)
                 .set("Authorization", `Bearer ${tokenOne}`)
@@ -92,9 +91,33 @@ describe('/alliances', () => {
     
     // } )
     
-    // describe("GET, when a valid token is present", () => {
+    describe("GET, when a valid token is present", () => {
+        it("returns a list of a users pending requests", async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
 
-    // })
+            const findRequestsResponse = await request(app)
+                .get(`/alliances/${userTwo._id.toString()}/receivedRequests`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+            console.log(findRequestsResponse.body.receivedRequests)
+            console.log([allianceOne, allianceTwo])
+            expect(findRequestsResponse.status).toEqual(200)
+            expect(findRequestsResponse.body.receivedRequests).toEqual([
+                expect.objectContaining({
+                    _id: allianceOne._id.toString(),
+                    sender: userOne._id.toString(),
+                    receiver: userTwo._id.toString()
+                }),
+                expect.objectContaining({
+                    _id: allianceTwo._id.toString(),
+                    sender: userThree._id.toString(),
+                    receiver: userTwo._id.toString()
+                }) 
+            ])
+        })
+
+    })
 
     // describe("GET, when a token is missing or invalid", () => {
 
