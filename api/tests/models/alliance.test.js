@@ -29,11 +29,6 @@ describe("Alliance model", () => {
 
     it('instantiates with pending status', async () => {
         const alliance = new Alliance({ sender: userOne._id, receiver: userTwo._id });
-        expect(alliance.status).toEqual('Pending')
+        expect(alliance.status).toEqual('pending')
     })
-
-
-
-
-    // it('instantiates with Tom')
 })
