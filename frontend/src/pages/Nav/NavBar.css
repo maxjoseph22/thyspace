@@ -1,0 +1,31 @@
+nav {
+    display: flex;
+    width: 80vw;
+    justify-content: space-around;
+    padding-bottom: 0.3rem;
+}
+
+.nav-link {
+    margin-right: 0.8rem;
+    text-decoration: none;
+    color: blue;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+    transform: scale(0.92);
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+    cursor: pointer;
+    transform: scale(0.92);
+} 

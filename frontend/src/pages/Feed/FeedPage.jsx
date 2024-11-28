@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { createPost, getPosts } from "../../services/posts";
-// import Post from "../../components/Post";
-import LogoutButton from "../../components/LogoutButton";
 import PostContainer from "../../components/PostContainer";
 import PostForm from "../../components/PostForm";
 import './FeedPage.css'
 import { getPayloadFromToken } from "../../services/helperFunctions";
+import NavBar from "../Nav/NavBar";
 
 export function FeedPage() {
   const [posts, setPosts] = useState([]);
@@ -46,16 +45,12 @@ export function FeedPage() {
 
   return (
     <>
+    <NavBar />
       <h2>Posts</h2>
       <div className="feed" role="feed">
         <PostForm submitPost={submitPost}/>
         {posts.length > 0 && <PostContainer posts={posts} setPosts={setPosts}/>}
-        {/* {posts.map((post) => (
-          <Post post={post} key={post._id} />
-        ))} */}
       </div>
-      <button onClick={() => console.log(posts)}>Click Me!</button>
-      <LogoutButton />
     </>
   );
 }
