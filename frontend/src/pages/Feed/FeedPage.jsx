@@ -7,6 +7,7 @@ import LogoutButton from "../../components/LogoutButton";
 import PostContainer from "../../components/PostContainer";
 import PostForm from "../../components/PostForm";
 import './FeedPage.css'
+import { getPayloadFromToken } from "../../services/helperFunctions";
 
 export function FeedPage() {
   const [posts, setPosts] = useState([]);
@@ -19,8 +20,6 @@ export function FeedPage() {
       getPosts(token)
         .then((data) => {
           setPosts(data.posts);
-          const decodedpayload = getPayloadFromToken(token)
-          localStorage.setItem("userId", decodedpayload.user_id)
           localStorage.setItem("token", data.token);
         })
         .catch((err) => {
@@ -36,18 +35,11 @@ export function FeedPage() {
     return;
   }
 
-  function getPayloadFromToken(token) {
-    if (!token) {
-      return false
-    }
-    const encryptedPayload = token.split('.')
-    return JSON.parse(window.atob(encryptedPayload[1]))
-  }
 
   const submitPost = async (postInfo) => {
-    const userId = localStorage.getItem("userId")
     const token = localStorage.getItem("token");
-    const newPost = await createPost(postInfo, userId, token)
+    const decodedpayload = getPayloadFromToken(token)
+    const newPost = await createPost(postInfo, decodedpayload.user_id, token)
     setPosts((prev) => [newPost.post, ...prev])
     localStorage.setItem('token', newPost.token)
   }

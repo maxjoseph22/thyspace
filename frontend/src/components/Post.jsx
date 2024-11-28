@@ -1,4 +1,5 @@
 import { deletePost } from "../services/posts";
+import { getPayloadFromToken } from "../services/helperFunctions";
 
 function Post({ post, setPosts }) {
   
@@ -13,15 +14,26 @@ function Post({ post, setPosts }) {
     })
     localStorage.setItem('token', postToRemove.token)
   }
+
+  const createdByCurrentUser = () => {
+    const token = localStorage.getItem("token")
+    const decodedpayload = getPayloadFromToken(token)
+    return decodedpayload.user_id === post.user_id
+  }
+
   return (
     <div className="post">
       {post.message}
-      <div className="post-btns">
-        <button>Update</button>
-        <button
-        onClick={removePost}
-        >Delete</button>
-      </div>
+        { createdByCurrentUser() ?
+          <div className="post-btns">
+            <button>Update</button>
+            <button
+            onClick={removePost}
+            >Delete</button> 
+          </div>
+          :
+          null
+      }
     </div>
   )
 }
