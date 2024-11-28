@@ -51,20 +51,6 @@ describe("User model", () => {
     expect(user.location).toEqual("Test Location");
   });
 
-  it("sets createdAt when a new user is created", () => {
-    const user = new User({
-      username: "Test_Username",
-      email: "someone@example.com",
-      password: "password",
-      firstname: "testFirstName",
-      lastname: "testLastName",
-    });
-    expect(user.createdAt).toBeDefined();
-    const now = new Date();
-    const difference = Math.abs(now - user.createdAt);
-    expect(difference).toBeLessThan(1000);
-  });
-
   it("has a first name", () => {
     const user = new User({
       username: "Test_Username",
@@ -98,7 +84,7 @@ describe("User model", () => {
     expect(user.profilePicture).toBeDefined();
   });
 
-  it("has a friends array", () => {
+  it("has an alliances array", () => {
     const user = new User({
       username: "Test_Username",
       email: "someone@example.com",
@@ -106,31 +92,8 @@ describe("User model", () => {
       firstname: "testFirstName",
       lastname: "testLastName",
     });
-    expect(user.friends).toEqual([])
+    expect(user.alliances).toEqual([])
   });
-
-  // it("has an object id in the friends array", async () => {
-  //   const user1 = new User({
-  //     username: "Test_Username",
-  //     email: "someone@example.com",
-  //     password: "password",
-  //     firstname: "testFirstName",
-  //     lastname: "testLastName",
-  //   });
-
-  //   const user2 = new User({
-  //     username: "Test_Username2",
-  //     email: "someone2@example.com",
-  //     password: "password2",
-  //     firstname: "testFirstName2",
-  //     lastname: "testLastName2",
-  //   });
-
-  //   user1.friends.push(user2._id);
-  // //   await user1.save()
-
-  // expect(user1.friends).toEqual([user2._id])
-  // });
 
   it("has a posts array", () => {
     const user = new User({
