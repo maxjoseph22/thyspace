@@ -60,7 +60,7 @@ describe('/alliances', () => {
                 .send({ sender: userOne._id, receiver: userTwo._id })
             
             const alliance = await Alliance.findOne({sender: userOne._id})
-            console.log(response)
+    
             expect(alliance.receiver).toEqual(userTwo._id);
             expect(alliance.status).toEqual("pending")
         })
@@ -72,17 +72,17 @@ describe('/alliances', () => {
             expect(responseOne.body.alliance.sender).toEqual(userOne._id.toString())
             expect(responseOne.body.alliance.receiver).toEqual(userTwo._id.toString())
             // const allianceId = responseOne.body.alliance._id
-            const receiverId = responseOne.body.receiver
+            const receiverId = responseOne.body.alliance.receiver
+
             
             const responseTwo = await request(app)
                 .post(`/alliances/${receiverId}/cancel`)
                 .set("Authorization", `Bearer ${tokenOne}`)
                 .send({ sender: userOne._id })
-            
+            expect(responseTwo.status).toEqual(201)
             expect(await Alliance.findOne({sender: userOne._id})).toBeNull();
-    
         })
-        // it("changes status to approved when the reciever approves an alliance request", () => {
+        // it("adds user ids to the correct users friend lists when a reciever accepts a friend request , () => {
 
         // })
 
