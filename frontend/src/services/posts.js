@@ -50,9 +50,28 @@ export async function deletePost(postId, token) {
   const response = await fetch(`${BACKEND_URL}/posts/${postId}`, requestOptions);
 
   if (response.status !== 202) {
-    throw new Error("Unable to create post");
+    throw new Error("Unable to delete post");
   }
 
   const data = await response.json()
   return data
+}
+
+export async function updatePost(postId, postInfo, token){
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({message: postInfo})
+  }
+  const response = await fetch(`${BACKEND_URL}/posts/${postId}`, requestOptions);
+
+  if (response.status !== 202) {
+    throw new Error("Unable to update post");
+  }
+
+  const data = await response.json();
+  return data;
 }
