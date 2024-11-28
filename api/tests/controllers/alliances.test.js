@@ -42,7 +42,6 @@ describe('/alliances', () => {
 
     beforeEach(async () => {
         await Alliance.deleteMany({});
-        await User.deleteMany({});
     })
 
     describe("POST, when a valid token is present", () => {
@@ -81,9 +80,38 @@ describe('/alliances', () => {
             expect(responseTwo.status).toEqual(201)
             expect(await Alliance.findOne({sender: userOne._id})).toBeNull();
         })
-        // it("adds user ids to the correct users friend lists when a reciever accepts a friend request , () => {
-
-        // })
+        it("adds user ids to the correct users friend lists when a reciever accepts a friend request" , async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const acceptRequestResponse = await request(app)
+                .post(`/alliances/${userOne._id}/accept`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+                .send({ receiver: userTwo._id })
+            expect(acceptRequestResponse.status).toEqual(200)
+            const updatedAllianceOne = await Alliance.findOne({ sender: userOne._id, receiver: userTwo._id })
+            expect(updatedAllianceOne.status).toEqual("accepted")
+            const updatedUserOne = await User.findOne({_id: userOne._id})
+            const updatedUserTwo = await User.findOne({_id: userTwo._id})
+            expect(updatedUserOne.alliances).toEqual([userTwo._id])
+            expect(updatedUserTwo.alliances).toEqual([userOne._id])
+        })
+        it("adds mutiple alliances", async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const responseOne = await request(app)
+                .post(`/alliances/${userOne._id}/accept`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+                .send({ receiver: userTwo._id })
+            const responseTwo = await request(app)
+                .post(`/alliances/${userThree._id}/accept`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+                .send({ receiver: userTwo._id })
+            const updatedUserOne = await User.findOne({_id: userOne._id})
+            const updatedUserTwo = await User.findOne({_id: userTwo._id})
+            const updatedUserThree = await User.findOne({_id: userThree._id})
+            expect(updatedUserOne.alliances).toEqual([userTwo._id])
+            expect(updatedUserTwo.alliances).toEqual([userOne._id, userThree._id])
+            expect(updatedUserThree.alliances).toEqual([userTwo._id])
+        })
 
     })
     
@@ -100,8 +128,8 @@ describe('/alliances', () => {
             const findRequestsResponse = await request(app)
                 .get(`/alliances/${userTwo._id.toString()}/receivedRequests`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
-            console.log(findRequestsResponse.body.receivedRequests)
-            console.log([allianceOne, allianceTwo])
+            // console.log(findRequestsResponse.body.receivedRequests)
+            // console.log([allianceOne, allianceTwo])
             expect(findRequestsResponse.status).toEqual(200)
             expect(findRequestsResponse.body.receivedRequests).toEqual([
                 expect.objectContaining({

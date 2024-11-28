@@ -48,11 +48,30 @@ const withdrawAllianceRequest = async (req, res) => {
         res.status(500).json({message: "An error occured, alliance not withdrawn!"})
     }
 }
+const acceptAlliance = async (req, res) => {
+    try {
+        const receiver = req.body.receiver
+        const sender = req.params.id
+        // Can we use findByIdAndUpdate here?
+        const alliance = await Alliance.findOne({sender: sender, receiver: receiver})
+        alliance.status = "accepted"
+        await alliance.save()
+        await User.findByIdAndUpdate(sender, { $addToSet: { alliances: receiver }})
+        await User.findByIdAndUpdate(receiver, { $addToSet: { alliances: sender }})
+        res.status(200).json({message: "Alliance forged."})
+    } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "Aliance failed to forge!"})
+    }
+
+
+}
 
 const AllianceController = {
     requestAlliance: requestAlliance,
     withdrawAllianceRequest: withdrawAllianceRequest,
-    viewReceivedRequests: viewReceivedRequests
+    viewReceivedRequests: viewReceivedRequests,
+    acceptAlliance: acceptAlliance
 }
 
 module.exports = { AllianceController }
