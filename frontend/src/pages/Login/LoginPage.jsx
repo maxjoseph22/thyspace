@@ -6,6 +6,7 @@ import { login } from "../../services/authentication";
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
@@ -42,10 +43,15 @@ export function LoginPage() {
         <label htmlFor="password">Password:</label>
         <input
           id="password"
-          type="password"
+          type={showPassword ? 'text': 'password'}
           value={password}
           onChange={handlePasswordChange}
         />
+        <button
+        onClick={(e) => {
+          e.preventDefault()
+          setShowPassword(!showPassword)}}
+        >Show Password</button>
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
     </>
