@@ -1,6 +1,20 @@
 const Alliance = require("../models/alliance")
+const User = require("../models/user")
 const { generateToken } = require("../lib/token")
+const mongoose = require("mongoose")
+const { Types } = mongoose;
 
+
+const viewReceivedRequests = async (req, res) => { 
+    try {
+        const receiverId = req.params.id
+        const receivedRequests = await Alliance.find({receiver: receiverId, status: "pending"})
+        res.status(200).json({receivedRequests: receivedRequests})
+    } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "An error occured, alliances were not returned"})
+    }
+}
 const requestAlliance = async (req, res) => {
     try {
         const { sender, receiver } = req.body
@@ -37,7 +51,8 @@ const withdrawAllianceRequest = async (req, res) => {
 
 const AllianceController = {
     requestAlliance: requestAlliance,
-    withdrawAllianceRequest: withdrawAllianceRequest
+    withdrawAllianceRequest: withdrawAllianceRequest,
+    viewReceivedRequests: viewReceivedRequests
 }
 
 module.exports = { AllianceController }
