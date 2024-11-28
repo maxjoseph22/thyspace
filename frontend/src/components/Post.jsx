@@ -1,6 +1,7 @@
 import { deletePost } from "../services/posts";
 import { getPayloadFromToken } from "../services/helperFunctions";
 import { useState } from "react";
+import './Post.css'
 
 function Post({ post, setPosts, sendUpdate }) {
     const [update, setUpdate] = useState(false); 
@@ -28,7 +29,7 @@ function Post({ post, setPosts, sendUpdate }) {
     const createdByCurrentUser = () => {
         const token = localStorage.getItem("token")
         const decodedpayload = getPayloadFromToken(token)
-        return decodedpayload.user_id === post.user_id
+        return decodedpayload.user_id === post.user_id._id
     }
 
     // allows the input field to be edited
@@ -45,11 +46,19 @@ function Post({ post, setPosts, sendUpdate }) {
             value={updateInput}
             onChange={handleUpdateInput}/>
             :
-            <p>{post.message}</p>
+            <div className="post-display">
+                <div className="userInfo-on-post">
+                    <p>{post.user_id.username}</p>
+                    <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
+                </div>
+                <div className="post-message">
+                    <p>{post.message}</p>
+                </div>
+            </div>
         }
         {
             createdByCurrentUser() ?
-            <div className="post-btns">
+            <div className="post-btns-containter">
             {
                 update ?
                 <button
@@ -57,7 +66,7 @@ function Post({ post, setPosts, sendUpdate }) {
                     sendUpdate(post._id, updateInput);
                     setUpdate(false)}}>Submit</button>
                 :
-                <div>
+                <div className="post-btns">
                     <button
                     onClick={() => {setUpdate(true)}}>
                     Update</button>

@@ -1,0 +1,28 @@
+.post-display {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+.post-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+.post-btns-containter {
+    display: flex;
+    margin-left: 0.6rem;
+    align-items: center;
+    justify-content: center;
+}
+.post-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.post-btns button {
+    margin: 0.2rem;
+}
