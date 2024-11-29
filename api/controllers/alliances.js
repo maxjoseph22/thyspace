@@ -5,11 +5,30 @@ const mongoose = require("mongoose")
 const { Types } = mongoose;
 
 
-const viewReceivedRequests = async (req, res) => { 
+const viewReceivedRequestsAdmin = async (req, res) => { 
     try {
         const receiverId = req.params.id
         const receivedRequests = await Alliance.find({receiver: receiverId, status: "pending"})
         res.status(200).json({receivedRequests: receivedRequests})
+    } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "An error occured, alliances were not returned"})
+    }
+}
+const viewReceivedRequests = async (req, res) => {
+    try {
+        const receiverId = req.params.id
+        const receivedRequests = await Alliance.find({receiver: receiverId, status: "pending"})
+        const rawUsersThatRequested = await Promise.all(receivedRequests.map(async (request) => await (User.findOne({_id: request.sender }))))
+        const usersThatRequested = rawUsersThatRequested.map((user) => ({
+            _id: user._id,
+            firstname: user.firstname, 
+            lastname: user.lastname,
+            location: user.location,
+            profilePicture: user.profilePicture
+    }))
+        res.status(200).json({ usersThatRequested: usersThatRequested })
+
     } catch (error) {
         console.log(`\n${error.message}\n`)
         res.status(500).json({message: "An error occured, alliances were not returned"})
@@ -70,6 +89,7 @@ const acceptAlliance = async (req, res) => {
 const AllianceController = {
     requestAlliance: requestAlliance,
     withdrawAllianceRequest: withdrawAllianceRequest,
+    viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
     acceptAlliance: acceptAlliance
 }
