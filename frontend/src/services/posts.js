@@ -19,14 +19,14 @@ export async function getPosts(token) {
     return data;
 }
 
-export async function createPost(postInfo, userId, token) {
+export async function createPost(postInfo, image, userId, token) {
     const requestOptions = {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({message: postInfo, user_id: userId})
+        body: JSON.stringify({message: postInfo, image: image, user_id: userId})
     }
 
     const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);

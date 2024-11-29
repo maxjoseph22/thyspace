@@ -93,6 +93,7 @@ function Post({ post, setPosts, sendUpdate }) {
                     <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
                 </div>
                 <div className="main-content">
+                    <img src={post.image}/>
                     {update ? 
                     <input
                     value={updateInput}

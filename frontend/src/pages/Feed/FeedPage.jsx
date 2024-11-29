@@ -34,10 +34,11 @@ export function FeedPage() {
         return;
     }
 
-    const submitPost = async (postInfo) => {
+    const submitPost = async (postInfo, dealingWithImages) => {
         const token = localStorage.getItem("token");
         const decodedpayload = getPayloadFromToken(token)
-        const newPost = await createPost(postInfo, decodedpayload.user_id, token)
+        const imageUrl = await dealingWithImages(decodedpayload.user_id)
+        const newPost = await createPost(postInfo, imageUrl.secure_url, decodedpayload.user_id, token)
         setPosts((prev) => [newPost.post, ...prev])
         localStorage.setItem('token', newPost.token)
     }
