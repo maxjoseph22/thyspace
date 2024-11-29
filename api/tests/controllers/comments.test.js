@@ -33,7 +33,22 @@ describe("/comments", () => {
         await Comment.deleteMany({});
         mockUserId = new mongoose.Types.ObjectId();
     });
+    
+    describe("GET, when token is missing", () => {
+        test("response code 401", async () => {
+            const comment = new Comment({
+                userId: mockUserId,
+                content: ":]"
+            });
+            await comment.save();
 
+            const response = await request(app)
+                .get("/comments");
+                
+            expect(response.status).toEqual(401);
+        });
+    });
+    
     describe("GET, when a token is present", () => {
         test("response code 200", async () => {
             const comment1 = new Comment({
@@ -82,20 +97,7 @@ describe("/comments", () => {
         });
     });
 
-    describe("GET, when token is missing", () => {
-        test("response code 401", async () => {
-            const comment = new Comment({
-                userId: mockUserId,
-                content: ":]"
-            });
-            await comment.save();
-
-            const response = await request(app)
-                .get("/comments");
-                
-            expect(response.status).toEqual(401);
-        });
-    });
+    
 
     describe("POST, when a token is present", () => {
         test("response code 201", async () => {
@@ -126,4 +128,87 @@ describe("/comments", () => {
             expect(comments[0].content).toEqual("i miss gaming");
         });
     });
-})
+
+    describe("PUT, when a token is present", () => {
+        test("response code 202", async () => {
+            const comment = new Comment({
+                userId: mockUserId,
+                content: "new comment"
+            });
+            await comment.save();
+
+            const response = await request(app)
+                .put(`/comments/${comment._id}`)
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    userId: mockUserId, 
+                    content: "edited comment"
+                });     
+
+            expect(response.status).toEqual(202);
+        });
+
+        test("updates a comment", async () => {
+            const comment1 = new Comment({
+                userId: mockUserId,
+                content: "new comment"
+            });
+            const comment2 = new Comment({
+                userId: mockUserId,
+                content: "second comment"
+            })
+            await comment1.save();
+            await comment2.save();
+
+            const response = await request(app)
+                .put(`/comments/${comment1._id}`)
+                .set("Authorization", `Bearer ${token}`)
+                .send({content: "updated comment!"});
+
+            const commentOne = await Comment.findOne({content: "updated comment!"});
+            const commentTwo = await Comment.findOne({content: "second comment"});
+
+            expect(commentOne.content).toEqual("updated comment!");
+            expect(commentTwo.content).toEqual("second comment");
+
+        });
+    });
+
+    describe("DELETE, when a token is present", () => {
+        test("response code 200", async () => {
+            const comment1 = new Comment({
+                userId: mockUserId,
+                content: "this comment will be deleted"
+            });
+            comment1.save();
+
+            const response = await request(app)
+                .delete(`/comments/${comment1._id}`)
+                .set("Authorization", `Bearer ${token}`)
+
+            expect(response.statusCode).toBe(200);
+        });
+
+        test("deletes a comment", async () => {
+            const comment1 = new Comment({
+                userId: mockUserId,
+                content: "bye bye"
+            });
+            const comment2 = new Comment({
+                userId: mockUserId,
+                content: "this comment should stay"
+            });
+
+            await comment1.save();
+            await comment2.save();
+
+            const response = await request(app)
+                .delete(`/comments/${comment1._id}`)
+                .set("Authorization", `Bearer ${token}`);
+
+            const comments = await Comment.find();
+            expect(comments.length).toEqual(1);
+            expect(comments[0].content).toEqual("this comment should stay");
+        });
+    });
+});
