@@ -6,13 +6,16 @@ const User = require("../../models/user");
 describe("/tokens", () => {
   beforeAll(async () => {
     const user = new User({
+      username: "Test_Username",
       email: "auth-test@test.com",
       password: "12345678",
+      firstname: "testFirstName",
+      lastname: "testLastName",
     });
 
     // We need to use `await` so that the "beforeAll" setup function waits for
     // the asynchronous user.save() to be done before exiting.
-    // Otherwise, the tests belowc ould run without the user actyakkt being
+    // Otherwise, the tests below could run without the user actyakkt being
     // saved, causing tests to fail inconsistently.
     await user.save();
   });
