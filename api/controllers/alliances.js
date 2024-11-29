@@ -18,17 +18,12 @@ const viewReceivedRequestsAdmin = async (req, res) => {
 const viewReceivedRequests = async (req, res) => {
     try {
         const receiverId = req.params.id
-        const receivedRequests = await Alliance.find({receiver: receiverId, status: "pending"})
-        const rawUsersThatRequested = await Promise.all(receivedRequests.map(async (request) => await (User.findOne({_id: request.sender }))))
-        const usersThatRequested = rawUsersThatRequested.map((user) => ({
-            _id: user._id,
-            firstname: user.firstname, 
-            lastname: user.lastname,
-            location: user.location,
-            profilePicture: user.profilePicture
-    }))
-        res.status(200).json({ usersThatRequested: usersThatRequested })
-
+        
+        const receivedRequestsWithUserData = await Alliance.find({receiver: receiverId, status: "pending"})
+            .populate('sender', "_id firstname lastname location profilePicture")
+        const usersThatRequested = receivedRequestsWithUserData.map((request) => request.sender)
+        res.status(200).json({ usersThatRequested })
+        
     } catch (error) {
         console.log(`\n${error.message}\n`)
         res.status(500).json({message: "An error occured, alliances were not returned"})
