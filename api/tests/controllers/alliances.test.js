@@ -80,7 +80,7 @@ describe('/alliances', () => {
             expect(responseTwo.status).toEqual(201)
             expect(await Alliance.findOne({sender: userOne._id})).toBeNull();
         })
-        it("adds user ids to the correct users friend lists when a reciever accepts a friend request" , async () => {
+        it("adds user ids to the correct users friend lists when a reciever accepts an alliance request" , async () => {
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
             const acceptRequestResponse = await request(app)
                 .post(`/alliances/${userOne._id}/accept`)
@@ -94,7 +94,7 @@ describe('/alliances', () => {
             expect(updatedUserOne.alliances).toEqual([userTwo._id])
             expect(updatedUserTwo.alliances).toEqual([userOne._id])
         })
-        it("adds mutiple alliances", async () => {
+        it("forges mutiple alliances", async () => {
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
             const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
             const responseOne = await request(app)
@@ -126,10 +126,8 @@ describe('/alliances', () => {
             const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
 
             const findRequestsResponse = await request(app)
-                .get(`/alliances/${userTwo._id.toString()}/receivedRequests`)
+                .get(`/alliances/${userTwo._id.toString()}/receivedRequestsAdmin`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
-            // console.log(findRequestsResponse.body.receivedRequests)
-            // console.log([allianceOne, allianceTwo])
             expect(findRequestsResponse.status).toEqual(200)
             expect(findRequestsResponse.body.receivedRequests).toEqual([
                 expect.objectContaining({
@@ -144,10 +142,35 @@ describe('/alliances', () => {
                 }) 
             ])
         })
+        it("allows a user to view basic data of people who have requested alliances", async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+
+            const findRequestsResponse = await request(app)
+                .get(`/alliances/${userTwo._id.toString()}/viewReceivedRequests`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+            expect(findRequestsResponse.status).toEqual(200)
+            expect(findRequestsResponse.body.usersThatRequested).toEqual([{
+                _id: userOne._id.toString(),
+                firstname: "John",
+                lastname: "Doe",
+                location: "New York, USA",
+                profilePicture: "https://example.com/images/user_one.jpg"
+            }, {
+                _id: userThree._id.toString(),
+                firstname: "Max",
+                lastname: "Power",
+                location: "Los Angeles, USA",
+                profilePicture: "https://example.com/images/user_one.jpg"
+            }
+        ])
+        })
 
     })
 
     // describe("GET, when a token is missing or invalid", () => {
+
 
     // })
 })

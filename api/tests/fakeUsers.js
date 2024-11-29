@@ -32,7 +32,7 @@ const fakeUserThree = {
     location: "Los Angeles, USA",
     firstname: "Max",
     lastname: "Power",
-    profilePicture: "",
+    profilePicture: "https://example.com/images/user_one.jpg",
     friends: [],
     posts: []
 }
