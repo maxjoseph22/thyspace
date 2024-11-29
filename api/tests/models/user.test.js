@@ -121,12 +121,33 @@ describe("User model", () => {
     });
 
     await user.save();
+    // Doug updated some of these tests
+    const savedUser = await User.findOne({email: "someone@example.com"});
+    console.log(savedUser)
+    expect(savedUser.username).toEqual("Test_Username");
+    expect(savedUser.email).toEqual("someone@example.com");
+    expect(savedUser.firstname).toEqual("testFirstName");
+    expect(savedUser.lastname).toEqual("testLastName");
+    expect(savedUser.profilePicture).toEqual("");
+
+    const isPasswordValid = await savedUser.comparePassword("password")
+    expect(isPasswordValid).toBe(true);
+  });
+
+  it("saved user has a createdAt and updatedAt", async () => {
+    const user = new User({
+      username: "Test_Username",
+      email: "someone@example.com",
+      password: "password",
+      firstname: "testFirstName",
+      lastname: "testLastName",
+    });
+
+    await user.save();
     const users = await User.find();
 
-    expect(users[0].username).toEqual("Test_Username");
-    expect(users[0].email).toEqual("someone@example.com");
-    expect(users[0].password).toEqual("password");
-    expect(users[0].firstname).toEqual("testFirstName");
-    expect(users[0].lastname).toEqual("testLastName");
+    expect(users[0].createdAt).toBeDefined();
+    expect(users[0].updatedAt).toBeDefined();
   });
+
 });
