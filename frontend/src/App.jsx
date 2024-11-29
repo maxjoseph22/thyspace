@@ -6,6 +6,7 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
 import MyProfile from './pages/MyProfile/MyProfile'
+import FindAlliance from "./pages/FindAlliances/FindAlliances";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -26,8 +27,12 @@ const router = createBrowserRouter([
     element: <FeedPage />,
   },
   {
-    path: 'myprofile',
+    path: '/myprofile',
     element: <MyProfile />,
+  },
+  {
+    path: '/findalliances',
+    element: <FindAlliance />
   }
   
 ]);
