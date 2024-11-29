@@ -9,7 +9,8 @@ async function createToken(req, res) {
   if (!user) {
     console.log("Auth Error: User not found");
     res.status(401).json({ message: "User not found" });
-  } else if (user.password !== password) {
+  // } else if (user.password !== password) {
+  } else if (await user.comparePassword(password) !== true) {
     console.log("Auth Error: Passwords do not match");
     res.status(401).json({ message: "Password incorrect" });
   } else {
