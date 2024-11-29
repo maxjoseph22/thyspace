@@ -1,5 +1,5 @@
 import { deletePost } from "../services/posts";
-import { getPayloadFromToken } from "../services/helperFunctions";
+import { getPayloadFromToken, convertDate } from "../services/helperFunctions";
 import { useState } from "react";
 import './Post.css'
 
@@ -37,11 +37,7 @@ function Post({ post, setPosts, sendUpdate }) {
         setUpdateInput(e.target.value);
     }
 
-    const convertDate = () => {
-        const date = new Date(post.createdAt)
-        date.toISOString().substring(0, 10);
-        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}`: date.getMinutes()}`
-    }
+
 
     const checkIfEdited = () => {
         return post.createdAt === post.updatedAt
@@ -58,7 +54,7 @@ function Post({ post, setPosts, sendUpdate }) {
                     </div>
                     <div className="username-date">
                         <p className="post-username">{post.user_id.username}</p>
-                        <p className="post-date">{convertDate()}</p>
+                        <p className="post-date">{convertDate(post)}</p>
                     </div>
                 </div>
                 {createdByCurrentUser() ?

@@ -86,11 +86,23 @@ async function findUser(req, res) {
   }
 }
 
+// findAll function
+async function getUsers(req, res) {
+  try {
+    const users = await User.find()
+    res.status(200).json({users: users})
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Unexpected server error" });
+  }
+}
+
 const UsersController = {
   createUser: createUser,
   deleteUser: deleteUser,
   updateUser: updateUser,
   findUser: findUser,
+  getUsers: getUsers,
 };
 
 module.exports = UsersController;
