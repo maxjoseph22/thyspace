@@ -2,6 +2,8 @@ import { deletePost } from "../services/posts";
 import { getPayloadFromToken } from "../services/helperFunctions";
 import { useState } from "react";
 import './Post.css'
+import { FaPencilAlt, FaUndo } from "react-icons/fa";
+import { IoMdClose, IoMdSend } from "react-icons/io";
 
 function Post({ post, setPosts, sendUpdate }) {
     const [update, setUpdate] = useState(false); 
@@ -64,25 +66,45 @@ function Post({ post, setPosts, sendUpdate }) {
                 {createdByCurrentUser() ?
                         (update ?
                         <div className="post-btns">
-                            <button
+                            {/* <button
                             onClick={() => { 
                                 sendUpdate(post._id, updateInput);
-                                setUpdate(false)}}>Submit</button>
-                            <button
+                                setUpdate(false)}}>Submit</button> */}
+                            <IoMdSend 
+                            onClick={() => { 
+                                sendUpdate(post._id, updateInput);
+                                setUpdate(false)}}
+                            className="send-update"
+                            />
+                            {/* <button
                             onClick={() => {
                                 setUpdateInput(post.message)
                                 setUpdate(false)
                             }}
-                            >Undo</button>
+                            >Undo</button> */}
+                            <FaUndo 
+                            onClick={() => {
+                                setUpdateInput(post.message)
+                                setUpdate(false)
+                            }}
+                            className="undo-update"
+                            />
                         </div>
                         :
                         <div className="post-btns">
-                            <button
+                            {/* <button
                             onClick={() => {setUpdate(true)}}>
-                            Update</button>
-                            <button
+                            Update</button> */}
+                            <FaPencilAlt
+                            className="edit-post" 
+                            onClick={() => {setUpdate(true)}}/>
+                            <IoMdClose 
                             onClick={removePost}
-                            >Delete</button>
+                            className="delete-post"
+                            />
+                            {/* <button
+                            onClick={removePost}
+                            >Delete</button> */}
                             </div>)
                     :
                     null
@@ -93,13 +115,16 @@ function Post({ post, setPosts, sendUpdate }) {
                     <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
                 </div>
                 <div className="main-content">
-                    <img src={post.image}/>
+                    {post.image ? <img src={post.image}/>: null}
                     {update ? 
                     <input
+                    className="post-message"
                     value={updateInput}
                     onChange={handleUpdateInput}/>
                     :
-                    <p>{post.message}</p>}
+                    <p
+                    className="post-message"
+                    >{post.message}</p>}
                 </div>
             </div>
             <div className="post-int-btns">

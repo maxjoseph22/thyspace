@@ -1,7 +1,10 @@
 import { useState, useRef } from "react"
-const CLOUDINARY_NAME = import.meta.env.CLOUDINARY_NAME;
+const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
+import './PostForm.css'
+import { IoMdClose } from "react-icons/io";
+import { FaRegImage } from "react-icons/fa";
 
-const PostForm = ({submitPost}) => {
+const PostForm = ({submitPost, setSeePostForm}) => {
     const [ postContent, setPostContent ] = useState('')
     const [ imageFile, setImageFile ] = useState(null)
     const [ previewImage, setPreviewImage ] = useState('')
@@ -32,7 +35,7 @@ const PostForm = ({submitPost}) => {
                 formData.append("upload_preset", "post_images")
                 formData.append("folder", `post_images/${userId}`);
                 const response = await fetch(
-                    `https://api.cloudinary.com/v1_1/${'dnixfhx1v'}/image/upload`,
+                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
                     {
                         method: 'POST',
                         body: formData
@@ -57,32 +60,64 @@ const PostForm = ({submitPost}) => {
     }
 
     return (
-        <form 
-            className="post-form"
-            onSubmit={(e) => {
-                e.preventDefault()
-                submitPost(postContent, dealWithCloudinarySend)
-                setPreviewImage('')
-                setPostContent('')
-        }}>
-            <label>Create Post</label>
-            <img src={previewImage}/>
-            <textarea
-            value={postContent} 
-            onChange={handleInputChanges}
-            placeholder="Start typing ..."
-            required
-            />
-            <input
-            ref={fileInputRef}
-            accept="image/*"
-            onChange={handleImageChanges}
-            type='file'
-            />
-            <button
-            type='submit'
-            >Post</button>
-        </ form>
+        <div className="overlay">
+        <div className="popup-form">
+            <form 
+                className="post-form"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    submitPost(postContent, dealWithCloudinarySend)
+                    setPreviewImage('')
+                    setPostContent('')
+            }}>
+                <div className="post-form-header">
+                    <div className="post-side-heading"></div>
+                    <label className="post-form-heading">Create Post</label><IoMdClose
+                    className="post-side-heading post-form-close" 
+                    onClick={(e) => {
+                        e.preventDefault()
+                        setSeePostForm(prev => !prev)
+                    }}
+                    />
+                    
+                </div>
+                <div className="post-image-container">
+                    {previewImage ?<img src={previewImage}
+                    style={{width: '5rem', height:'5rem'}}
+                    />: null}
+                </div>
+                <div className="post-text-container">
+                    <textarea
+                    className="post-text"
+                    value={postContent} 
+                    onChange={handleInputChanges}
+                    placeholder="Start typing ..."
+                    required
+                    />
+                </div>
+                <div className="post-form-footer">
+                    <button
+                    type='submit'
+                    className="post-btn"
+                    >Post</button>
+                    <label
+                    htmlFor="file-upload" className="custom-file-upload"
+                    >
+                        <FaRegImage className="upload-icon"/>
+                    </label>
+                    
+                    <input
+                    id='file-upload'
+                    ref={fileInputRef}
+                    accept="image/*"
+                    onChange={handleImageChanges}
+                    type='file'
+                    style={{ display: 'none' }}
+                    />
+                </div>
+            </ form>
+        </div>
+        </div>
     )
 }
 

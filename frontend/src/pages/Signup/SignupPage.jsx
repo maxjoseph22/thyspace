@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
+import './SignupPage.css'
 
 export function SignupPage() {
   const [userInfo, setUserInfo] = useState({
@@ -33,7 +34,9 @@ export function SignupPage() {
   return (
     <>
       <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}
+      className="signup-form"
+      >
         <label htmlFor="email">Email:</label>
         <input
           id="email"
@@ -42,6 +45,7 @@ export function SignupPage() {
           value={userInfo.email}
           placeholder="email"
           onChange={handleInputChanges}
+          className="user-field"
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -51,6 +55,7 @@ export function SignupPage() {
           name='password'
           value={userInfo.password}
           onChange={handleInputChanges}
+          className="user-field"
         />
         <label htmlFor="username">Username:</label>
         <input
@@ -60,6 +65,7 @@ export function SignupPage() {
           name='username'
           value={userInfo.username}
           onChange={handleInputChanges}
+          className="user-field"
         />
         <label htmlFor="firstname">First Name:</label>
         <input
@@ -69,6 +75,7 @@ export function SignupPage() {
           name='firstname'
           value={userInfo.firstname}
           onChange={handleInputChanges}
+          className="user-field"
         />
         <label htmlFor="lastname">Last Name:</label>
         <input
@@ -78,8 +85,12 @@ export function SignupPage() {
           name='lastname'
           value={userInfo.lastname}
           onChange={handleInputChanges}
+          className="user-field"
         />
         <input role="submit-button" id="submit" type="submit" value="Submit" />
+        <div>
+          <Link to='/login'>Already Have An Account</Link>
+        </div>
       </form>
     </>
   );

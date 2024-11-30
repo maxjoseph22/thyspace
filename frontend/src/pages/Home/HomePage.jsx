@@ -6,8 +6,10 @@ export function HomePage() {
   return (
     <div className="home">
       <h1>Welcome to Acebook!</h1>
-      <Link to="/signup">Sign Up</Link>
-      <Link to="/login">Log In</Link>
+      <div className="user-auth">
+        <Link to="/login">Log In</Link>
+        <Link to="/signup">Sign Up</Link>        
+      </div>
     </div>
   );
 }

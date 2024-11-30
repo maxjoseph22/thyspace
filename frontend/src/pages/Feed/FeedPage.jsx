@@ -10,6 +10,7 @@ import NavBar from "../Nav/NavBar";
 
 export function FeedPage() {
     const [posts, setPosts] = useState([]);
+    const [seePostForm, setSeePostForm] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +39,8 @@ export function FeedPage() {
         const token = localStorage.getItem("token");
         const decodedpayload = getPayloadFromToken(token)
         const imageUrl = await dealingWithImages(decodedpayload.user_id)
-        const newPost = await createPost(postInfo, imageUrl.secure_url, decodedpayload.user_id, token)
+        const imageUrlCheck = imageUrl ? imageUrl.secure_url: ''
+        const newPost = await createPost(postInfo, imageUrlCheck, decodedpayload.user_id, token)
         setPosts((prev) => [newPost.post, ...prev])
         localStorage.setItem('token', newPost.token)
     }
@@ -48,7 +50,13 @@ export function FeedPage() {
     <NavBar />
       <h2>Feed</h2>
       <div className="feed" role="feed">
-        <PostForm submitPost={submitPost}/>
+        {seePostForm ? 
+        <PostForm submitPost={submitPost} setSeePostForm={setSeePostForm}/>
+        :
+        <button
+        onClick={() => setSeePostForm(true)}
+        >Create A Post</button>}
+        
         {posts.length > 0 && <PostContainer posts={posts} setPosts={setPosts}/>}
       </div>
     </>

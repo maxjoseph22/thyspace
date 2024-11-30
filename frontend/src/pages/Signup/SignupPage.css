@@ -1,0 +1,10 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    height: 40vh;
+    justify-content: center;
+}
+
+.user-field {
+    margin: 0.35rem 0;
+}

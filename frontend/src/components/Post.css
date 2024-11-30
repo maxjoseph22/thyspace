@@ -31,6 +31,17 @@
     justify-content: flex-end;
 }
 
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-content img {
+    width: 10rem;
+    height: 13rem;
+}
+
 .post-username {
     font-size: 0.8rem;
 }
@@ -42,3 +53,48 @@
 .edited-tag {
     font-size: 0.6rem;
 }
+
+.post-message {
+    margin: 0.8rem 0;
+}
+
+.edit-post {
+    margin: 0 0.4rem 0 0;
+}
+
+.edit-post:hover {
+    cursor: pointer;
+    scale: 0.9;
+}
+
+.delete-post:hover {
+    cursor: pointer;
+    animation: spin 0.25s linear;
+}
+
+.send-update {
+    margin: 0 0.4rem 0 0;
+}
+
+.send-update:hover {
+    cursor: pointer;
+    transform: translate(0.2rem);
+}
+
+.undo-update:hover {
+    cursor: pointer;
+    animation: reverse-spin 0.5s forwards;
+}
+
+@keyframes reverse-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-180deg);
+    }
+}
+
+
+
+
