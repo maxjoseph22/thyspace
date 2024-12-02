@@ -5,6 +5,7 @@ const app = require("../../app");
 const User = require("../../models/user");
 const Alliance = require("../../models/alliance")
 const { fakeUserOne, fakeUserTwo, fakeUserThree } = require("../fakeUsers")
+const { generateToken, decodeToken } = require("../../lib/token")
 
 require("../mongodb_helper")
 
@@ -47,16 +48,15 @@ describe('/alliances', () => {
     describe("POST, when a valid token is present", () => {
         it("returns a response code of 201 when a new alliance is requested", async () => {
             const response = await request(app)
-                .post("/alliances")
+                .post(`/alliances/${userTwo._id}`)
                 .set("Authorization", `Bearer ${tokenOne}`)
-                .send({ sender: userOne._id, receiver: userTwo._id })
+
             expect(response.status).toEqual(201);
         })
         it("correctly adds a new alliance to the database when the sender requests one", async () => {
             const response = await request(app)
-                .post("/alliances")
+                .post(`/alliances/${userTwo._id}`)
                 .set("Authorization", `Bearer ${tokenOne}`)
-                .send({ sender: userOne._id, receiver: userTwo._id })
             
             const alliance = await Alliance.findOne({sender: userOne._id})
     
@@ -65,9 +65,9 @@ describe('/alliances', () => {
         })
         it("correctly removes a pending alliance if a sender changes their mind", async () => {
             const responseOne = await request(app)
-                .post("/alliances")
+                .post(`/alliances/${userTwo._id}`)
                 .set("Authorization", `Bearer ${tokenOne}`)
-                .send({ sender: userOne._id, receiver: userTwo._id })
+                
             expect(responseOne.body.alliance.sender).toEqual(userOne._id.toString())
             expect(responseOne.body.alliance.receiver).toEqual(userTwo._id.toString())
         
@@ -76,7 +76,7 @@ describe('/alliances', () => {
             const responseTwo = await request(app)
                 .post(`/alliances/${receiverId}/cancel`)
                 .set("Authorization", `Bearer ${tokenOne}`)
-                .send({ sender: userOne._id })
+                
             expect(responseTwo.status).toEqual(201)
             expect(await Alliance.findOne({sender: userOne._id})).toBeNull();
         })
@@ -85,7 +85,7 @@ describe('/alliances', () => {
             const acceptRequestResponse = await request(app)
                 .post(`/alliances/${userOne._id}/accept`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
-                .send({ receiver: userTwo._id })
+        
             expect(acceptRequestResponse.status).toEqual(200)
             const updatedAllianceOne = await Alliance.findOne({ sender: userOne._id, receiver: userTwo._id })
             expect(updatedAllianceOne.status).toEqual("accepted")
@@ -100,11 +100,11 @@ describe('/alliances', () => {
             const responseOne = await request(app)
                 .post(`/alliances/${userOne._id}/accept`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
-                .send({ receiver: userTwo._id })
+                
             const responseTwo = await request(app)
                 .post(`/alliances/${userThree._id}/accept`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
-                .send({ receiver: userTwo._id })
+
             const updatedUserOne = await User.findOne({_id: userOne._id})
             const updatedUserTwo = await User.findOne({_id: userTwo._id})
             const updatedUserThree = await User.findOne({_id: userThree._id})
@@ -148,7 +148,7 @@ describe('/alliances', () => {
             const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
 
             const findRequestsResponse = await request(app)
-                .get(`/alliances/${userTwo._id.toString()}/viewReceivedRequests`)
+                .get(`/alliances/viewReceivedRequests`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
             expect(findRequestsResponse.status).toEqual(200)
             expect(findRequestsResponse.body.usersThatRequested).toEqual([{
