@@ -1,10 +1,31 @@
 const request = require("supertest");
+const JWT = require("jsonwebtoken");
 
 const app = require("../../app");
 const User = require("../../models/user");
 
 require("../mongodb_helper");
 
+
+
+const secret = process.env.JWT_SECRET;
+
+function createToken(userId) {
+  return JWT.sign(
+    {
+      user_id: userId,
+      // Backdate this token of 5 minutes
+      iat: Math.floor(Date.now() / 1000) - 5 * 60,
+      // Set the JWT token to expire in 10 minutes
+      exp: Math.floor(Date.now() / 1000) + 10 * 60,
+    },
+    secret
+  );
+}
+
+
+let token;
+let user;
 describe("/users", () => {
   beforeEach(async () => {
     await User.deleteMany({});
@@ -69,18 +90,19 @@ describe("/users", () => {
   describe("DELETE, when user id is given", () => {
     test("the response code is 200 and the user is deleted", async () => {
       // create a user
-      const user = await User.create({
+      user = await User.create({
         username: "Test_Username",
         email: "someone@example.com",
         password: "password",
         firstname: "testFirstName",
         lastname: "testLastName",
       });
-      
-      console.log(user)
+      token = createToken(user.id);
+  
 
       const response = await request(app)
         .delete(`/users/${user._id}`)
+        .set("Authorization", `Bearer ${token}`)
       // check the response code
       expect(response.statusCode).toBe(200);
       // check database user collection is empty
@@ -92,7 +114,7 @@ describe("/users", () => {
   describe("PUT, when user id is given", () => {
     test("the response code is 200 and the user is updated", async () => {
       // create a user
-      const user = await User.create({
+      user = await User.create({
         username: "Test_Username",
         email: "someone@example.com",
         password: "password",
@@ -100,8 +122,11 @@ describe("/users", () => {
         lastname: "testLastName",
       });
 
+      token = createToken(user.id);
+
       const response = await request(app)
         .put(`/users/${user._id}`)
+        .set("Authorization", `Bearer ${token}`)
         .send({password: "new_password"})
 
       expect(response.statusCode).toBe(200);
@@ -114,19 +139,20 @@ describe("/users", () => {
   describe("GET, when user id is given", () => {
     test("the response code is 200 and the user is found", async () => {
       // create a user
-      const user = await User.create({
+      user = await User.create({
         username: "Test_Username",
         email: "someone@example.com",
         password: "password",
         firstname: "testFirstName",
         lastname: "testLastName",
       });
-
+      token = createToken(user.id);
+      
       const response = await request(app)
-        .get(`/users/${user._id}`)
+        .get(`/users/${user.id}`)
+        .set("Authorization", `Bearer ${token}`)
 
       expect(response.statusCode).toBe(200);
-
 
       foundUser = await User.findById(user._id);
       expect(foundUser.firstname).toBe("testFirstName")
