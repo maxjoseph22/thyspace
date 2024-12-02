@@ -24,7 +24,8 @@ export function DiplomacyPage() {
             }
         }
         fetchRequests();
-    })
+    }, [navigate]);
+    // TODO look into appropriate dependency array
     return (
         <>
         <NavBar />
