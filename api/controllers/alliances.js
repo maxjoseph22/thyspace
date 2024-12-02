@@ -17,7 +17,7 @@ const viewReceivedRequestsAdmin = async (req, res) => {
 }
 const viewReceivedRequests = async (req, res) => {
     try {
-        const receiverId = req.params.id
+        const receiverId = req.user_id
         
         const receivedRequestsWithUserData = await Alliance.find({receiver: receiverId, status: "pending"})
             .populate('sender', "_id firstname lastname location profilePicture")
@@ -29,9 +29,12 @@ const viewReceivedRequests = async (req, res) => {
         res.status(500).json({message: "An error occured, alliances were not returned"})
     }
 }
+// DONE
+
 const requestAlliance = async (req, res) => {
     try {
-        const { sender, receiver } = req.body
+        const sender = req.user_id
+        const receiver = req.params.id
         const alliance = new Alliance({sender, receiver})
         await alliance.save()
 
@@ -43,9 +46,10 @@ const requestAlliance = async (req, res) => {
     }
 } 
 
+
 const withdrawAllianceRequest = async (req, res) => {
     try {
-        const sender = req.body.sender
+        const sender = req.user_id
         const receiver = req.params.id
 
         const alliance = await Alliance.findOne({sender: sender, receiver: receiver})
@@ -62,9 +66,10 @@ const withdrawAllianceRequest = async (req, res) => {
         res.status(500).json({message: "An error occured, alliance not withdrawn!"})
     }
 }
+
 const acceptAlliance = async (req, res) => {
     try {
-        const receiver = req.body.receiver
+        const receiver = req.user_id
         const sender = req.params.id
         // Can we use findByIdAndUpdate here?
         const alliance = await Alliance.findOne({sender: sender, receiver: receiver})
@@ -77,8 +82,6 @@ const acceptAlliance = async (req, res) => {
         console.log(`\n${error.message}\n`)
         res.status(500).json({message: "Aliance failed to forge!"})
     }
-
-
 }
 
 const AllianceController = {
@@ -92,4 +95,6 @@ const AllianceController = {
 module.exports = { AllianceController }
 
 
-// TODO, how can we make it so that only one alliance can be made between two users?
+// // TODO:
+// - how can we make it so that only one alliance can be made between two users?
+// - Refactor acceptAlliance to use findByIdAndUpdate 
