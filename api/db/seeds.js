@@ -25,7 +25,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Safaa",
             lastname: "Imran",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
@@ -46,7 +45,7 @@ const createUsers = async () => {
             password: "password789",
             location: "United Kingdom",
             firstname: "Doug",
-            lastname: "Just Doug",
+            lastname: "Fairfield",
             profilePicture: "",
             alliances: [],
             posts: []
@@ -148,6 +147,10 @@ const createPosts = async () => {
             user_id: users[8]._id
         }),
         new Post({
+            message: "We as a society must needs work toward a better method of settling disputes than with petty duelling.",
+            user_id: users[8]._id
+        }),
+        new Post({
             message: "if I see that damn wombat one more time",
             user_id: users[1]._id
         }),
@@ -160,7 +163,7 @@ const createPosts = async () => {
             user_id: users[3]._id
         }),
         new Post({
-            message: "Hello!",
+            message: "How are you guys cleaning your armour? I feel like just soap and water doesn't do it for me. I miss the shine",
             user_id: users[5]._id
         }),
         new Post({
