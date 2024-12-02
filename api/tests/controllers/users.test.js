@@ -76,8 +76,9 @@ describe("/users", () => {
         firstname: "testFirstName",
         lastname: "testLastName",
       });
-
+      
       console.log(user)
+
       const response = await request(app)
         .delete(`/users/${user._id}`)
       // check the response code
