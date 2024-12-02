@@ -96,12 +96,11 @@ async function findUser(req, res) {
     if (userToFindID !== req.user_id) {
       return res.status(401).json({ message: "Forbidden! You are not logged in!" });
   }
-
     const foundUser = await User.findById(userToFindID)
 
     if (!foundUser) {
       return res.status(404).json({message: "User not found"})
-    }
+    } 
     res.status(200).json({message: "User found", user: foundUser})
   } catch (err) {
     console.error(err);
