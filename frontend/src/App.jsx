@@ -8,6 +8,7 @@ import { FeedPage } from "./pages/Feed/FeedPage";
 import { DiplomacyPage } from "./pages/Diplomacy/DiplomacyPage" 
 import MyProfile from './pages/MyProfile/MyProfile'
 import FindAlliance from "./pages/FindAlliances/FindAlliances";
+import Diplomacy from "./pages/Diplomacy/Diplomacy"
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
     path: '/diplomacy',
     element: <DiplomacyPage />
   }
+// =======
+//     element: <Diplomacy />,
+//   },
+// >>>>>>> main
   
 ]);
 
