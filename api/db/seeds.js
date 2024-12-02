@@ -12,6 +12,8 @@ connectToDatabase();
 const seed = async () => {
     await createUsers();
     await createPosts();
+    await createAlliances();
+    // await createComments();
 };
 
 const createUsers = async () => {
@@ -125,7 +127,6 @@ const createUsers = async () => {
     await User.deleteMany({});
     for (const userData of users){
         await userData.save();
-        console.log(userData);
     };
 };
 
@@ -147,11 +148,27 @@ const createPosts = async () => {
             user_id: users[8]._id
         }),
         new Post({
-            message: "if I see that wombat one more time",
+            message: "if I see that damn wombat one more time",
             user_id: users[1]._id
         }),
         new Post({
+            message: "Half of a half is a quarter I think",
+            user_id: users[2]._id
+        }),
+        new Post({
+            message: "I yearn for the battlefield",
+            user_id: users[3]._id
+        }),
+        new Post({
+            message: "Hello!",
+            user_id: users[5]._id
+        }),
+        new Post({
             message: "I heard this place was a suitable replacement for 'X'. They should not have renamed it into a 'close' button.",
+            user_id: users[6]._id
+        }),
+        new Post({
+            message: "Why must men fight amongst themselves when there's quite literally dragons out here",
             user_id: users[6]._id
         }),
         new Post({
@@ -161,10 +178,144 @@ const createPosts = async () => {
         new Post({
             message: "wow I do not have anything to say. third post",
             user_id: users[0]._id
+        }),
+        new Post({
+            message: "should i liveblog this dragon battle",
+            user_id: users[7]._id
+        }),
+        new Post({
+            message: "just ended a thousand year war now im going to get chips :)",
+            user_id: users[7]._id
+        }),
+        new Post({
+            message: "Hey all! Just wanted to hop on and let everyone know I've been knighted! So grateful for this amazing opportunity, thank you to everyone who's supported me through this journey.",
+            user_id: users[4]._id
+        }),
+        new Post({
+            message: "post number 4",
+            user_id: users[0]._id
+        }),
+        new Post({
+            message: "Can you believe they're trying to criminalise killing for sport? What, are we all supposed to be bounty hunters now?",
+            user_id: users[9]._id
+        }),
+        new Post({
+            message: "we said we wanted 10 posts per page so i'm making a few to help that. 5",
+            user_id: users[0]._id
         })
     ];
     await Post.deleteMany({});
     await Post.insertMany(posts);
+};
+
+// const createComments = async () => {
+//     const users = await User.find();
+//     const posts = await Post.find();
+//     const comments = [
+//         new Comment({
+
+//         })
+//     ];
+//     await Comment.deleteMany({});
+//     await Comment.insertMany(comments);
+// };
+
+const createAlliances = async () => {
+    const users = await User.find();
+    const alliances = [
+        new Alliance({
+            sender: users[8]._id,
+            receiver: users[9]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[6]._id,
+            receiver: users[8]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[7]._id,
+            receiver: users[6]._id,
+            status: "rejected"
+        }),
+        new Alliance({
+            sender: users[7]._id,
+            receiver: users[9]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[3]._id,
+            receiver: users[1]._id,
+            status: "rejected"
+        }),
+        new Alliance({
+            sender: users[3]._id,
+            receiver: users[2]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[4]._id,
+            receiver: users[5]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[4]._id,
+            receiver: users[1]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[6]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[1]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[2]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[3]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[4]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[0]._id,
+            receiver: users[5]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[9]._id,
+            receiver: users[7]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[1]._id,
+            receiver: users[2]._id,
+            status: "accepted"
+        }),
+        new Alliance({
+            sender: users[1]._id,
+            receiver: users[5]._id,
+            status: "rejected"
+        }),
+        new Alliance({
+            sender: users[1]._id,
+            receiver: users[8]._id,
+            status: "accepted"
+        })
+    ]
+    await Alliance.deleteMany({});
+    await Alliance.insertMany(alliances);
 };
 
 seed()
@@ -172,6 +323,5 @@ seed()
         console.log("database seeded");
         mongoose.connection.close() })
     .catch((error) => {
-        console.log(error);
-        
+        console.log(error); 
     });

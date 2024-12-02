@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   location: { type: String },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  profilePicture: {type: String, default: ""},
+  profilePicture: {type: String, default: "/ourFriendTom.avif"},
   alliances: [{ type: Types.ObjectId, ref: "User" }],
   posts: [{ type: Types.ObjectId, ref: "Post" }],
 }, {
