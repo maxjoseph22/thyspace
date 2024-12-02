@@ -77,13 +77,13 @@ describe('/alliances', () => {
                 .post(`/alliances/${receiverId}/cancel`)
                 .set("Authorization", `Bearer ${tokenOne}`)
                 
-            expect(responseTwo.status).toEqual(201)
+            expect(responseTwo.status).toEqual(200)
             expect(await Alliance.findOne({sender: userOne._id})).toBeNull();
         })
         it("adds user ids to the correct users friend lists when a reciever accepts an alliance request" , async () => {
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
             const acceptRequestResponse = await request(app)
-                .post(`/alliances/${userOne._id}/accept`)
+                .post(`/alliances/${userOne._id}/forge`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
         
             expect(acceptRequestResponse.status).toEqual(200)
@@ -98,11 +98,11 @@ describe('/alliances', () => {
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
             const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
             const responseOne = await request(app)
-                .post(`/alliances/${userOne._id}/accept`)
+                .post(`/alliances/${userOne._id}/forge`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
                 
             const responseTwo = await request(app)
-                .post(`/alliances/${userThree._id}/accept`)
+                .post(`/alliances/${userThree._id}/forge`)
                 .set("Authorization", `Bearer ${tokenTwo}`)
 
             const updatedUserOne = await User.findOne({_id: userOne._id})

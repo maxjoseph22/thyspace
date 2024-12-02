@@ -5,7 +5,7 @@ const { AllianceController } = require("../controllers/alliances");
 
 router.post("/:id", AllianceController.requestAlliance)
 router.post("/:id/cancel", AllianceController.withdrawAllianceRequest)
-router.post("/:id/accept", AllianceController.acceptAlliance)
+router.post("/:id/forge", AllianceController.acceptAlliance)
 router.get("/:id/receivedRequestsAdmin", AllianceController.viewReceivedRequestsAdmin)
 router.get("/viewReceivedRequests", AllianceController.viewReceivedRequests)
 

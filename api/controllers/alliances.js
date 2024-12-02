@@ -59,7 +59,7 @@ const withdrawAllianceRequest = async (req, res) => {
         }
 
         await Alliance.deleteOne({ _id: alliance._id })
-        res.status(201).json({message: "Alliance request successfully withdrawn!"})
+        res.status(200).json({message: "Alliance request successfully withdrawn!"})
 
     } catch (error) {
         console.log(`\n${error.message}\n`)

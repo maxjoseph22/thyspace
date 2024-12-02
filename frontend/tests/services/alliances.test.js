@@ -30,10 +30,11 @@ describe("alliances service", () => {
         const url = fetchArguments[0];
         const options = fetchArguments[1];
 
-        expect(url).toEqual(`${BACKEND_URL}/alliances/${mockUserId}/viewReceivedRequests`);
+        expect(url).toEqual(`${BACKEND_URL}/alliances/viewReceivedRequests`);
         expect(options.method).toEqual("GET");
         expect(options.headers["Authorization"]).toEqual("Bearer testToken")
 
         expect(result).toEqual(mockResponse)
     })
+    
 })
