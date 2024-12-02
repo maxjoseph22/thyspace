@@ -1,7 +1,7 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, expect, vi } from "vitest";
 
-import { getPosts } from "../../src/services/posts";
+import { getPosts, createPost, deletePost, updatePost } from "../../src/services/posts";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -17,7 +17,6 @@ describe("posts service", () => {
 
       await getPosts("testToken");
 
-      // This is an array of the arguments that were last passed to fetch
       const fetchArguments = fetch.mock.lastCall;
       const url = fetchArguments[0];
       const options = fetchArguments[1];
@@ -37,6 +36,118 @@ describe("posts service", () => {
         await getPosts("testToken");
       } catch (err) {
         expect(err.message).toEqual("Unable to fetch posts");
+      }
+    });
+  });
+
+  describe("createPost", () => {
+    test("Creates a post and gets new token", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ post: {}, token: "newToken" }), {
+        status: 201,
+      });
+      const fakePostContent = 'Some Content'
+      const fakeUserId = 'i1u45kjnqkj1n34ijn'
+
+      const returnedPost = await createPost(fakePostContent, fakeUserId, "testToken");
+
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+
+      expect(url).toEqual(`${BACKEND_URL}/posts`);
+      expect(options.method).toEqual("POST");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+      expect(options.headers["Content-Type"]).toEqual("application/json");
+      expect(options.body).toEqual(JSON.stringify({message: fakePostContent, user_id: fakeUserId}));
+      expect(returnedPost).toEqual({post: {}, token: 'newToken'})
+    });
+
+    test("rejects with an error if the status is not 201", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Something went wrong" }),
+        { status: 400 }
+      );
+      const fakePostContent = 'Some Content'
+      const fakeUserId = 'i1u45kjnqkj1n34ijn'
+
+      try {
+        await createPost(fakePostContent, fakeUserId, "testToken");
+      } catch (err) {
+        expect(err.message).toEqual("Unable to create post");
+      }
+    });
+  });
+
+  describe("deletePost", () => {
+    test("Deletes a post and gets new token", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ post: {}, token: "newToken" }), {
+        status: 202,
+      });
+      const fakePostId = 'i1u45kjnqkj1n34ijn'
+
+      const returnedPost = await deletePost(fakePostId, "testToken");
+
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+
+      
+
+      expect(url).toEqual(`${BACKEND_URL}/posts/${fakePostId}`);
+      expect(options.method).toEqual("DELETE");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+      expect(returnedPost).toEqual({post: {}, token: 'newToken'})
+    });
+
+    test("rejects with an error if the status is not 202", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Something went wrong" }),
+        { status: 400 }
+      );
+      const fakePostId = 'i1u45kjnqkj1n34ijn'
+
+      try {
+        await deletePost(fakePostId, "testToken");
+      } catch (err) {
+        expect(err.message).toEqual("Unable to delete post");
+      }
+    });
+  });
+
+  describe("updatePost", () => {
+    test("Updates a post and gets new token", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ post: {}, token: "newToken" }), {
+        status: 202,
+      });
+      const fakePostId = 'i1u45kjnqkj1n34ijn'
+      const fakePostContent = 'Some Content'
+
+      const returnedPost = await updatePost(fakePostId, fakePostContent, "testToken");
+
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+
+      
+
+      expect(url).toEqual(`${BACKEND_URL}/posts/${fakePostId}`);
+      expect(options.method).toEqual("PUT");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+      expect(returnedPost).toEqual({post: {}, token: 'newToken'})
+    });
+
+    test("rejects with an error if the status is not 202", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Something went wrong" }),
+        { status: 400 }
+      );
+      const fakePostId = 'i1u45kjnqkj1n34ijn'
+      const fakePostContent = 'Some Content'
+
+      try {
+        await updatePost(fakePostId, fakePostContent,"testToken");
+      } catch (err) {
+        expect(err.message).toEqual("Unable to update post");
       }
     });
   });
