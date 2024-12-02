@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import './LoginPage.css'
 import { login } from "../../services/authentication";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,27 +33,46 @@ export function LoginPage() {
   return (
     <>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}
+      className="login-form"
+      >
         <label htmlFor="email">Email:</label>
         <input
           id="email"
           type="text"
           value={email}
           onChange={handleEmailChange}
+          className="user-field"
         />
         <label htmlFor="password">Password:</label>
+        <div className="login-password">
         <input
           id="password"
           type={showPassword ? 'text': 'password'}
           value={password}
           onChange={handlePasswordChange}
+          className="user-field"
         />
-        <button
-        onClick={(e) => {
-          e.preventDefault()
-          setShowPassword(!showPassword)}}
-        >Show Password</button>
+        {showPassword ?
+          <IoIosEyeOff
+          className="show-password" 
+          type='button'
+          onClick={(e) => {
+            e.preventDefault()
+            setShowPassword(!showPassword)}}/>
+        :
+          <IoIosEye 
+          className="show-password"
+          type='button'
+          onClick={(e) => {
+            e.preventDefault()
+            setShowPassword(!showPassword)}}/>
+        }
+        </div>
         <input role="submit-button" id="submit" type="submit" value="Submit" />
+        <div>
+          <Link to='/signup'>Create An Account</Link>
+        </div>
       </form>
     </>
   );

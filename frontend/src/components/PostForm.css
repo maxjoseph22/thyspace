@@ -1,0 +1,132 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 100vh; 
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3rem); 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    z-index: 2;
+}
+
+.popup-form {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    z-index: 3;
+    width: 55vw;
+    height: 55vh;
+    background-color: #f5f5dc;
+    border: 1px solid #D4AF37;
+    border-radius: 2rem;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.post-form {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.post-form-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 0.9rem;
+    background-color: #9b1c31;
+    border-radius: 2rem;
+}
+
+.post-side-heading {
+    min-width: 3rem;
+}
+
+.post-form-close:hover {
+    cursor: pointer;
+    animation: spin 0.25s linear;
+}
+
+.post-form-heading {
+    flex-grow: 1;
+    color: #f5f5dc;
+}
+.post-image-container {
+    display: flex;
+    justify-content: center;
+    min-height: 5rem;
+    align-items: center;
+
+}
+
+.post-text-container {
+    width: 80%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-text {
+    height: 8rem;
+    resize: none;
+    box-sizing: border-box;
+    flex-grow: 1;
+    background-color: #9b1c31;
+}
+
+.post-text::placeholder {
+    color: #f5f5dc;
+}
+
+.post-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40vw;
+}
+
+.post-btn {
+    margin: 0;
+    border: none;
+    flex-grow: 1;
+    margin-right: 0.8rem;
+    background-color: #9b1c31;
+
+    border-radius: 2rem;
+    color: #f5f5dc;
+    font-weight: bold;
+}
+
+.post-btn:hover {
+    cursor: pointer;
+    scale: 0.9;
+}
+
+.custom-file-upload {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-icon:hover {
+    cursor: pointer;
+    scale: 0.9;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(90deg);
+    }
+}

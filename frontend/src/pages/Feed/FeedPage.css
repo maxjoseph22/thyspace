@@ -4,12 +4,6 @@
     align-items: center;
     margin: 1.2rem;
 }
-.post-form label {
-    margin-bottom: 0.5rem;
-}
-.post-form button {
-    margin-top: 0.5rem;
-}
 
 .post {
     margin-bottom: 0.6rem;

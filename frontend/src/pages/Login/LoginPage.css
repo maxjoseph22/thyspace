@@ -1,0 +1,13 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-password {
+    display: flex;
+    align-items: center;
+}
+
+.show-password:hover {
+    cursor: pointer;
+}
