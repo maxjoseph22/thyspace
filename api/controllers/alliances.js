@@ -35,6 +35,15 @@ const requestAlliance = async (req, res) => {
     try {
         const sender = req.user_id
         const receiver = req.params.id
+        const existingRequest = await Alliance.findOne({
+            $or: [
+                { sender: sender, receiver: receiver },
+                { sender: receiver, receiver: sender }
+            ]
+        })
+        if (existingRequest) {
+            throw new Error("This alliance has already been requested.")
+        }
         const alliance = new Alliance({sender, receiver})
         await alliance.save()
 
@@ -42,7 +51,12 @@ const requestAlliance = async (req, res) => {
         res.status(201).json({alliance: alliance, token: newToken })
     } catch (error) {
         console.log(`\n${error.message}\n`)
-        res.status(500).json({message: "An error occured, alliance not requested"})
+        if (error.message === "This alliance has already been requested.") {
+            res.status(409).json({ message: error.message})
+        } else {
+            res.status(500).json({message: "An error occured, alliance not requested"})
+        }
+        
     }
 } 
 

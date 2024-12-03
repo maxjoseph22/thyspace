@@ -1,4 +1,4 @@
-import AllianceRequest from "./AllianceRequest"
+import AllianceRequest from "./AllianceRequestsView"
 
 const AllianceRequestContainer = ({ users }) => {
     return (
