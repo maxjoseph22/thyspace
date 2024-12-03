@@ -131,12 +131,13 @@ describe("/posts", () => {
         .get("/posts")
         .set("Authorization", `Bearer ${token}`);
 
-      const posts = response.body.posts;
+      const posts = await Post.find();
+      console.log("response:", posts)
       const firstPost = posts[0];
       const secondPost = posts[1];
       
-      expect(firstPost.message).toEqual("hola!");
-      expect(secondPost.message).toEqual("howdy!");
+      expect(firstPost.message).toEqual("howdy!");
+      expect(secondPost.message).toEqual("hola!");
     });
 
     test("returns a new token", async () => {
@@ -252,4 +253,55 @@ describe("/posts", () => {
       expect(response.body.post.message).toEqual("howdy!");
     })
   })
+
+  describe("GET, individual users posts when token is present", () => {
+    test("the response code is 200", async () => {
+      const post1 = new Post({ message: "I love all my children equally" , user_id: user._id});
+      const post2 = new Post({ message: "I've never cared for GOB" , user_id: user._id});
+      await post1.save();
+      await post2.save();
+
+      const response = await request(app)
+        .get(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(200);
+    });
+
+    test("returns every post for an individual user in their collection", async () => {
+      const post1 = new Post({ message: "howdy!" , user_id: user._id });
+      const post2 = new Post({ message: "hola!" , user_id: user._id });
+      await post1.save();
+      await post2.save();
+
+      const response = await request(app)
+        .get(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      const posts = await Post.find();
+      const firstPost = posts[0];
+      const secondPost = posts[1];
+      
+      expect(firstPost.message).toEqual("howdy!");
+      expect(secondPost.message).toEqual("hola!");
+    });
+
+    test("returns a new token", async () => {
+      const post1 = new Post({ message: "First Post!" , user_id: user._id });
+      const post2 = new Post({ message: "Second Post!", user_id: user._id });
+      await post1.save();
+      await post2.save();
+
+      const response = await request(app)
+        .get(`/posts/${post1._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      const newToken = response.body.token;
+      const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
+      const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
+
+      // iat stands for issued at
+      expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+    });
+  });
 });

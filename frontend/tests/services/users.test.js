@@ -1,6 +1,6 @@
 import createFetchMock from 'vitest-fetch-mock';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import userService from '../../src/services/users';
+import { getUsers, getUserById, updateUser, deleteUser } from '../../src/services/users'
 
 const fetchMock = createFetchMock(vi);
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -17,7 +17,7 @@ describe('userService', () => {
         );
 
         const testToken = 'testToken';
-        const returnedUsers = await userService.getUsers(testToken);
+        const returnedUsers = await getUsers(testToken);
 
         const fetchArguments = fetch.mock.lastCall;
         const url = fetchArguments[0];
@@ -35,7 +35,7 @@ describe('userService', () => {
             fetchMock.mockResponseOnce(JSON.stringify({message: 'Something went wrong'}, {status: 400}))
 
             try {
-                await userService.getUsers('testToken')
+                await getUsers('testToken')
             } catch (err) {
                 expect(err.message).toEqual('Unable to fetch users')
             }
@@ -49,7 +49,7 @@ describe('userService', () => {
             const testToken = 'testToken';
             const id = '123456748fht';
 
-            const returnedUser = await userService.getUserById(id, testToken);
+            const returnedUser = await getUserById(id, testToken);
             
             const fetchArguments = fetch.mock.lastCall
             const url = fetchArguments[0]
@@ -66,7 +66,7 @@ describe('userService', () => {
             
             
             try {
-                await userService.getUserById('testToken')
+                await getUserById('testToken')
             } catch (err) {
                 expect(err.message).toEqual('Unable to fetch user')
             }
@@ -83,9 +83,11 @@ describe('userService', () => {
 
             const id = 3;
             const updatedData = { email: 'new@email.com' }
+            console.log("updated data:", updatedData)
             const oldToken = 'oldToken';
-
-            const result = await userService.updateUser(id, updatedData, oldToken);
+            console.log("updated user:", updatedUser)
+            const result = await updateUser(id, updatedData, oldToken);
+            console.log("result:", result)
 
             const fetchArguments = fetch.mock.lastCall
             const url = fetchArguments[0]
@@ -107,7 +109,7 @@ describe('userService', () => {
             const oldToken = 'oldToken';
 
             try {
-                await userService.updateUser(id, updatedData, oldToken)
+                await updateUser(id, updatedData, oldToken)
             } catch (err) {
                 expect(err.message).toEqual('Unable to update user')
             }
@@ -124,7 +126,7 @@ describe('userService', () => {
             const id = '123456748fht'
             const testToken = "testToken"
 
-            const deletedUser = await userService.deleteUser(id, testToken)
+            const deletedUser = await deleteUser(id, testToken)
 
             const fetchArguments = fetch.mock.lastCall
             const url = fetchArguments[0]
@@ -143,7 +145,7 @@ describe('userService', () => {
             const testToken = 'testToken'
 
             try {
-                await userService.deleteUser(id, testToken)
+                await deleteUser(id, testToken)
             } catch (err) {
                 expect(err.message).toEqual('Unable to delete user')
             }
