@@ -31,6 +31,30 @@ const viewReceivedRequests = async (req, res) => {
 }
 // DONE
 
+const viewPotentialAlliances = async (req, res) => {
+    try {
+        const currentUser = req.user_id
+        const otherUsers = await User.find({ _id: { $ne: currentUser } },
+        "_id firstname lastname location profilePicture")
+        res.status(200).json({ otherUsers })
+      } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "An error occured, users were not returned"})
+      }
+}
+
+const viewForgedAlliances = async (req, res) => {
+    try{
+        const currentUser = await User.findOne({ _id: req.user_id})
+            .populate('alliances', "_id firstname lastname location profilePicture")
+        res.status(200).json({ forgedAlliances: currentUser.alliances })
+
+    } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "An error occured, alliances were not returned"})
+    }
+}
+
 const requestAlliance = async (req, res) => {
     try {
         const sender = req.user_id
@@ -94,7 +118,7 @@ const acceptAlliance = async (req, res) => {
         res.status(200).json({message: "Alliance forged."})
     } catch (error) {
         console.log(`\n${error.message}\n`)
-        res.status(500).json({message: "Aliance failed to forge!"})
+        res.status(500).json({message: "Alliance failed to forge!"})
     }
 }
 
@@ -103,6 +127,8 @@ const AllianceController = {
     withdrawAllianceRequest: withdrawAllianceRequest,
     viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
+    viewPotentialAlliances: viewPotentialAlliances,
+    viewForgedAlliances: viewForgedAlliances,
     acceptAlliance: acceptAlliance
 }
 

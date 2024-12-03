@@ -8,5 +8,7 @@ router.post("/:id/cancel", AllianceController.withdrawAllianceRequest)
 router.post("/:id/forge", AllianceController.acceptAlliance)
 router.get("/:id/receivedRequestsAdmin", AllianceController.viewReceivedRequestsAdmin)
 router.get("/viewReceivedRequests", AllianceController.viewReceivedRequests)
+router.get("/viewPotentialAlliances", AllianceController.viewPotentialAlliances)
+router.get("/viewForgedAlliances", AllianceController.viewForgedAlliances)
 
 module.exports = router;
