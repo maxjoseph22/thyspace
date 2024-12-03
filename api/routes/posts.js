@@ -7,5 +7,6 @@ router.get("/", PostsController.getAllPosts);
 router.post("/", PostsController.createPost);
 router.put("/:id", PostsController.updatePost);
 router.delete("/:id", PostsController.deletePost);
+router.get("/:id", PostsController.getUserPosts);
 
 module.exports = router;
