@@ -74,3 +74,22 @@ export const forgeAlliance = async (token, senderId) => {
     const data = await response.json();
     return data
 }
+
+export const rejectAlliance = async (token, senderId) => {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json"
+        },
+    }
+
+    const response = await fetch(`${BACKEND_URL}/alliances/${senderId}/reject`, requestOptions)
+    
+    if (response.status != 200) {
+        throw new Error("Unable to reject alliance request")
+    }
+
+    const data = await response.json();
+    return data
+}

@@ -98,12 +98,34 @@ const acceptAlliance = async (req, res) => {
     }
 }
 
+const rejectAlliance = async (req, res) => {
+    try {
+        const sender = req.params.id
+        const receiver = req.user_id
+
+        const alliance = await Alliance.findOne({sender: sender, receiver: receiver})
+    
+        if (alliance.status !== 'pending') {
+            res.status(403).json({message: "You may not reject a forged alliance! Only spilled blood can unforge this alliance."})
+        }
+
+        await Alliance.deleteOne({ _id: alliance._id })
+        res.status(200).json({message: "Alliance request successfully rejected!"})
+
+    } catch (error) {
+        console.log(`\n${error.message}\n`)
+        res.status(500).json({message: "An error occured, alliance not rejected!"})
+    }
+}
+
+
 const AllianceController = {
     requestAlliance: requestAlliance,
     withdrawAllianceRequest: withdrawAllianceRequest,
     viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
-    acceptAlliance: acceptAlliance
+    acceptAlliance: acceptAlliance,
+    rejectAlliance: rejectAlliance
 }
 
 module.exports = { AllianceController }

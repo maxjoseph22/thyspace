@@ -1,4 +1,5 @@
 import ForgeAllianceButton from "./ForgeAllianceButton"
+import RejectAllianceButton from "./RejectAllianceButton"
 
 const AllianceRequest = (props) => {
     return (
@@ -7,6 +8,7 @@ const AllianceRequest = (props) => {
             <h3>{props.user.firstname} {props.user.lastname}</h3>
             <p>{props.user.location}</p>
             <ForgeAllianceButton _id={props.user._id}/>
+            <RejectAllianceButton _id={props.user._id}/>
         </div>
     )
 }
