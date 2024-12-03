@@ -52,11 +52,24 @@ async function deletePost(req, res){
   res.status(202).json({post: postToDelete, token: newToken});
 }
 
+async function getUserPosts(req, res){
+  const {id} = req.params
+  console.log("user id:", id)
+  try{
+    const posts = await Post.find({ user_id: id}).sort({createdAt: -1});
+    const newToken = generateToken(req.user);
+    res.status(200).json({posts: posts, token: newToken, });
+  } catch (error) {
+    res.status(500).json({message: "Error fetching post", error: error.message})
+  }
+}
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   updatePost: updatePost,
-  deletePost: deletePost
+  deletePost: deletePost,
+  getUserPosts: getUserPosts,
 };
 
 module.exports = PostsController;

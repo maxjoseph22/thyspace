@@ -18,7 +18,6 @@ export async function getPosts(token) {
     const data = await response.json();
     return data;
 }
-
 export async function createPost(postInfo, image, userId, token) {
     const requestOptions = {
         method: "POST",
@@ -71,6 +70,25 @@ export async function updatePost(postId, postInfo, token){
 
     if (response.status !== 202) {
         throw new Error("Unable to update post");
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+
+export async function getPostsById(userId, token) {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await fetch(`${BACKEND_URL}/posts/${userId}`, requestOptions);
+
+    if (response.status !== 200) {
+        throw new Error("Unable to fetch posts");
     }
 
     const data = await response.json();

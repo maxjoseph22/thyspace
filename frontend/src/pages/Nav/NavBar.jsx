@@ -10,7 +10,7 @@ const NavBar = () => {
             </div>
             <div className="right-nav">
                 <Link to='/findalliances'><button className="nav-link">Find Alliances</button></Link>
-                <Link><button className="nav-link">Diplomacy</button></Link>
+                <Link to='/diplomacy'><button className="nav-link">Diplomacy</button></Link>
                 <Link ><button className="nav-link">Pic</button></Link>
                 <Link to='/myprofile'><button className="nav-link">My Account</button></Link>
                 <LogoutButton />

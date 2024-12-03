@@ -5,8 +5,11 @@ import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
+import { DiplomacyPage } from "./pages/Diplomacy/DiplomacyPage" 
 import MyProfile from './pages/MyProfile/MyProfile'
 import FindAlliance from "./pages/FindAlliances/FindAlliances";
+import Diplomacy from "./pages/Diplomacy/Diplomacy"
+import UserProfile from "./pages/UsersProfiles/UserProfile";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -33,7 +36,19 @@ const router = createBrowserRouter([
   {
     path: '/findalliances',
     element: <FindAlliance />
-  }
+  },
+  {
+    path: '/diplomacy',
+    element: <DiplomacyPage />,
+  },
+  {
+    path: '/userprofile/:userId',
+    element: <UserProfile />,
+  },
+  {
+    path: '/my-profile',
+    element: <MyProfile />,
+  },
   
 ]);
 
