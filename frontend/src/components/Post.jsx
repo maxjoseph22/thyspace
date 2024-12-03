@@ -4,6 +4,7 @@ import { useState } from "react";
 import './Post.css'
 import { FaPencilAlt, FaUndo } from "react-icons/fa";
 import { IoMdClose, IoMdSend } from "react-icons/io";
+import Like from "./Like";
 
 function Post({ post, setPosts, sendUpdate }) {
     const [update, setUpdate] = useState(false); 
@@ -124,7 +125,7 @@ function Post({ post, setPosts, sendUpdate }) {
                 </div>
             </div>
             <div className="post-int-btns">
-                <button>Like</button>
+                <Like  post={post} setPosts={setPosts}/>
                 <button>Comment</button>
             </div>
             <div className="post-cmts"></div>
