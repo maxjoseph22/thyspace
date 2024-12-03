@@ -148,7 +148,7 @@ const AllianceController = {
     withdrawAllianceRequest: withdrawAllianceRequest,
     viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
-    rejectAlliance: rejectAlliance
+    rejectAlliance: rejectAlliance,
     viewPotentialAlliances: viewPotentialAlliances,
     viewForgedAlliances: viewForgedAlliances,
     acceptAlliance: acceptAlliance
