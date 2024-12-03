@@ -56,7 +56,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
         }
 
         const result = await response.json();
-        return result.user;
+        return result;
     }
 
     export async function deleteUser(id, token) {
