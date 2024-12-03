@@ -28,6 +28,4 @@ const PostContainer = ({ posts, setPosts }) => {
     )
 }
 
-
-
 export default PostContainer
