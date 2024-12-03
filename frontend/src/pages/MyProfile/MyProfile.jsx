@@ -18,7 +18,6 @@ const MyProfile = () => {
         fetchPosts();
     }, [])
 
-
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem("token")
