@@ -3,18 +3,27 @@ import { useState } from "react";
 import { toggleLikes } from "../services/likes";
 import { getPayloadFromToken } from "../services/helperFunctions";
 
+const isLikedByUser = (likes, userId) => {
+    console.log(likes, userId)
+    return likes.likes.some(like => like._id === userId)
+}
+
 const Like = ({ setPosts, post }) => {
-    const [ isLiked, setIsLiked ] = useState(false)
+    const [ isLiked, setIsLiked ] = useState(() => {
+        const token = localStorage.getItem('token')
+        const userId = getPayloadFromToken(token).user_id
+        return isLikedByUser(post, userId)
+    })
 
     const handleLike = async () => {
         const token = localStorage.getItem('token')
         const userId = await getPayloadFromToken(token).user_id
         try {
             const updatedData = await toggleLikes( post._id, userId, 'Post', token)
-
-            const isLikedByUser = updatedData.likes.some(like => like.userId._id === userId)
+            console.log(updatedData)
+            const alreadyLiked = isLikedByUser(updatedData, userId)
             
-            setIsLiked(isLikedByUser)
+            setIsLiked(alreadyLiked)
 
             setPosts(prevPosts => prevPosts.map(p => {
                 return p._id === post._id ? { ...p, likes: updatedData.likes} : p
@@ -22,7 +31,6 @@ const Like = ({ setPosts, post }) => {
         } catch (error) {
             console.error('Error toggling like:', error)
         }
-        
     }
 
     return (
