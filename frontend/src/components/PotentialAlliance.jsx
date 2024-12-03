@@ -1,4 +1,5 @@
 import { convertDate } from "../services/helperFunctions"
+import { Link } from "react-router-dom";
 import AllianceRequestButton from "./AllianceRequestButton"
 
 const PotentialAlliance = ({ user }) => {

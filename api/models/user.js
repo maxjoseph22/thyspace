@@ -11,7 +11,7 @@ const UserSchema = new Schema({
   lastname: { type: String, required: true },
   profilePicture: {type: String, default: ""},
   alliances: [{ type: Types.ObjectId, ref: "User" }],
-  posts: [{ type: Types.ObjectId, ref: "Post" }],
+  // posts: [{ type: Types.ObjectId, ref: "Post" }],
 }, {
   timestamps: true
 });

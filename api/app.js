@@ -7,7 +7,6 @@ const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const allianceRouter = require("./routes/alliances")
-const commentsRouter = require("./routes/comments");
 
 const app = express();
 
@@ -24,7 +23,6 @@ app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/alliances", tokenChecker, allianceRouter);
-app.use("/comments", tokenChecker, commentsRouter);
 
 // 404 Handler
 app.use((_req, res) => {
