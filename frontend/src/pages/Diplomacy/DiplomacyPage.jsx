@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { viewReceivedRequests } from "../../services/alliances"
 import { getPayloadFromToken } from "../../services/helperFunctions";
-import AllianceRequestContainer from '../../components/AllianceRequestContainer'
+import AllianceRequestContainer from '../../components/AllianceRequestsViewContainer'
 import NavBar from "../Nav/NavBar";
 
 export function DiplomacyPage() {
