@@ -9,5 +9,7 @@ router.post("/:id/forge", AllianceController.acceptAlliance)
 router.post("/:id/reject", AllianceController.rejectAlliance)
 router.get("/:id/receivedRequestsAdmin", AllianceController.viewReceivedRequestsAdmin)
 router.get("/viewReceivedRequests", AllianceController.viewReceivedRequests)
+router.get("/viewPotentialAlliances", AllianceController.viewPotentialAlliances)
+router.get("/viewForgedAlliances", AllianceController.viewForgedAlliances)
 
 module.exports = router;

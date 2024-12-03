@@ -33,16 +33,17 @@ describe('/alliances', () => {
     beforeAll(async () => {
         await Alliance.deleteMany({});
         await User.deleteMany({});
+    })
+
+    beforeEach(async () => {
+        await Alliance.deleteMany({});
+        await User.deleteMany({});
         userOne = await new User(fakeUserOne).save();
         userTwo = await new User(fakeUserTwo).save();
         userThree = await new User(fakeUserThree).save();
         tokenOne = createToken(userOne._id);
         tokenTwo = createToken(userTwo._id);
         tokenThree = createToken(userThree._id);
-    })
-
-    beforeEach(async () => {
-        await Alliance.deleteMany({});
     })
 
     describe("POST, when a valid token is present", () => {
@@ -166,12 +167,55 @@ describe('/alliances', () => {
             }
         ])
         })
+        it("allows a user to view basic data of all people available for alliances", async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+
+            const findUsersResponse = await request(app)
+                .get('/alliances/viewPotentialAlliances')
+                .set("Authorization", `Bearer ${tokenTwo}`)
+            
+            expect(findUsersResponse.status).toEqual(200)
+            expect(findUsersResponse.body.otherUsers).toEqual([{
+                _id: userOne._id.toString(),
+                firstname: "John",
+                lastname: "Doe",
+                location: "New York, USA",
+                profilePicture: "https://example.com/images/user_one.jpg"
+            }, {
+                _id: userThree._id.toString(),
+                firstname: "Max",
+                lastname: "Power",
+                location: "Los Angeles, USA",
+                profilePicture: "https://example.com/images/user_one.jpg"
+            }
+            ])
+        })
+            it("allows a user to view basic data of people they have forged alliances with", async () => {
+                const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+                const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+                const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+                
+                const Response = await request(app)
+                    .post(`/alliances/${userOne._id}/forge`)
+                    .set("Authorization", `Bearer ${tokenTwo}`)
+                
+    
+                const findForgedResponse = await request(app)
+                    .get('/alliances/viewForgedAlliances')
+                    .set("Authorization", `Bearer ${tokenTwo}`)
+                
+                expect(findForgedResponse.status).toEqual(200)
+                expect(findForgedResponse.body.forgedAlliances).toEqual([{
+                    _id: userOne._id.toString(),
+                    firstname: "John",
+                    lastname: "Doe",
+                    location: "New York, USA",
+                    profilePicture: "https://example.com/images/user_one.jpg"
+                }
+            ])
+        })
 
     })
-
-    // describe("GET, when a token is missing or invalid", () => {
-
-
-    // })
 })
-

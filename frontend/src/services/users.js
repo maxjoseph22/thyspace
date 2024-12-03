@@ -20,17 +20,15 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     }
 
 
-    export async function getUserById(id, token) {
-        console.log(id, "user id")
-
+    export async function getUserById(id, token = null) {
         const requestOptions = {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`,
+                ...(token && { Authorization: `Bearer ${token}` }),
+                "Content-Type": "application/json",
             },
-        };
+        };      
         const response = await fetch(`${BACKEND_URL}/users/${id}`, requestOptions)
-        console.log(response)
         
         if (response.status !== 200) {
             throw new Error("Unable to fetch user")
