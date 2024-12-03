@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const { generateToken } = require("../lib/token");
+const Like = require("../models/like");
 
 async function getAllPosts(req, res) {
   // const posts = await Post.find().sort({createdAt: - 1}).populate('user_id', 'profilePicture username')
@@ -26,11 +27,6 @@ async function createPost(req, res) {
   await post.save();
   const newToken = generateToken(req.user_id);
   await post.populate('user_id', 'profilePicture username')
-  .populate({
-    path: 'likes',
-    select: 'username userId',
-    model: 'User'
-  })
 
   res.status(201).json({ post: post, token: newToken });
 }
@@ -57,13 +53,12 @@ async function updatePost(req, res){
 }
 
 async function deletePost(req, res){
-  const {id} = req.params;  
+  const { id }  = req.params;
   const post = await Post.findById(id);
-  // console.log(post)
   post.comments.forEach(async (comment) => {
     await Comment.findByIdAndDelete(comment)
   })
-
+  await Like.deleteMany({ entityId: id})
   const postToDelete = await Post.findByIdAndRemove(id);
   const newToken = generateToken(req.user_id);
   res.status(202).json({post: postToDelete, token: newToken});

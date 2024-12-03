@@ -4,7 +4,6 @@ const Comment =  require('../models/comment')
 
 async function toggleLike(req, res) {
     const { entityId, entityType, userId } = req.body;
-    console.log(entityId, entityType, userId)
     if(!['Post', 'Comment'].includes(entityType)){
         return res.tatus(400).json({ message: 'Invalid entity type'})
     }
@@ -17,9 +16,7 @@ async function toggleLike(req, res) {
         }
 
         const alreadyLiked = await Like.findOne({ userId, entityId, entityType });
-        console.log(alreadyLiked, 'already liked')
         if (alreadyLiked) {
-            console.log('clearing like')
             await alreadyLiked.deleteOne();
 
             await model.findByIdAndUpdate(entityId, {
@@ -36,7 +33,6 @@ async function toggleLike(req, res) {
                 likes: updatedLikes,
             })
         } else {
-            console.log('making a new like')
             const newLike = new Like({
                 userId,
                 entityId,

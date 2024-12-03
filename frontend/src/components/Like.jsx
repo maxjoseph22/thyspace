@@ -4,7 +4,6 @@ import { toggleLikes } from "../services/likes";
 import { getPayloadFromToken } from "../services/helperFunctions";
 
 const isLikedByUser = (likes, userId) => {
-    console.log(likes)
     return likes.some(like => {
         if (like.userId) {
             return like.userId._id === userId
@@ -26,7 +25,6 @@ const Like = ({ setPosts, post }) => {
         const userId = await getPayloadFromToken(token).user_id
         try {
             const updatedData = await toggleLikes( post._id, userId, 'Post', token)
-            console.log(updatedData.likes, 'updatedData')
             const alreadyLiked = isLikedByUser(updatedData.likes, userId)
             
             setIsLiked(alreadyLiked)
