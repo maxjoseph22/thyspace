@@ -5,6 +5,7 @@ import './Post.css'
 import { FaPencilAlt, FaUndo } from "react-icons/fa";
 import { IoMdClose, IoMdSend } from "react-icons/io";
 import Like from "./Like";
+import { Link } from "react-router-dom";
 
 function Post({ post, setPosts, sendUpdate }) {
     const [update, setUpdate] = useState(false); 
@@ -56,7 +57,9 @@ function Post({ post, setPosts, sendUpdate }) {
                         <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
                     </div>
                     <div className="username-date">
+                        <Link to={`/userprofile/${post.user_id._id}`}>
                         <p className="post-username">{post.user_id.username}</p>
+                        </Link>
                         <p className="post-date">{convertDate(post)}</p>
                     </div>
                 </div>
