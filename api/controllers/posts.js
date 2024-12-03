@@ -69,6 +69,11 @@ async function getUserPosts(req, res){
   console.log("user id:", id)
   try{
     const posts = await Post.find({ user_id: id}).sort({createdAt: -1}).populate('user_id', 'profilePicture username')
+    .populate({
+      path: 'likes',
+      select: 'username userId',
+      model: 'User'
+    })
     const newToken = generateToken(req.user);
     res.status(200).json({posts: posts, token: newToken, });
   } catch (error) {
