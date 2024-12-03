@@ -74,3 +74,37 @@ export const forgeAlliance = async (token, senderId) => {
     const data = await response.json();
     return data
 }
+
+export const viewForgedAlliances = async (token) => {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+    const response = await fetch(`${BACKEND_URL}/alliances/viewForgedAlliances`, requestOptions) 
+
+    if (response.status != 200) {
+        throw new Error("Unable to view forged alliances")
+    }
+
+    const data = await response.json();
+    return data
+}
+
+export const viewPotentialAlliances = async (token) => {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+    const response = await fetch(`${BACKEND_URL}/alliances/viewPotentialAlliances`, requestOptions) 
+
+    if (response.status != 200) {
+        throw new Error("Unable to view potential alliances")
+    }
+
+    const data = await response.json();
+    return data
+}
