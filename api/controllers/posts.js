@@ -11,6 +11,12 @@ async function getAllPosts(req, res) {
       select: "profilePicture username", // Select only profilePicture and username fields for users
     }
   })
+  .populate({
+    path: 'likes',
+    select: 'username',
+    model: 'User'
+  })
+
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: posts, token: token });
 }
@@ -19,7 +25,13 @@ async function createPost(req, res) {
   const post = new Post(req.body);
   await post.save();
   const newToken = generateToken(req.user_id);
-  await post.populate('user_id', 'profilePicture username').populate('likes', 'username userId');
+  await post.populate('user_id', 'profilePicture username')
+  .populate({
+    path: 'likes',
+    select: 'username userId',
+    model: 'User'
+  })
+
   res.status(201).json({ post: post, token: newToken });
 }
 
@@ -33,7 +45,12 @@ async function updatePost(req, res){
         path: "userId", // Populate users in each comment
         select: "profilePicture username", // Select only profilePicture and username fields for users
     }
-  });
+  })
+  .populate({
+    path: 'likes',
+    select: 'username userId',
+    model: 'User'
+  })
 
   const newToken = generateToken(req.user_id);
   res.status(202).json({post: post, token: newToken});

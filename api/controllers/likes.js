@@ -27,7 +27,9 @@ async function toggleLike(req, res) {
             });
 
             const updatedLikes = await Like.find({ entityId, entityType })
-            .populate('userId', 'username')
+            .populate('userId', 'username _id')
+
+            // Flatten 
 
             return res.status(200).json({
                 message: 'Unliked successfully!',
@@ -48,7 +50,7 @@ async function toggleLike(req, res) {
             })
 
             const updatedLikes = await Like.find({ entityId, entityType })
-            .populate('userId', 'username');
+            .populate('userId', 'username _id');
 
             return res.status(201).json({
                 message: 'Liked successfully!',
