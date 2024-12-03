@@ -1,5 +1,6 @@
 import { convertDate } from "../services/helperFunctions"
 import { Link } from "react-router-dom";
+import AllianceRequestButton from "./AllianceRequestButton"
 
 const PotentialAlliance = ({ user }) => {
     return (
@@ -10,6 +11,7 @@ const PotentialAlliance = ({ user }) => {
             </Link>
             <p>Name: {`${user.firstname} ${user.lastname}`}</p>
             <p>Joined: {convertDate(user)}</p>
+            <AllianceRequestButton _id={user._id}/>
         </div>
     )
 }

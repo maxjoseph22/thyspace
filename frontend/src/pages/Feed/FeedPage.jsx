@@ -47,6 +47,11 @@ export function FeedPage() {
 
   return (
     <>
+    <img 
+      src="https://see.fontimg.com/api/rf5/x3J88/ZWE0MjI4NDJjYTkzNGUwN2E4NTA5ZTJhMDY0ZmNkNmYudHRm/VGh5U3BhY2U/magnific-chaos-personal-use-regular.png?r=fs&h=130&w=2000&fg=000000&bg=FFFFFF&tb=1&s=65" 
+      alt="Old English fonts"
+      style={{ position: 'absolute', top: '0', left: '0', zIndex: '1000' }} 
+      />
     <NavBar />
       <h2>Feed</h2>
       <div className="feed" role="feed">
