@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { signup } from "../../services/authentication";
 import './SignupPage.css'
 
@@ -20,6 +20,8 @@ export function SignupPage() {
     firstname: '',
     lastname: ''
   })
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate();
 
@@ -56,15 +58,31 @@ export function SignupPage() {
           className="user-field"
         />
         <label htmlFor="password">Password</label>
-        <input
-          // placeholder="Password"
-          id="password"
-          type="password"
-          name='password'
-          value={userInfo.password}
-          onChange={handleInputChanges}
-          className="user-field"
-        />
+        <div className="login-password">
+          <input
+            // placeholder="Password"
+            id="password"
+            type={showPassword ? 'text': 'password'}
+            name='password'
+            value={userInfo.password}
+            onChange={handleInputChanges}
+            className="user-field"
+          />
+          {showPassword ?
+            <IoIosEyeOff
+            className="show-password" 
+            type='button'
+            onClick={(e) => {
+              e.preventDefault()
+              setShowPassword(!showPassword)}}/>
+          :
+            <IoIosEye 
+            className="show-password"
+            type='button'
+            onClick={(e) => {
+              e.preventDefault()
+              setShowPassword(!showPassword)}}/>
+        }</div>
         <label htmlFor="username">Username</label>
         <input
           // placeholder="Username"
