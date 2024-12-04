@@ -1,7 +1,7 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, expect, vi } from "vitest";
 
-import { getPosts, createPost, deletePost, updatePost } from "../../src/services/posts";
+import { getPosts, createPost, deletePost, updatePost, getPostsById } from "../../src/services/posts";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -47,10 +47,13 @@ describe("posts service", () => {
       });
       const fakePostContent = 'Some Content'
       const fakeUserId = 'i1u45kjnqkj1n34ijn'
+      const testToken = "testToken"
 
-      const returnedPost = await createPost(fakePostContent, fakeUserId, "testToken");
+      const returnedPost = await createPost(fakePostContent, fakeUserId, testToken);
+      console.log("returned post:", returnedPost)
 
       const fetchArguments = fetch.mock.lastCall;
+      console.log("fetched arguments:", fetchArguments)
       const url = fetchArguments[0];
       const options = fetchArguments[1];
 
@@ -148,6 +151,37 @@ describe("posts service", () => {
         await updatePost(fakePostId, fakePostContent,"testToken");
       } catch (err) {
         expect(err.message).toEqual("Unable to update post");
+      }
+    });
+  });
+
+  describe("getPostsById", () => {
+    test("includes a token with its request", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ posts: [], token: "newToken" }), {
+        status: 200,
+      });
+
+      const fakeUserId = 'i1u45kjnqkj1n34ijn'
+      await getPostsById(fakeUserId, "testToken");
+
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+
+      expect(url).toEqual(`${BACKEND_URL}/posts/${fakeUserId}`);
+      expect(options.method).toEqual("GET");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+    });
+    test("rejects with an error if the status is not 200", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Something went wrong" }),
+        { status: 400 }
+      );
+      const fakeUserId = 'i1u45kjnqkj1n34ijn'
+      try {
+        await getPostsById(fakeUserId, "testToken");
+      } catch (err) {
+        expect(err.message).toEqual("Unable to fetch posts");
       }
     });
   });
