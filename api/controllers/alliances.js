@@ -34,13 +34,62 @@ const viewReceivedRequests = async (req, res) => {
 const viewPotentialAlliances = async (req, res) => {
     try {
         const currentUser = req.user_id
-        const otherUsers = await User.find({ _id: { $ne: currentUser } },
-        "_id firstname lastname location profilePicture")
-        res.status(200).json({ otherUsers })
-      } catch (error) {
-        console.log(`\n${error.message}\n`)
-        res.status(500).json({message: "An error occured, users were not returned"})
-      }
+        const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
+
+        const usersWithAlliancesData = await Promise.all(otherUsers.map(async (user) => {
+            alliance = await Alliance.findOne({
+                $or: [
+                    { sender: currentUser, receiver: user._id },
+                    { receiver: currentUser, sender: user._id },
+                ]
+            })
+            const plainUser = user.toObject()
+            if (alliance) {
+                plainUser["status"] = alliance.status
+            } 
+            else {
+                plainUser["status"] = "none"
+            }
+            return plainUser
+            }
+        ))
+        res.status(200).json({ usersWithAlliancesData })
+        } catch (error) {
+            console.log(`\n${error.message}\n`)
+            res.status(500).json({message: "An error occured, users were not returned"})
+    }
+    
+    
+    
+    
+    
+    
+    
+    // try {
+    //     const currentUser = req.user_id
+    //     const alliances = await Alliance.find({
+    //         $or: [
+    //             { sender: req.user_id },
+    //             { receiver: req.user_id },
+    //         ]
+    //     })
+    //     if (alliances) {
+    //         const otherUsers = await User.find({ _id: { $ne: currentUser } },
+    //             "_id firstname lastname location profilePicture")
+    //         for (user of otherUsers) {
+    //             if (user._id in alliances) {
+    //                 user.alliances.status = allian
+    //             }
+    //         }
+
+    //     }
+    //     const otherUsers = await User.find({ _id: { $ne: currentUser } },
+    //     "_id firstname lastname location profilePicture")
+    //     res.status(200).json({ otherUsers })
+    //   } catch (error) {
+    //     console.log(`\n${error.message}\n`)
+    //     res.status(500).json({message: "An error occured, users were not returned"})
+    //   }
 }
 
 const viewForgedAlliances = async (req, res) => {
@@ -83,7 +132,6 @@ const requestAlliance = async (req, res) => {
         
     }
 } 
-
 
 const withdrawAllianceRequest = async (req, res) => {
     try {
@@ -158,5 +206,5 @@ module.exports = { AllianceController }
 
 
 // // TODO:
-// - how can we make it so that only one alliance can be made between two users?
+// - how can we make it so that only one alliance can be made between two users? DONE
 // - Refactor acceptAlliance to use findByIdAndUpdate 
