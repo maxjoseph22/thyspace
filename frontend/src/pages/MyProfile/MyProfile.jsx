@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {getUserById, updateUser, deleteUser} from "../../services/users";
 import UserCard from "../../components/UserCard";
 import { getPayloadFromToken } from "../../services/helperFunctions";
-import EditProfile from "../../components/MyProfile/editProfile";
+import EditProfile from "../../components/MyProfile/EditProfile";
 import NavBar from "../Nav/NavBar";
 import { getPostsById } from "../../services/posts";
 import PostContainer from "../../components/PostContainer";
@@ -71,8 +71,7 @@ const MyProfile = () => {
         try {
             const token = localStorage.getItem("token")
             const updatedUser = await updateUser(user._id, updatedProfile, token)
-            console.log("Updated user object:", updatedUser)
-            setUser(updatedUser);
+            setUser({...updatedUser.user});
             setEditing(false);
             setError(false)
             alert("Your profile has been updated")
@@ -85,11 +84,8 @@ const MyProfile = () => {
         try{
             const token = localStorage.getItem("token")
             const userId = await getPayloadFromToken(token).user_id
-            console.log(token)
-            console.log(userId)
             if (token && userId) {
                 const data = await getPostsById(userId, token)
-                console.log("Fetched posts", data.posts)
                 setPosts(data.posts)
                 setError(null) 
             } else {
