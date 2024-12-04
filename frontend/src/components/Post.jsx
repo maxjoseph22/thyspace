@@ -44,7 +44,7 @@ function Post({ post, setPosts, sendUpdate }) {
 
 
     const checkIfEdited = () => {
-        return post.createdAt === post.updatedAt
+        return !post.isEdited
     }
 
     // renders the post, with conditional rendering of Update and Delete buttons

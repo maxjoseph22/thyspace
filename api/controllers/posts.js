@@ -33,7 +33,7 @@ async function createPost(req, res) {
 
 async function updatePost(req, res){ 
   const {id} = req.params;
-  const post = await Post.findByIdAndUpdate(id, {$set: req.body}, {new: true})
+  const post = await Post.findByIdAndUpdate(id, {$set: {...req.body, isEdited: true}}, {new: true})
     .populate('user_id', 'profilePicture username')
     .populate({
       path: "comments", // populate post with all comments 
