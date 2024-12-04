@@ -63,11 +63,18 @@ function Comment({ comment, setPosts, postId }) {
         })
     }
 
+    const checkIfEdited = () => {
+        return !comment.isEdited
+    }
+
 
     return (
         <>
         {comment.userId.profilePicture && <img src={comment.userId.profilePicture} />}
         <p>{comment.userId.username}</p>
+        <div className="main-content-header">
+            <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
+        </div>
         {update? 
         <input value={updateInput}
         onChange={handleCommentUpdate}
