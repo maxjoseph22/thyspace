@@ -5,6 +5,7 @@ import './Post.css'
 import { FaPencilAlt, FaUndo } from "react-icons/fa";
 import { IoMdClose, IoMdSend } from "react-icons/io";
 import Like from "./Like";
+import CommentsContainer from "./Comments/CommentsContainer";
 import { Link } from "react-router-dom";
 
 function Post({ post, setPosts, sendUpdate }) {
@@ -40,8 +41,6 @@ function Post({ post, setPosts, sendUpdate }) {
     const handleUpdateInput = (e) => {
         setUpdateInput(e.target.value);
     }
-
-
 
     const checkIfEdited = () => {
         return !post.isEdited
@@ -131,7 +130,9 @@ function Post({ post, setPosts, sendUpdate }) {
                 <Like  post={post} setPosts={setPosts}/>
                 <button>Comment</button>
             </div>
-            <div className="post-cmts"></div>
+            <div className="post-cmts">
+                <CommentsContainer comments={post.comments} setPosts={setPosts} postId={post._id}/>
+            </div>
 
         </div>
         </div>
