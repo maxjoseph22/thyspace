@@ -15,12 +15,17 @@ const CommentForm = ({ postId, setPosts }) => {
         const token = localStorage.getItem("token");
         const userId = getPayloadFromToken(token).user_id
         const commentData = await createComment(comment, postId, userId, token)
-        
-        setPosts(prevPost => {
-            const newComments = [commentData, ...prevPost.comments]
-            prevPost.comments = [...newComments]
-            return {...prevPost}
+        setPosts(prevPosts => {
+            return prevPosts.map(post => {
+                if (post._id === postId){
+                    return {
+                        ...post,
+                        comments: [commentData.comment, ...post.comments]
+                    }
+                } else return post
+            })
         })
+        setComment('')
     }
 
     return (

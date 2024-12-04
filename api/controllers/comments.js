@@ -1,6 +1,6 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
-const { ObjectId } = require("mongoose")
+const Like = require('../models/like')
 const { generateToken } = require("../lib/token");
 
 async function createComment(req, res){
@@ -10,21 +10,26 @@ async function createComment(req, res){
         userId: userId,
         content: content,
     });
-    await comment.save();
+    await comment.save()
     
     // add comment Id reference into specific post document 
     const post = await Post.findById(postId)
     post.comments.push(comment._id)
     await post.save()
-    
+    const populatedComment = await Comment.findById(comment._id).populate("userId", 'username profilePicture');
     const newToken = generateToken(req.userId);
-    res.status(201).json({comment: comment, token: newToken});
+    res.status(201).json({comment: populatedComment, token: newToken});
 }
 
 async function editComment(req, res){
     const {commentId} = req.params;
-    const comment = await Comment.findByIdAndUpdate(commentId, {$set: req.body}, {new: true});
-    // console.log(req.body);
+    const comment = await Comment.findByIdAndUpdate(commentId, { $set: {...req.body, isEdited: true} }, {new: true}).populate("userId", 'username profilePicture')
+    .populate({
+        path: 'likes',
+        select: 'username userId',
+        model: 'User'
+    });
+    
     const newToken = generateToken(req.userId);
     res.status(202).json({comment: comment, token: newToken});
 }
@@ -33,7 +38,7 @@ async function deleteComment(req, res){
 
     // get both ids from parama (they are strings)
     const { postId, commentId } = req.params;
-
+    await Like.deleteMany({ entityId: commentId})
     // find and remove comment and store removed comment in commentToRemove variable
     const commentToRemove = await Comment.findByIdAndRemove(commentId);
         if (!commentToRemove) {
@@ -57,7 +62,7 @@ async function deleteComment(req, res){
     await postToUpdate.save()
 
     const newToken = generateToken(req.userId);
-    res.status(200).json({comment: commentToRemove, token: newToken});
+    res.status(202).json({comment: commentToRemove, token: newToken});
 }
 
 const CommentsController = {
