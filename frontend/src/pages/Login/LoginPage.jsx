@@ -19,7 +19,7 @@ export function LoginPage() {
     } catch (err) {
       console.error(err);
       // Display an alert with the error message
-      alert("Login failed: Incorrect email or password. Please try again.");
+      alert("❌ Login failed ❌ Incorrect email or password. Please try again.");
     }
   }
 

@@ -29,7 +29,7 @@ export function DiplomacyPage() {
     return (
         <>
         <NavBar />
-            <h1>New allies flock to our flanks!</h1>
+            <h1>New allies flock to our ranks!</h1>
             <img src="https://c.tenor.com/43cc01Cj1JkAAAAd/tenor.gif" alt="Fun GIF"></img>
             <h2>friend or foe?</h2>
                 <AllianceRequestContainer users={receivedRequests}/>
