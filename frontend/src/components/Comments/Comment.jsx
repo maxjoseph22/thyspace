@@ -1,6 +1,7 @@
 import { deleteComment, updateComment } from "../../services/comments";
 import { getPayloadFromToken } from "../../services/helperFunctions";
-import { useState } from "react";
+import { useState } from "react";   
+import Like from "../Like";
 
 function Comment({ comment, setPosts, postId }) {
     const [ update, setUpdate ] = useState(false)
@@ -34,7 +35,6 @@ function Comment({ comment, setPosts, postId }) {
     const submitCommentChanges = async () => {
         const token = localStorage.getItem('token')
         const newComment = await updateComment(postId, comment._id, updateInput, token)
-        console.log(newComment)
         setPosts(prevPosts => {
             return prevPosts.map(post => {
                 if (post._id === postId){
@@ -50,6 +50,20 @@ function Comment({ comment, setPosts, postId }) {
         setUpdate(false)
     }
 
+    const handleLikeUpdate = (updatedData) => {
+        setPosts(prevPosts => {
+            return prevPosts.map(post => {
+                if (post._id === postId) {
+                    const updatedComments =  post.comments.map(c => {
+                        return c._id === comment._id ? { ...c, likes: updatedData.likes} : c
+                    })
+                    return { ...post, comments: updatedComments}
+                } else return post 
+            })
+        })
+    }
+
+
     return (
         <>
         {comment.userId.profilePicture && <img src={comment.userId.profilePicture} />}
@@ -60,6 +74,9 @@ function Comment({ comment, setPosts, postId }) {
         />
         :
         <p>{comment.content}</p>}
+
+        <Like  entity={comment} setPosts={setPosts} handleLikeUpdate={handleLikeUpdate} entityType='Comment' />
+
         {createdByCurrentUser() && 
         ( update ?
             <div>

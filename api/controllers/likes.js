@@ -5,7 +5,7 @@ const Comment =  require('../models/comment')
 async function toggleLike(req, res) {
     const { entityId, entityType, userId } = req.body;
     if(!['Post', 'Comment'].includes(entityType)){
-        return res.tatus(400).json({ message: 'Invalid entity type'})
+        return res.status(400).json({ message: 'Invalid entity type'})
     }
 
     const model = entityType === 'Post' ? Post: Comment
@@ -25,7 +25,7 @@ async function toggleLike(req, res) {
 
             const updatedLikes = await Like.find({ entityId, entityType })
             .populate('userId', 'username _id')
-
+            await  Like.deleteOne({ entityId, entityType })
             // Flatten 
 
             return res.status(200).json({

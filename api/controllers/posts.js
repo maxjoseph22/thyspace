@@ -8,10 +8,16 @@ async function getAllPosts(req, res) {
   const posts = await Post.find().sort({createdAt: - 1}).populate('user_id', 'profilePicture username').populate({
     path: "comments", // populate post with all comments 
     options: { sort: { createdAt: -1 } },
-    populate: {
+    populate: [{
       path: "userId", // Populate users in each comment
       select: "profilePicture username", // Select only profilePicture and username fields for users
+    },
+    {
+      path: 'likes', // Populate likes within comments
+      select: 'username userId',
+      model: 'User'
     }
+  ]
   })
   .populate({
     path: 'likes',
@@ -39,10 +45,16 @@ async function updatePost(req, res){
     .populate({
       path: "comments", // populate post with all comments 
       options: { sort: { createdAt: -1 } },
-      populate: {
+      populate: [{
         path: "userId", // Populate users in each comment
         select: "profilePicture username", // Select only profilePicture and username fields for users
+    },
+    {
+      path: 'likes', // Populate likes within comments
+      select: 'username userId',
+      model: 'User'
     }
+  ]
   })
   .populate({
     path: 'likes',
@@ -68,7 +80,6 @@ async function deletePost(req, res){
 
 async function getUserPosts(req, res){
   const {id} = req.params
-  console.log("user id:", id)
   try{
     const posts = await Post.find({ user_id: id}).sort({createdAt: -1}).populate('user_id', 'profilePicture username')
     .populate({
