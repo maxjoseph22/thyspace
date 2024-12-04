@@ -15,9 +15,7 @@ const NavBar = () => {
     const grabUserPic = async () => {
         const token = localStorage.getItem("token")
         const currentUserId = await getPayloadFromToken(token).user_id;
-        console.log(token, currentUserId)
         const data = await getUserById(currentUserId, token)
-        console.log(data.user)
         setUser({...data.user})
     }
     return (

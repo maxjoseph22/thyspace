@@ -1,15 +1,12 @@
-import { convertDate } from "../services/helperFunctions"
-import { Link } from "react-router-dom";
 import AllianceRequestButton from "./AllianceRequestButton"
 
 const PotentialAlliance = ({ user }) => {
     console.log(user)
     return (
         <div className="">
-            <h2>{user.profilePicture ? user.profilePicture: 'Tom'}</h2>
+            {user.profilePicture && <img src={user.profilePicture}/>}
             <p>{`${user.firstname} ${user.lastname}`}</p>
             <p>{user.location}</p>
-            {/* <p>Joined: {convertDate(user)}</p> */}
             <AllianceRequestButton _id={user._id} status={user.status}/>
         </div>
     )

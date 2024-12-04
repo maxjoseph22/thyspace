@@ -10,21 +10,20 @@ async function createComment(req, res){
         userId: userId,
         content: content,
     });
-    await comment.save();
+    await comment.save()
     
     // add comment Id reference into specific post document 
     const post = await Post.findById(postId)
     post.comments.push(comment._id)
     await post.save()
-    
+    const populatedComment = await Comment.findById(comment._id).populate("userId", 'username profilePicture');
     const newToken = generateToken(req.userId);
-    res.status(201).json({comment: comment, token: newToken});
+    res.status(201).json({comment: populatedComment, token: newToken});
 }
 
 async function editComment(req, res){
     const {commentId} = req.params;
-    const comment = await Comment.findByIdAndUpdate(commentId, {$set: req.body}, {new: true});
-    // console.log(req.body);
+    const comment = await Comment.findByIdAndUpdate(commentId, {$set: req.body}, {new: true}).populate("userId", 'username profilePicture');
     const newToken = generateToken(req.userId);
     res.status(202).json({comment: comment, token: newToken});
 }
@@ -57,7 +56,7 @@ async function deleteComment(req, res){
     await postToUpdate.save()
 
     const newToken = generateToken(req.userId);
-    res.status(200).json({comment: commentToRemove, token: newToken});
+    res.status(202).json({comment: commentToRemove, token: newToken});
 }
 
 const CommentsController = {
