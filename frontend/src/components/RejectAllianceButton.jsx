@@ -12,7 +12,7 @@ const RejectAllianceButton = (props) => {
             }
             const response = await rejectAlliance(token, _id)
             console.log("Alliance Rejected", response);
-            alert("Alliance request rejected!");
+            alert("❌ Alliance rejected! 🪓 To the battlefield!");
             window.location.reload();
         } catch (error) {
             console.error("Error forging alliance:", error)
