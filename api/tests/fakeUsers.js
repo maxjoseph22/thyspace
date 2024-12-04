@@ -37,6 +37,19 @@ const fakeUserThree = {
     posts: []
 }
 
+const fakeUserFour = {
+  createdAt: new Date("2024-04-10T09:45:30Z"),
+  username: "sarah_connor",
+  email: "sarah.connor@example.com",
+  password: "Term1nator!",
+  location: "San Francisco, USA",
+  firstname: "Sarah",
+  lastname: "Connor",
+  profilePicture: "",
+  friends: [],
+  posts: []
+}
+
 const fakeUsers = [
     {
       createdAt: new Date("2024-01-15T12:34:56Z"),
@@ -160,4 +173,4 @@ const fakeUsers = [
     }
   ];
 
-  module.exports = {fakeUserOne, fakeUserTwo, fakeUserThree, fakeUsers}
+  module.exports = {fakeUserOne, fakeUserTwo, fakeUserThree, fakeUserFour, fakeUsers}

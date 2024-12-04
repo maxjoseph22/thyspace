@@ -4,7 +4,7 @@ const JWT = require("jsonwebtoken");
 const app = require("../../app");
 const User = require("../../models/user");
 const Alliance = require("../../models/alliance")
-const { fakeUserOne, fakeUserTwo, fakeUserThree } = require("../fakeUsers")
+const { fakeUserOne, fakeUserTwo, fakeUserThree, fakeUserFour } = require("../fakeUsers")
 const { generateToken, decodeToken } = require("../../lib/token")
 
 require("../mongodb_helper")
@@ -177,45 +177,79 @@ describe('/alliances', () => {
                 .set("Authorization", `Bearer ${tokenTwo}`)
             
             expect(findUsersResponse.status).toEqual(200)
-            expect(findUsersResponse.body.otherUsers).toEqual([{
+            expect(findUsersResponse.body.usersWithAlliancesData).toEqual([{
+                    _id: userOne._id.toString(),
+                    firstname: "John",
+                    lastname: "Doe",
+                    location: "New York, USA",
+                    profilePicture: "https://example.com/images/user_one.jpg",
+                    status: "pending"
+                }, {
+                    _id: userThree._id.toString(),
+                    firstname: "Max",
+                    lastname: "Power",
+                    location: "Los Angeles, USA",
+                    profilePicture: "https://example.com/images/user_one.jpg",
+                    status: "pending"
+                }
+            ])
+        })
+        it("allows a user to view basic data of people they have forged alliances with", async () => {
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+            
+            const Response = await request(app)
+                .post(`/alliances/${userOne._id}/forge`)
+                .set("Authorization", `Bearer ${tokenTwo}`)
+            
+
+            const findForgedResponse = await request(app)
+                .get('/alliances/viewForgedAlliances')
+                .set("Authorization", `Bearer ${tokenTwo}`)
+            
+            expect(findForgedResponse.status).toEqual(200)
+            expect(findForgedResponse.body.forgedAlliances).toEqual([{
                 _id: userOne._id.toString(),
                 firstname: "John",
                 lastname: "Doe",
                 location: "New York, USA",
                 profilePicture: "https://example.com/images/user_one.jpg"
-            }, {
-                _id: userThree._id.toString(),
-                firstname: "Max",
-                lastname: "Power",
-                location: "Los Angeles, USA",
-                profilePicture: "https://example.com/images/user_one.jpg"
             }
             ])
         })
-            it("allows a user to view basic data of people they have forged alliances with", async () => {
-                const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
-                const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
-                const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
-                
-                const Response = await request(app)
-                    .post(`/alliances/${userOne._id}/forge`)
-                    .set("Authorization", `Bearer ${tokenTwo}`)
-                
-    
-                const findForgedResponse = await request(app)
-                    .get('/alliances/viewForgedAlliances')
-                    .set("Authorization", `Bearer ${tokenTwo}`)
-                
-                expect(findForgedResponse.status).toEqual(200)
-                expect(findForgedResponse.body.forgedAlliances).toEqual([{
-                    _id: userOne._id.toString(),
-                    firstname: "John",
-                    lastname: "Doe",
-                    location: "New York, USA",
-                    profilePicture: "https://example.com/images/user_one.jpg"
-                }
-            ])
-        })
+        it("returns basic info of all users along with whether they have previously requested a friendship", async () => {
+            // This was a testing gorund for adding alliance status to the usersdata
+            const userFour = await new User(fakeUserFour).save()
+            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+            
+                try {
+                    const currentUser = userTwo._id
+                    const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
 
+                    const userWithAlliance = await Promise.all(otherUsers.map(async (user) => {
+                        alliance = await Alliance.findOne({
+                            $or: [
+                                { sender: currentUser, receiver: user._id },
+                                { receiver: currentUser, sender: user._id },
+                            ]
+                        })
+                        const plainUser = user.toObject()
+                        if (alliance) {
+                            plainUser["status"] = alliance.status
+                        } 
+                        else {
+                            plainUser["status"] = "none"
+                        }
+                        return plainUser
+                        }
+                ))} catch (error) {
+                    console.log(error)
+                }
+                
+
+        })
     })
 })

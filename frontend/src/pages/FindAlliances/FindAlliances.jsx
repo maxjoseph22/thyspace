@@ -15,7 +15,7 @@ const FindAlliance = () => {
             if (loggedIn) {
                 try {
                 const data = await viewPotentialAlliances(token)
-                setEveryUser(data.otherUsers)
+                setEveryUser(data.usersWithAlliancesData)
                 } catch (error) {
                     console.log(error)
                     navigate('/login')

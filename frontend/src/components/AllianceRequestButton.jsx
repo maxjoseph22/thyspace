@@ -4,8 +4,10 @@ import { useState } from "react"
 
 
 const AllianceRequestButton = (props) => {
-    const { _id } = props
-    const [requested, request] = useState(false)
+    const { _id, status } = props
+    const [requested, request] = useState(() => {
+        return status === "pending" || status === "accepted"
+    })
 
     const sendRequest = async () => {
         if(!requested) {

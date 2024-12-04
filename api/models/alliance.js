@@ -14,6 +14,7 @@ const AlliancesSchema = new Schema({
     },
     status: { 
         type: String,
+        ref: "Status",
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending'
     },
