@@ -93,14 +93,22 @@ const viewPotentialAlliances = async (req, res) => {
 }
 
 const viewForgedAlliances = async (req, res) => {
-    try{
-        const currentUser = await User.findOne({ _id: req.user_id})
-            .populate('alliances', "_id firstname lastname location profilePicture")
-        res.status(200).json({ forgedAlliances: currentUser.alliances })
+    try {
+        const currentUser = await User.findOne({ _id: req.user_id })
+            .populate({
+                path: 'alliances',
+                select: "_id firstname lastname location profilePicture"
+            });
+
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ alliances: currentUser.alliances });
 
     } catch (error) {
-        console.log(`\n${error.message}\n`)
-        res.status(500).json({message: "An error occured, alliances were not returned"})
+        console.error(error);
+        res.status(500).json({ message: "An error occurred, alliances were not returned" });
     }
 }
 
