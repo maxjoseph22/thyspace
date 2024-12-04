@@ -54,7 +54,7 @@ function Post({ post, setPosts, sendUpdate }) {
             <div className="post-header">
                 <div className="user-info">
                     <div className="picture">
-                        <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
+                    {post.user_id.profilePicture ? <img src={post.user_id.profilePicture} />: <p>Temporary</p>}
                     </div>
                     <div className="username-date">
                         <Link to={`/userprofile/${post.user_id._id}`}>
