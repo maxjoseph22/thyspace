@@ -18,7 +18,8 @@ export function LoginPage() {
       navigate("/feed");
     } catch (err) {
       console.error(err);
-      navigate("/login");
+      // Display an alert with the error message
+      alert("Login failed: Incorrect email or password. Please try again.");
     }
   }
 
