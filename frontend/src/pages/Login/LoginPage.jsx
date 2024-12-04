@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './LoginPage.css'
 import { login } from "../../services/authentication";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 export function LoginPage() {
+
+  useEffect(() => {
+    document.body.classList.add("login-page");
+    return () => {
+      document.body.classList.remove("login-page");
+    };
+  }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false)
@@ -69,7 +77,7 @@ export function LoginPage() {
             setShowPassword(!showPassword)}}/>
         }
         </div>
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
+        <input role="submit-button" id="submit" type="submit" value="SUBMIT" />
         <div>
           <Link to='/signup'>Create An Account</Link>
         </div>
