@@ -135,7 +135,6 @@ function Post({ post, setPosts, sendUpdate }) {
 
             <div className="post-int-btns">
                 <Like  entity={post} setPosts={setPosts} handleLikeUpdate={handleLikeUpdate} entityType='Post'/>
-                <button>Comment</button>
             </div>
             <div className="post-cmts">
                 <CommentsContainer comments={post.comments} setPosts={setPosts} postId={post._id} />
