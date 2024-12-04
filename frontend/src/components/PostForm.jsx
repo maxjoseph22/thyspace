@@ -55,7 +55,7 @@ const PostForm = ({submitPost, setSeePostForm}) => {
             alert("An error occurred. Please try again.");
         }
         setImageFile(null)
-        fileInputRef.current.value = ''
+        if (fileInputRef.current) fileInputRef.current.value = ''
         return imageUrl
     }
 
@@ -69,6 +69,7 @@ const PostForm = ({submitPost, setSeePostForm}) => {
                     submitPost(postContent, dealWithCloudinarySend)
                     setPreviewImage('')
                     setPostContent('')
+                    setSeePostForm(false)
             }}>
                 <div className="post-form-header">
                     <div className="post-side-heading"></div>
