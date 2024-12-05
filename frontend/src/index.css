@@ -1,10 +1,10 @@
-:root {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-}
+/* :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+} */
 
 @font-face {
-  font-family: 'Fegakines';
-  src: url('./assets/ncl-fegakines/NCLFegakines-Demo.otf');
+  font-family: 'Magnific-Chaos';
+  src: url('./assets/magnific-caos-font/MagnificChaosPersonalUseRegular-x3J88.ttf');
 }
 
 @font-face {

@@ -14,10 +14,12 @@ nav {
 .nav-link {
     margin-right: 0.8rem;
     text-decoration: none;
-    color: blue;
-    background: none;
+    color: #f3e3c8;
+    background: #952424;
     border: none;
     font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .nav-link:hover {
@@ -38,9 +40,12 @@ nav {
 }
 
 .logout-btn {
-    background: none;
+    background: #952424;
     border: none;
     font-size: 0.9rem;
+    border-radius: 5px;
+    padding: 5px;
+    color: #f3e3c8
 }
 
 .logout-btn:hover {

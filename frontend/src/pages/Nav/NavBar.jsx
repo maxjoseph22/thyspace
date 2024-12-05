@@ -20,10 +20,13 @@ const NavBar = () => {
         console.log(data.user)
         setUser({...data.user})
     }
+
+
     return (
         <nav>
             <div className="left-nav">
-                <Link to='/feed'><button className="nav-link">Logo</button></Link>
+                {/* <Link to='/feed'><button className="nav-link">Logo</button></Link> */}
+                <Link to='/feed'><div><img src="public/ThySpace_Logo.png" width='180rem' height='120rem'/></div></Link>
             </div>
             <div className="right-nav">
                 <Link to='/findalliances'><button className="nav-link">Find Alliances</button></Link>
