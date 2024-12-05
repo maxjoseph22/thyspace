@@ -7,11 +7,9 @@ body {
 }
 
 .find-alliances-background {
-    background-image: url('../../assets/Feedpage_Background.png');
+    background-image: url('../../assets/Background.png');
     
 }
-
-
 
 .title{
     border-radius: 15px;
