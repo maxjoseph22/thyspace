@@ -5,12 +5,12 @@ import { useEffect, useState } from "react"
 import { getUserById } from "../../services/users"
 import { getPayloadFromToken } from "../../services/helperFunctions"
 
-const NavBar = () => {
+const NavBar = ({ profileInfo }) => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
         grabUserPic()
-    }, [])
+    }, [profileInfo])
     
     const grabUserPic = async () => {
         const token = localStorage.getItem("token")

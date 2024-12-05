@@ -58,19 +58,29 @@ const EditProfile = ({user, onSave, onCancel }) => {
             <input
                 type="text"
                 name="username"
+                placeholder="username"
                 value={(formData.username)}
                 onChange={handleChange}
                 />
             <input
                 type="text"
                 name="firstname"
+                placeholder="firstname"
                 value={(formData.firstname)}
                 onChange={handleChange}
                 />
             <input
                 type="text"
                 name="lastname"
+                placeholder="lastname"
                 value={(formData.lastname)}
+                onChange={handleChange}
+                />
+            <input
+                type="text"
+                name="location"
+                placeholder="location"
+                value={(formData.location)}
                 onChange={handleChange}
                 />
 
