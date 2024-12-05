@@ -45,38 +45,52 @@ const viewReceivedRequests = async (req, res) => {
 
 const viewPotentialAlliances = async (req, res) => {
     try {
-        const currentUser = req.user_id
-        const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
+        const currentUser = req.user_id;
 
-        const usersWithAlliancesData = await Promise.all(otherUsers.map(async (user) => {
-            alliance = await Alliance.findOne({
+        // Step 1: Find users where the alliance status is NOT 'accepted' and exclude the current user
+        const otherUsers = await User.find({ _id: { $ne: currentUser } }, "_id firstname lastname location profilePicture");
+
+        // Step 2: Fetch alliances to exclude 'accepted' ones
+        const acceptedAlliances = await Alliance.find({
+            $or: [
+                { sender: currentUser, status: "accepted" },
+                { receiver: currentUser, status: "accepted" }
+            ]
+        }).select("sender receiver");
+
+        // Step 3: Extract IDs of users in accepted alliances
+        const excludedUserIds = new Set(
+            acceptedAlliances.flatMap(alliance => [alliance.sender.toString(), alliance.receiver.toString()])
+        );
+
+        // Step 4: Filter users who are not part of 'accepted' alliances
+        const filteredUsers = otherUsers.filter(user => !excludedUserIds.has(user._id.toString()));
+
+        // Step 5: Add status information to remaining users
+        const usersWithAlliancesData = await Promise.all(filteredUsers.map(async (user) => {
+            const alliance = await Alliance.findOne({
                 $or: [
                     { sender: currentUser, receiver: user._id },
                     { receiver: currentUser, sender: user._id },
                 ]
-            })
-            const plainUser = user.toObject()
+            });
+
+            const plainUser = user.toObject();
             if (alliance) {
-                plainUser["status"] = alliance.status
-                if (alliance.sender === currentUser) {
-                    plainUser["allianceRole"] = "sender"
-                }
-                else {
-                    plainUser["allianceRole"] = "receiver"
-                }
-            } 
-            else {
-                plainUser["status"] = "none"
+                plainUser["status"] = alliance.status;
+                plainUser["allianceRole"] = alliance.sender.toString() === currentUser ? "sender" : "receiver";
+            } else {
+                plainUser["status"] = "none";
             }
-            return plainUser
-            }
-        ))
-        res.status(200).json({ usersWithAlliancesData })
-        } catch (error) {
-            console.log(`\n${error.message}\n`)
-            res.status(500).json({message: "An error occured, users were not returned"})
+            return plainUser;
+        }));
+
+        res.status(200).json({ usersWithAlliancesData });
+    } catch (error) {
+        console.error(`Error in viewPotentialAlliances: ${error.message}`);
+        res.status(500).json({ message: "An error occurred, users were not returned" });
     }
-}
+};
 
 const viewForgedAlliances = async (req, res) => {
     try {
