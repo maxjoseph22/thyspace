@@ -56,7 +56,7 @@ const AllianceRequestButton = (props) => {
     }
     
     return (
-        <div Class="reject">
+        <div className="reject">
         {requested && localRole==="receiver" && (
             <div>
                 <p className="alliance-info"> This user sent an envoy!</p>

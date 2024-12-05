@@ -1,6 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     color: #333;
 
@@ -8,7 +8,6 @@ body {
 
 .find-alliances-background {
     background-image: url('../../assets/Background.png');
-    
 }
 
 .title{

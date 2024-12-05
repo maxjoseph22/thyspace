@@ -1,6 +1,5 @@
 import PotentialAllianceContainer from '../../components/PotentialAllianceContainer'
 import { useEffect, useState } from 'react'
-import { getUsers } from '../../services/users'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../Nav/NavBar'
 import { viewPotentialAlliances, viewSpecificPotentialAlliances } from "../../services/alliances"
@@ -52,7 +51,7 @@ const FindAlliance = () => {
     return (
         <>
             <NavBar />
-            <div Class="title">
+            <div className="title">
             <h1>Find Alliances</h1>
             <select 
             name='searchArea'
