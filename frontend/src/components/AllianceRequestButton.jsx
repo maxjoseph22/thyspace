@@ -1,12 +1,13 @@
 import React from "react"
 import { requestAlliance, withdrawAllianceRequest } from "../services/alliances"
 import { useState } from "react"
-
+import ForgeAllianceButton from "./ForgeAllianceButton"
 
 const AllianceRequestButton = (props) => {
-    const { _id, status } = props
+    const { _id, status, role } = props
+    console.log("Initial state", status, role);
     const [requested, request] = useState(() => {
-        return status === "pending" || status === "accepted"
+        return status === "pending" || status === "accepted" 
     })
 
     const sendRequest = async () => {
@@ -32,13 +33,13 @@ const AllianceRequestButton = (props) => {
                     throw new Error("No token found.")
                 }
                 const response = await withdrawAllianceRequest(token, _id)
+
                 console.log("Alliance request withdrawn", response);
                 
             } catch (error) {
                 console.log("Error withdrawing alliance request")
             }
         }
-
     }
     
     return (
