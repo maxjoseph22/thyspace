@@ -224,17 +224,17 @@ const createAlliances = async () => {
         new Alliance({
             sender: users[8]._id,
             receiver: users[9]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[6]._id,
             receiver: users[8]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[7]._id,
             receiver: users[6]._id,
-            status: "rejected"
+            status: "pending"
         }),
         new Alliance({
             sender: users[7]._id,
@@ -243,18 +243,13 @@ const createAlliances = async () => {
         }),
         new Alliance({
             sender: users[3]._id,
-            receiver: users[1]._id,
-            status: "rejected"
-        }),
-        new Alliance({
-            sender: users[3]._id,
             receiver: users[2]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[4]._id,
             receiver: users[5]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[4]._id,
@@ -269,27 +264,32 @@ const createAlliances = async () => {
         new Alliance({
             sender: users[0]._id,
             receiver: users[1]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[0]._id,
             receiver: users[2]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[0]._id,
             receiver: users[3]._id,
-            status: "accepted"
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[1]._id,
+            receiver: users[3]._id,
+            status: "pending"
         }),
         new Alliance({
             sender: users[0]._id,
             receiver: users[4]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[0]._id,
             receiver: users[5]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[9]._id,
@@ -299,17 +299,17 @@ const createAlliances = async () => {
         new Alliance({
             sender: users[1]._id,
             receiver: users[2]._id,
-            status: "accepted"
+            status: "pending"
         }),
         new Alliance({
             sender: users[1]._id,
             receiver: users[5]._id,
-            status: "rejected"
+            status: "pending"
         }),
         new Alliance({
             sender: users[1]._id,
             receiver: users[8]._id,
-            status: "accepted"
+            status: "pending"
         })
     ]
     await Alliance.deleteMany({});
