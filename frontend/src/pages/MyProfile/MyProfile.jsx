@@ -20,7 +20,7 @@ const MyProfile = () => {
         fetchUser();
         fetchPosts();
         fetchAlliances();
-    }, [])
+    }, [user])
 
     const fetchUser = async () => {
         try {
@@ -127,7 +127,7 @@ const MyProfile = () => {
 
     return (
         <>
-            <NavBar />
+            <NavBar profileInfo={user}/>
             <div className="my-profile">
                 <div className="left-panel">
                     {error && <p className="error-message">{error}</p>}
