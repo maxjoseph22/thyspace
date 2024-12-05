@@ -5,12 +5,12 @@ import { useEffect, useState } from "react"
 import { getUserById } from "../../services/users"
 import { getPayloadFromToken } from "../../services/helperFunctions"
 
-const NavBar = () => {
+const NavBar = ({ profileInfo }) => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
         grabUserPic()
-    }, [])
+    }, [profileInfo])
     
     const grabUserPic = async () => {
         const token = localStorage.getItem("token")
@@ -18,10 +18,13 @@ const NavBar = () => {
         const data = await getUserById(currentUserId, token)
         setUser({...data.user})
     }
+
+
     return (
         <nav>
             <div className="left-nav">
-                <Link to='/feed'><button className="nav-link">Logo</button></Link>
+                {/* <Link to='/feed'><button className="nav-link">Logo</button></Link> */}
+                <Link to='/feed'><div><img src="public/ThySpace_Logo.png" width='180rem' height='120rem'/></div></Link>
             </div>
             <div className="right-nav">
                 <Link to='/findalliances'><button className="nav-link">Find Alliances</button></Link>
