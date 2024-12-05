@@ -176,7 +176,7 @@ const MyProfile = () => {
                     <div className="post-section">
                         <h3>Your Posts</h3>
                         {posts.length > 0 ? (
-                            <PostContainer posts={posts} />
+                            <PostContainer posts={posts} setPosts={setPosts} />
                         ) : (
                             <p>No post available.</p>
                         )}
