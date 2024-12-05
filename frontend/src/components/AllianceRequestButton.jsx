@@ -5,7 +5,7 @@ import ForgeAllianceButton from "./ForgeAllianceButton"
 
 const AllianceRequestButton = (props) => {
     const { _id, status, role } = props
-    console.log("Initial state", status, role);
+    // console.log("Initial state", status, role);
     const [requested, request] = useState(() => {
         return status === "pending" || status === "accepted" 
     })
