@@ -157,7 +157,7 @@ const MyProfile = () => {
                             <p>No user found or you are not logged in.</p>
                         )
                     )}
-                    <div className="alliance section">
+                    <div className="alliance-section">
                         <h3>Your Alliances</h3>
                         {alliances.length > 0 ? (
                             alliances.map((alliance) => (
@@ -176,7 +176,7 @@ const MyProfile = () => {
                     <div className="post-section">
                         <h3>Your Posts</h3>
                         {posts.length > 0 ? (
-                            <PostContainer posts={posts} />
+                            <PostContainer posts={posts} setPosts={setPosts} />
                         ) : (
                             <p>No post available.</p>
                         )}

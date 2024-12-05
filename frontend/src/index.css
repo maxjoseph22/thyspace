@@ -8,6 +8,11 @@
 }
 
 @font-face {
+  font-family: 'Fegakines';
+  src: url('./assets/ncl-fegakines/NCLFegakines-Demo.ttf');
+}
+
+@font-face {
   font-family: 'EagleLake';
   src: url('./assets/Eagle_Lake/EagleLake-Regular.ttf');
 }
@@ -27,5 +32,3 @@ a:hover {
   min-width: 320px;
   min-height: 100vh;
 } */
-
-

@@ -1,14 +1,29 @@
 nav {
     display: flex;
-    width: 80vw;
-    justify-content: space-around;
-    padding-bottom: 0.3rem;
-    margin: 0.4rem 0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.4rem 1rem;
+    margin: 0;
+}
+
+.left-nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.left-nav img{
+    margin: 0;
+    padding: 0;
 }
 
 .right-nav {
     display: flex;
     align-items: center;
+    margin-right: 7rem;
+    
 }
 
 .nav-link {
@@ -17,9 +32,11 @@ nav {
     color: #f3e3c8;
     background: #952424;
     border: none;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 5px;
     padding: 5px;
+    border: 2px solid #f1b83a;
+    font-family: 'EagleLake';
 }
 
 .nav-link:hover {
@@ -42,10 +59,12 @@ nav {
 .logout-btn {
     background: #952424;
     border: none;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 5px;
     padding: 5px;
-    color: #f3e3c8
+    color: #f3e3c8;
+    border: 2px solid #f1b83a;
+    font-family: 'EagleLake';
 }
 
 .logout-btn:hover {

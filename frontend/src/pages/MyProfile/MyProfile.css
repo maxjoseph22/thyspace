@@ -8,6 +8,7 @@ body {
 
 .my-profile-background {
     background-image: url('../../assets/Feedpage_Background.png');
+    background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -22,20 +23,29 @@ body {
     margin: 20px auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns:1fr 2fr;
     gap: 20px;
 }
 
 .left-panel {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 5px solid #E3AD2F;
+    border-top-color: #FBD346;
+    border-left-color: #FBD346;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: 'EagleLake';
+    color: #f3e3c8;
 }
 
 .profile-panel {
-    background: #fff;
+    background: #2F2D2A;
     border-radius: 15px;
+    border: 5px solid #E3AD2F;
+    border-top-color: #FBD346;
+    border-left-color: #FBD346;
+    border-radius: 5px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
@@ -62,7 +72,7 @@ body {
 .profile-panel p {
     margin: 5px 0;
     font-size: 14px;
-    color: #777;
+    color: #f3e3c8;
 }
 
 
@@ -76,13 +86,15 @@ body {
 
 .profile-buttons button {
     background-color: #952424;
-    color: #fff;
+    color: #f3e3c8;
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'EagleLake';
     font-size: 11px;
+    border: 2px solid #f1b83a;
+    
 }
 
 .profile-buttons button:hover {
@@ -94,11 +106,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    color: #2F2D2A;
+
+}
+
+.alliance-section {
+    color: #2F2D2A;
+
 }
 
 .alliance div p,
 .posts div p {
-    background: #f1f1f1;
+    background: #2F2D2A;
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
@@ -113,7 +132,7 @@ body {
 }
 
 .post-section {
-    background: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -122,7 +141,6 @@ body {
 .post-section h3 {
     margin-bottom: 15px;
     font-size: 18px;
-    border-bottom: 1px solid #eee;
 }
 
 .error-message {
