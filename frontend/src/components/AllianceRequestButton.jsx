@@ -16,8 +16,7 @@ const AllianceRequestButton = (props) => {
             if(!token) {
                 throw new Error("No token found.")
             }
-            const response = await requestAlliance(token, _id)
-            console.log("Alliance requested", response);
+            await requestAlliance(token, _id)
             request(true)
             setLocalStatus("pending")
             setLocalRole("sender")
@@ -32,8 +31,7 @@ const AllianceRequestButton = (props) => {
             if(!token) {
                 throw new Error("No token found.")
             }
-            const response = await withdrawAllianceRequest(token, _id)
-            console.log("Alliance request withdrawn", response);
+            await withdrawAllianceRequest(token, _id)
             request(false)
             setLocalStatus("none") 
         } catch (error) {
@@ -46,8 +44,7 @@ const AllianceRequestButton = (props) => {
             if(!token) {
                 throw new Error("No token found.")
             }
-            const response = await rejectAlliance(token, _id)
-            console.log("Alliance request rejected", response);
+            await rejectAlliance(token, _id)
             request(false)
             setLocalStatus("none")
         } catch (error) {

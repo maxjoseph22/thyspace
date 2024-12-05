@@ -13,8 +13,7 @@ const RejectAllianceButton = (props) => {
             if(!token) {
                 throw new Error("No token found")
             }
-            const response = await rejectAlliance(token, _id)
-            console.log("Alliance Rejected", response);
+            await rejectAlliance(token, _id)
             alert("❌ Alliance rejected! 🪓 To the battlefield!");
             updateScreen()
         } catch (error) {

@@ -71,8 +71,12 @@ function Comment({ comment, setPosts, postId }) {
 
     return (
         <>
-        {comment.userId.profilePicture && <img src={comment.userId.profilePicture} />}
-        <p>{comment.userId.username}</p>
+        <div className="comment-who">
+            {comment.userId.profilePicture && <img 
+            className="comment-pic"
+            src={comment.userId.profilePicture} />}
+            <p>{comment.userId.username}</p>
+        </div>
         <div className="main-content-header">
             <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
         </div>
@@ -82,7 +86,7 @@ function Comment({ comment, setPosts, postId }) {
         className="update-comment"
         />
         :
-        <p>{comment.content}</p>}
+        <p className="comment-content">{comment.content}</p>}
 
         <Like  entity={comment} setPosts={setPosts} handleLikeUpdate={handleLikeUpdate} entityType='Comment' />
 

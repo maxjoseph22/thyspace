@@ -32,7 +32,6 @@ export function SignupPage() {
     event.preventDefault();
 
     if (!emailRegex.test(userInfo.email)) {
-      console.log('Testing')
       setemailErrorMessage('Kindly submit a true and proper email.');
       return;
     }

@@ -24,3 +24,17 @@
 .comment-submit {
     margin-bottom: 1rem;
 }
+
+.comment-who {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.comment-pic {
+    max-width: 6rem;
+}
+
+.comment-content {
+    justify-content: center;
+}
