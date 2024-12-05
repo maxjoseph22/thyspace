@@ -15,6 +15,19 @@ const viewReceivedRequestsAdmin = async (req, res) => {
         res.status(500).json({message: "An error occured, alliances were not returned"})
     }
 }
+
+const findOneAlliance = async (req, res) => {
+    try {
+        const allianceId = req.params.id
+        const alliance = await Alliance.findOne({ _id: allianceId})
+        if (!alliance) {
+            return res.status(404).json({message: "Alliance not found in database"})
+        }
+        res.status(200).json({alliance})
+    } catch (error) {
+        res.status(500).json({message: "An error occured, alliance was not returned"})
+    }
+}
 const viewReceivedRequests = async (req, res) => {
     try {
         const receiverId = req.user_id
@@ -29,7 +42,6 @@ const viewReceivedRequests = async (req, res) => {
         res.status(500).json({message: "An error occured, alliances were not returned"})
     }
 }
-// DONE
 
 const viewPotentialAlliances = async (req, res) => {
     try {
@@ -46,6 +58,12 @@ const viewPotentialAlliances = async (req, res) => {
             const plainUser = user.toObject()
             if (alliance) {
                 plainUser["status"] = alliance.status
+                if (alliance.sender === currentUser) {
+                    plainUser["allianceRole"] = "sender"
+                }
+                else {
+                    plainUser["allianceRole"] = "receiver"
+                }
             } 
             else {
                 plainUser["status"] = "none"
@@ -58,38 +76,6 @@ const viewPotentialAlliances = async (req, res) => {
             console.log(`\n${error.message}\n`)
             res.status(500).json({message: "An error occured, users were not returned"})
     }
-    
-    
-    
-    
-    
-    
-    
-    // try {
-    //     const currentUser = req.user_id
-    //     const alliances = await Alliance.find({
-    //         $or: [
-    //             { sender: req.user_id },
-    //             { receiver: req.user_id },
-    //         ]
-    //     })
-    //     if (alliances) {
-    //         const otherUsers = await User.find({ _id: { $ne: currentUser } },
-    //             "_id firstname lastname location profilePicture")
-    //         for (user of otherUsers) {
-    //             if (user._id in alliances) {
-    //                 user.alliances.status = allian
-    //             }
-    //         }
-
-    //     }
-    //     const otherUsers = await User.find({ _id: { $ne: currentUser } },
-    //     "_id firstname lastname location profilePicture")
-    //     res.status(200).json({ otherUsers })
-    //   } catch (error) {
-    //     console.log(`\n${error.message}\n`)
-    //     res.status(500).json({message: "An error occured, users were not returned"})
-    //   }
 }
 
 const viewForgedAlliances = async (req, res) => {
@@ -141,7 +127,7 @@ const withdrawAllianceRequest = async (req, res) => {
         const alliance = await Alliance.findOne({sender: sender, receiver: receiver})
     
         if (alliance.status !== 'pending') {
-            res.status(403).json({message: "You may not withdraw a forged alliance! Only spilled blood can unforge this alliance."})
+            return res.status(403).json({message: "You may not withdraw a forged alliance! Only spilled blood can unforge this alliance."})
         }
 
         await Alliance.deleteOne({ _id: alliance._id })
@@ -196,6 +182,7 @@ const AllianceController = {
     withdrawAllianceRequest: withdrawAllianceRequest,
     viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
+    findOneAlliance: findOneAlliance,
     rejectAlliance: rejectAlliance,
     viewPotentialAlliances: viewPotentialAlliances,
     viewForgedAlliances: viewForgedAlliances,
