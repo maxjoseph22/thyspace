@@ -136,7 +136,7 @@ const seedData = async () => {
       { 
         sender: createdUsers[0]._id, 
         receiver: createdUsers[5]._id, 
-        status: 'accepted' 
+        status: 'pending' 
       }
     ];
 

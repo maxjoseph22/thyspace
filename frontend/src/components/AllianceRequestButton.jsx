@@ -5,10 +5,11 @@ import ForgeAllianceButton from "./ForgeAllianceButton"
 
 const AllianceRequestButton = (props) => {
     const { _id, status, role } = props
-    console.log("Initial state", status, role);
+    console.log(`user: ${_id}, ${status}, ${role}`)
     const [requested, request] = useState(() => {
-        return status === "pending" || status === "accepted" 
+        return status === "pending"
     })
+    console.log(`requested: ${requested}`)
 
     const sendRequest = async () => {
         if(!requested) {
@@ -44,9 +45,12 @@ const AllianceRequestButton = (props) => {
     
     return (
         <div>
-        {!requested && <button onClick={sendRequest}>Request Alliance!</button>}
+        {requested && role==="receiver" && <button>This user has requested an alliance</button>}
+        {requested && role === "sender" && <button>You requested already</button>}
+        {!requested && status === "none" && <button>Request?</button>}
+        {/* {!requested && <button onClick={sendRequest}>Request Alliance!</button>}
         {requested && <button onClick={sendRequest}>Withdraw alliance request...</button>}
-        {requested && <p>Alliance Requested</p>}
+        {requested && <p>Alliance Requested</p>} */}
         </div>
     );
 };
