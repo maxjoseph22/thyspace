@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+
+}
+
+.find-alliances-background {
+    background-image: url('../../assets/Feedpage_Background.png');
+    
+}
+
+
+
+.title{
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'EagleLake';
+}
+
+.title select {
+    font-family: 'EagleLake', cursive; /* Apply EagleLake font */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px; /* Add padding for better spacing */
+    border: 2px solid #333; /* Border around dropdown */
+    border-radius: 5px; /* Optional: Rounded corners */
+    background-color: white; /* White background */
+    color: #F3E3C8; /* Text color */
+    margin-right: 10px; /* Add spacing between elements */
+    background-color: #952424;
+    border: 4px solid #f1b83a;
+}
+
+.title input {
+    font-family: 'EagleLake', cursive; /* Apply EagleLake font */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px 10px; /* Add padding for better spacing */
+    border: 2px solid #333; /* Border around input */
+    border-radius: 5px; /* Optional: Rounded corners */
+    background-color: white; /* White background */
+    color: #F3E3C8; /* Text color */
+    margin-right: 10px; /* Add spacing between elements */
+    background-color: #952424;
+    border: 4px solid #f1b83a;
+}
+
+.title button {
+    font-family: 'EagleLake', cursive; /* Apply EagleLake font */
+    font-size: 16px; /* Adjust font size */
+    padding: 8px 15px; /* Add padding for button */
+    border: 2px solid #333; /* Border around button */
+    border-radius: 5px; /* Optional: Rounded corners */
+    background-color: white; /* White background */
+    color: #F3E3C8; /* Text color */
+    cursor: pointer; /* Change cursor to pointer for interactivity */
+    transition: all 0.3s ease; /* Smooth hover effect */
+    background-color: #952424;
+    border: 4px solid #f1b83a;
+}
+
+input[name='searchCriteria']::placeholder {
+    color: #F3E3C8;
+}
+
