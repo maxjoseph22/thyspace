@@ -168,7 +168,7 @@ describe('/alliances', () => {
         ])
         })
         it("allows a user to view basic data of all people available for alliances", async () => {
-            const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            const allianceOne = await new Alliance({ sender: userTwo._id, receiver: userOne._id }).save();
             const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
             const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
 
@@ -179,7 +179,8 @@ describe('/alliances', () => {
             expect(findUsersResponse.status).toEqual(200)
             expect(findUsersResponse.body.usersWithAlliancesData).toEqual([{
                     _id: userOne._id.toString(),
-                    allianceRole: "receiver",
+                    allianceId: allianceOne._id.toString(),
+                    allianceRole: "sender",
                     firstname: "John",
                     lastname: "Doe",
                     location: "New York, USA",
@@ -187,6 +188,7 @@ describe('/alliances', () => {
                     status: "pending"
                 }, {
                     _id: userThree._id.toString(),
+                    allianceId: allianceTwo._id.toString(),
                     allianceRole: "receiver",
                     firstname: "Max",
                     lastname: "Power",
@@ -211,14 +213,14 @@ describe('/alliances', () => {
                 .set("Authorization", `Bearer ${tokenTwo}`)
             
             expect(findForgedResponse.status).toEqual(200)
-            expect(findForgedResponse.body.forgedAlliances).toEqual([{
+            expect(findForgedResponse.body.alliances[0]).toEqual({
                 _id: userOne._id.toString(),
                 firstname: "John",
                 lastname: "Doe",
                 location: "New York, USA",
                 profilePicture: "https://example.com/images/user_one.jpg"
             }
-            ])
+            )
         })
         it("returns a single alliance when given an id", async () => {
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
@@ -241,63 +243,73 @@ describe('/alliances', () => {
         })
         it("returns basic info of all users along with whether they have previously requested a friendship", async () => {
             // This was a testing gorund for adding alliance status to the usersdata
-            const userFour = await new User(fakeUserFour).save()
+            // const userFour = await new User(fakeUserFour).save()
+            // const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
+            // const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
+            // const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+            
             const allianceOne = await new Alliance({ sender: userOne._id, receiver: userTwo._id }).save();
             const allianceTwo = await new Alliance({ sender: userThree._id, receiver: userTwo._id }).save();
-            const allianceThree = await new Alliance({ sender: userThree._id, receiver: userOne._id }).save();
+
+            const response = await request(app)
+                .get(`/alliances/${allianceOne._id}/findAllianceWithUserRole`)
+                .set("Authorization", `Bearer ${tokenOne}`)
             
-                try {
-                    const currentUser = userTwo._id
-                    const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
+            console.log(response.body)
+            })
+        //         try {
+        //             const currentUser = userTwo._id
+        //             const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
 
-                    const userWithAlliance = await Promise.all(otherUsers.map(async (user) => {
-                        alliance = await Alliance.findOne({
-                            $or: [
-                                { sender: currentUser, receiver: user._id },
-                                { receiver: currentUser, sender: user._id },
-                            ]
-                        })
-                        const plainUser = user.toObject()
-                        if (alliance) {
-                            plainUser["status"] = alliance.status
-                            if (alliance.sender === currentUser) {
-                                plainUser["allianceRole"] = "sender"
-                            }
-                            else {
-                                plainUser["allianceRole"] = "receiver"
-                            }
-                            plainUser['allianceWithUserId'] = alliance._id
-                        } 
-                        else {
-                            plainUser["status"] = "none"
-                        }
-                        return plainUser
-                        }
-                ))
-                // console.log(userWithAlliance)
+        //             const userWithAlliance = await Promise.all(otherUsers.map(async (user) => {
+        //                 alliance = await Alliance.findOne({
+        //                     $or: [
+        //                         { sender: currentUser, receiver: user._id },
+        //                         { receiver: currentUser, sender: user._id },
+        //                     ]
+        //                 })
+        //                 const plainUser = user.toObject()
+        //                 if (alliance) {
+        //                     plainUser["status"] = alliance.status
+        //                     if (alliance.sender === currentUser) {
+        //                         plainUser["allianceRole"] = "sender"
+        //                     }
+        //                     else {
+        //                         plainUser["allianceRole"] = "receiver"
+        //                     }
+        //                     plainUser['allianceWithUserId'] = alliance._id
+        //                 } 
+        //                 else {
+        //                     plainUser["status"] = "none"
+        //                 }
+        //                 return plainUser
+        //                 }
+        //         ))
+        //         // console.log(userWithAlliance)
 
-                // const allianceUpdate = await Alliance.findOne({ _id: userWithAlliance[0].allianceWithUserId })
-                //     // .select('sender receiver status')
+        //         // const allianceUpdate = await Alliance.findOne({ _id: userWithAlliance[0].allianceWithUserId })
+        //         //     // .select('sender receiver status')
 
-                // // if (!allianceUpdate) {
-                // //     role = "none"
-                // // }
-                // console.log(allianceUpdate)
+        //         // // if (!allianceUpdate) {
+        //         // //     role = "none"
+        //         // // }
+        //         // console.log(allianceUpdate)
 
 
-            } catch (error) {
-                    console.log(error)
-                }
+        //     } catch (error) {
+        //             console.log(error)
+        //         }
                 
-            // try {
-            //     const currentUser = UserTwo._id
-            //     const userToFind = userOne._id
+        //     // try {
+        //     //     const currentUser = UserTwo._id
+        //     //     const userToFind = userOne._id
 
-            // } catch (error) {
-            //     console.log(error)
-            // }
+        //     // } catch (error) {
+        //     //     console.log(error)
+        //     // }
                 
 
-        })
+        // })
+
     })
 })

@@ -28,6 +28,29 @@ const findOneAlliance = async (req, res) => {
         res.status(500).json({message: "An error occured, alliance was not returned"})
     }
 }
+
+const findWithRole = async (req, res) => {
+    try {
+        const currentUser = req.user_id
+        const alliance = await Alliance.findOne({ _id: req.params.id })
+        const roleUpdate = {
+            role: "", 
+            status: alliance.status
+        }
+        if (!alliance) {
+            return res.status(404).json({message: "Alliance not found in database"})
+        }
+        if (alliance.sender.toString() === currentUser) {
+            roleUpdate.role = "sender"
+        }
+        else if (alliance.receiver.toString() === currentUser) {
+            roleUpdate.role = "receiver"
+        }
+        res.status(200).json({ roleUpdate })
+    } catch (error) {
+        res.status(500).json({message: "An error occured, alliance was not returned"})
+    }
+}
 const viewReceivedRequests = async (req, res) => {
     try {
         const receiverId = req.user_id
@@ -58,12 +81,13 @@ const viewPotentialAlliances = async (req, res) => {
             const plainUser = user.toObject()
             if (alliance) {
                 plainUser["status"] = alliance.status
-                if (alliance.sender === currentUser) {
+                if (alliance.sender.toString() === currentUser.toString()) {
                     plainUser["allianceRole"] = "sender"
                 }
                 else {
                     plainUser["allianceRole"] = "receiver"
                 }
+                plainUser['allianceId'] = alliance._id
             } 
             else {
                 plainUser["status"] = "none"
@@ -191,6 +215,7 @@ const AllianceController = {
     viewReceivedRequestsAdmin: viewReceivedRequestsAdmin,
     viewReceivedRequests: viewReceivedRequests,
     findOneAlliance: findOneAlliance,
+    findWithRole: findWithRole,
     rejectAlliance: rejectAlliance,
     viewPotentialAlliances: viewPotentialAlliances,
     viewForgedAlliances: viewForgedAlliances,

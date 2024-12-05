@@ -126,3 +126,20 @@ export const viewPotentialAlliances = async (token) => {
     const data = await response.json();
     return data
 }
+
+export const getAllianceRole = async (token, allianceId) => {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+    const response = await fetch(`${BACKEND_URL}/alliances/${allianceId}/findAllianceWithUserRole`, requestOptions) 
+
+    if (response.status != 200) {
+        throw new Error("Unable to view alliance role data")
+    }
+   
+    const data = await response.json();
+    return data
+}
