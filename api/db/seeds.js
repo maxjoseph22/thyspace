@@ -35,7 +35,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Khalid",
             lastname: "Ham",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
@@ -46,7 +45,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Doug",
             lastname: "Fairfield",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
@@ -57,7 +55,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Cezary",
             lastname: "Karwoski-Budd",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
@@ -68,7 +65,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Shola",
             lastname: "Forbes",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
@@ -79,7 +75,6 @@ const createUsers = async () => {
             location: "United Kingdom",
             firstname: "Max",
             lastname: "Joseph",
-            profilePicture: "",
             alliances: [],
             posts: []
         }),
