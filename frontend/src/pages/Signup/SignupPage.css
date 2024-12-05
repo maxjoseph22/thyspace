@@ -58,6 +58,13 @@ label {
     position: relative;
 }
 
+.error-message {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-family: 'EagleLake', sans-serif;
+    color: rgb(134, 6, 6);
+}
+
 .show-password {
     position: absolute;
     right: 10px;
