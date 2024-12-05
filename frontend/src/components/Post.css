@@ -100,6 +100,7 @@ a {
 .delete-post {
     color: #f3e3c8;
 }
+
 .delete-post:hover {
     cursor: pointer;
     animation: spin 0.25s linear;
@@ -107,11 +108,16 @@ a {
 
 .send-update {
     margin: 0 0.4rem 0 0;
+    color: #f3e3c8;
 }
 
 .send-update:hover {
     cursor: pointer;
     transform: translate(0.2rem);
+}
+
+.undo-update {
+    color: #f3e3c8;
 }
 
 .undo-update:hover {
@@ -148,6 +154,33 @@ a {
 .post-cmts p {
     display:flex;
     justify-self: left
+}
+
+.update-comment {
+        margin: 0.5rem;
+        margin-top: 2rem;
+        width: 100%;
+        box-sizing: border-box;
+        /* flex-grow: 1; */
+        border: none;
+        background-color: rgb(79, 79, 79);
+        padding: 10px;
+        border-radius: 5px;
+        color: #f3e3c8;
+        font-family: 'EagleLake';
+}
+
+.update-post {
+    margin: 0.5rem;
+    margin-top: 2rem;
+    width: 65%;
+    border: none;
+    background-color: rgb(79, 79, 79);
+    padding: 10px;
+    border-radius: 5px;
+    color: #f3e3c8;
+    font-family: 'EagleLake';
+    box-sizing: border-box;
 }
 
 

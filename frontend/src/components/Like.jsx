@@ -2,6 +2,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { useState } from "react";
 import { toggleLikes } from "../services/likes";
 import { getPayloadFromToken } from "../services/helperFunctions";
+import './Like.css'
 
 const isLikedByUser = (likes, userId) => {
     return likes.some(like => {
@@ -35,18 +36,22 @@ const Like = ({ entity, entityType, handleLikeUpdate }) => {
     }
 
     return (
-        <>
+        <div className="like-container">
             {isLiked ? 
-                <FaHeart 
+                <FaHeart
+                className="like"
                 onClick={handleLike}
                 />
                 :
                 <FaRegHeart
+                className="like"
                 onClick={handleLike}
                 />
             }
-            <p>{entity.likes.length}</p>
-        </>
+            <p
+            className="like"
+            >{entity.likes.length}</p>
+        </div>
     )
 }
 

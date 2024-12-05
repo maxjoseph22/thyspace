@@ -2,6 +2,7 @@ import { deleteComment, updateComment } from "../../services/comments";
 import { getPayloadFromToken } from "../../services/helperFunctions";
 import { useState } from "react";   
 import Like from "../Like";
+import './Comment.css'
 
 function Comment({ comment, setPosts, postId }) {
     const [ update, setUpdate ] = useState(false)
@@ -78,6 +79,7 @@ function Comment({ comment, setPosts, postId }) {
         {update? 
         <input value={updateInput}
         onChange={handleCommentUpdate}
+        className="update-comment"
         />
         :
         <p>{comment.content}</p>}
@@ -86,8 +88,10 @@ function Comment({ comment, setPosts, postId }) {
 
         {createdByCurrentUser() && 
         ( update ?
-            <div>
-                <button onClick={submitCommentChanges}>
+            <div className="submit-undo">
+                <button onClick={submitCommentChanges}
+                className="comment-buttons"
+                >
                     Submit
                     </button>
                 <button onClick={
@@ -96,12 +100,17 @@ function Comment({ comment, setPosts, postId }) {
                         setUpdate(false)
                     }
                 }
+                className="comment-buttons"
                 >Undo</button>
             </div>
             :
-            <div>
-                <button onClick={() => setUpdate(true)}>Update</button>
-                <button onClick={sendDeleteComment}>Delete</button>
+            <div className="update-delete">
+                <button onClick={() => setUpdate(true)}
+                    className="comment-buttons"
+                    >Update</button>
+                <button onClick={sendDeleteComment}
+                className="comment-buttons"
+                >Delete</button>
             </div>
         )
         }

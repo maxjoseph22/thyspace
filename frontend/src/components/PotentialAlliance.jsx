@@ -1,7 +1,5 @@
-import { convertDate } from "../services/helperFunctions"
-import { Link } from "react-router-dom";
-import React, { useState } from "react";
 import AllianceRequestButton from "./AllianceRequestButton"
+import './PotAlliance.css'
 
 const PotentialAlliance = ({ user }) => {
     // const [role, setRole] = useState(user.allianceRole)
@@ -11,10 +9,10 @@ const PotentialAlliance = ({ user }) => {
     // }
 
     return (
-        <div className="">
+        <div className="alliance">
             {user.profilePicture && <img src={user.profilePicture}/>}
-            <p>{`${user.firstname} ${user.lastname}`}</p>
-            <p>{user.location}</p>
+            <p className="alliance-info">{`${user.firstname} ${user.lastname}`}</p>
+            <p className="alliance-info">{user.location}</p>
             {/* <p>Joined: {convertDate(user)}</p> */}
             <AllianceRequestButton _id={user._id} status={user.status} role={user.allianceRole}/>
         </div>

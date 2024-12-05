@@ -1,11 +1,11 @@
-import React from "react"
 import { requestAlliance, rejectAlliance, withdrawAllianceRequest, getAllianceRole } from "../services/alliances"
 import { useState } from "react"
 import ForgeAllianceButton from "./ForgeAllianceButton";
 import "./AllianceRequestButton.css";
+
 const AllianceRequestButton = (props) => {
     const { _id, status, role } = props
-    const [localSatus, setLocalStatus] = useState(status)
+    const [localStatus, setLocalStatus] = useState(status)
     const [localRole, setLocalRole] = useState(role)
     const [requested, request] = useState(() => {
         return status === "pending"
@@ -59,14 +59,14 @@ const AllianceRequestButton = (props) => {
         <div Class="reject">
         {requested && localRole==="receiver" && (
             <div>
-                <p>This user has proposed an alliance!</p>
+                <p className="alliance-info"> This user sent an envoy!</p>
                 <ForgeAllianceButton _id={_id}/> <br></br>
                 <button onClick={rejectRequest}>Reject this alliance request</button>
             </div>
         )}
         {requested && localRole==="sender" && (
             <div>
-                <p>Alliance pending!</p>
+                <p className="alliance-info">Envoy dispatched!</p>
                 <button onClick={withdrawRequest}>Withdraw alliance request?</button>
             </div>
         )}   

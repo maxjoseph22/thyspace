@@ -126,7 +126,7 @@ function Post({ post, setPosts, sendUpdate }) {
                     {post.image ? <img src={post.image}/>: null}
                     {update ? 
                     <input
-                    className="post-message"
+                    className="update-post"
                     value={updateInput}
                     onChange={handleUpdateInput}/>
                     :

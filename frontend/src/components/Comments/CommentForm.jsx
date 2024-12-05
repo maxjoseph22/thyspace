@@ -36,6 +36,7 @@ const CommentForm = ({ postId, setPosts }) => {
                 onChange={handleCommentChange}
                 placeholder="Type your comment here"/>
             <button 
+                className="comment-buttons comment-submit"
                 type="submit">
                 Submit Comment
             </button>
