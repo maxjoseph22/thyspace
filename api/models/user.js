@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   location: { type: String },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  profilePicture: {type: String, default: ""},
+  profilePicture: {type: String, default: 'https://res.cloudinary.com/dnixfhx1v/image/upload/v1733410110/m6s1cxpr0mbzxdggusxe.png'},
   alliances: [{ type: Types.ObjectId, ref: "User" }],
   // posts: [{ type: Types.ObjectId, ref: "Post" }],
 }, {
