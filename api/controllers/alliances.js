@@ -2,8 +2,7 @@ const Alliance = require("../models/alliance")
 const User = require("../models/user")
 const { generateToken } = require("../lib/token")
 const mongoose = require("mongoose")
-const { Types } = mongoose;
-
+const Fuse = require('fuse.js')
 
 const viewReceivedRequestsAdmin = async (req, res) => { 
     try {
@@ -228,6 +227,50 @@ const rejectAlliance = async (req, res) => {
     }
 }
 
+const specificPossibleAlliances = async (req, res) => {
+    const { searchArea, searchCriteria } = req.body
+    if (!searchArea || !searchCriteria) {
+        return res.status(400).json({ message: "specificArea and specificCriteria are required" });
+    }
+    try {
+        const currentUser = req.user_id
+        const otherUsers = await User.find({ _id: { $ne: currentUser }}, "_id firstname lastname location profilePicture")
+
+        const options = {
+            includeScore: true,
+            threshold: 0.4,
+            keys: [searchArea]
+        }
+
+        const fuse = new Fuse(otherUsers, options)
+        const searchResults = fuse.search(searchCriteria);
+        const filteredUsers = searchResults.map(result => result.item);
+        const usersWithAlliancesData = await Promise.all(
+            filteredUsers.map(async (user) => {
+                const alliance = await Alliance.findOne({
+                    $or: [
+                        { sender: currentUser, receiver: user._id },
+                        { receiver: currentUser, sender: user._id },
+                    ],
+                });
+
+                const plainUser = user.toObject();
+                if (alliance) {
+                    plainUser["status"] = alliance.status;
+                    plainUser["allianceRole"] = alliance.sender === currentUser ? "sender" : "receiver";
+                } else {
+                    plainUser["status"] = "none";
+                }
+                return plainUser;
+            })
+        );
+        res.status(200).json({ usersWithAlliancesData });
+    } catch (error) {
+        console.error(`\n${error.message}\n`)
+        res.status(500).json({ message: "An error occurred, users were not returned" });
+    }
+}
+
 
 const AllianceController = {
     requestAlliance: requestAlliance,
@@ -239,7 +282,8 @@ const AllianceController = {
     rejectAlliance: rejectAlliance,
     viewPotentialAlliances: viewPotentialAlliances,
     viewForgedAlliances: viewForgedAlliances,
-    acceptAlliance: acceptAlliance
+    acceptAlliance: acceptAlliance,
+    specificPossibleAlliances: specificPossibleAlliances
 }
 
 module.exports = { AllianceController }

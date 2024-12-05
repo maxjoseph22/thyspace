@@ -88,7 +88,7 @@ export const rejectAlliance = async (token, senderId) => {
     if (response.status != 200) {
         throw new Error("Unable to reject alliance request")
     }
-          
+
     const data = await response.json();
     return data
 }
@@ -122,7 +122,26 @@ export const viewPotentialAlliances = async (token) => {
     if (response.status != 200) {
         throw new Error("Unable to view potential alliances")
     }
-   
+
+    const data = await response.json();
+    return data
+}
+
+export const viewSpecificPotentialAlliances = async (search, token) => {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({...search})
+    }
+    const response = await fetch(`${BACKEND_URL}/alliances/viewSpecificAlliances`, requestOptions);
+
+    if (response.status != 200) {
+        throw new Error("Unable to view potential alliances")
+    }
+
     const data = await response.json();
     return data
 }

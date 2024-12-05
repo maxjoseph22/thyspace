@@ -4,8 +4,7 @@ import { useState } from "react"
 import ForgeAllianceButton from "./ForgeAllianceButton"
 
 const AllianceRequestButton = (props) => {
-    const { _id, role, status } = props
-    console.log(`user: ${_id}, ${status}, ${role}`)
+    const { _id, status, role } = props
     const [requested, request] = useState(() => {
         return status === "pending"
     })
