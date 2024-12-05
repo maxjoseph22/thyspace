@@ -1,4 +1,5 @@
 import { rejectAlliance } from "../services/alliances"
+import "./RejectAllianceButton.css";
 
 const RejectAllianceButton = (props) => {
     const { _id } = props
@@ -29,10 +30,10 @@ const RejectAllianceButton = (props) => {
     }
 
     return (
-        <button onClick={() => {
-            handleClick()
-        }}
-        >Reject this alliance request</button>
+
+        <div className="no-forge">
+        <button onClick={handleClick}>Reject this alliance request</button>
+        </div>
     );
 };
 

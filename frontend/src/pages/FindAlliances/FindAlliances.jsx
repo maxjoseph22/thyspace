@@ -4,6 +4,7 @@ import { getUsers } from '../../services/users'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../Nav/NavBar'
 import { viewPotentialAlliances, viewSpecificPotentialAlliances } from "../../services/alliances"
+import "./FindAlliances.css";
 
 const FindAlliance = () => {
     const [everyUser, setEveryUser] = useState([])
@@ -29,6 +30,13 @@ const FindAlliance = () => {
         fetchPotentialAlliances();
     }, [navigate])
 
+    useEffect(() => {
+        document.body.classList.add("find-alliances-background");
+        return () => {
+            document.body.classList.remove("find-alliances-background");
+        };
+    }, [])
+
     const submitSearch = async () => {
         if(searchBy.searchCriteria.trim() !== ''){
             const token = localStorage.getItem('token')
@@ -44,6 +52,7 @@ const FindAlliance = () => {
     return (
         <>
             <NavBar />
+            <div Class="title">
             <h1>Find Alliances</h1>
             <select 
             name='searchArea'
@@ -62,6 +71,7 @@ const FindAlliance = () => {
             />
             <button onClick={submitSearch}>Search</button>
             <PotentialAllianceContainer users={everyUser}/>
+            </div>
         </>
     )
 }
