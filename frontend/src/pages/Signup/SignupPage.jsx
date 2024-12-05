@@ -21,12 +21,21 @@ export function SignupPage() {
     lastname: ''
   })
 
+  const [emailErrorMessage, setemailErrorMessage] = useState("")
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
+
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (!emailRegex.test(userInfo.email)) {
+      setemailErrorMessage('Kindly submit a true and proper email.');
+      return;
+    }
+
     try {
       await signup(userInfo);
       navigate("/login");
@@ -48,6 +57,9 @@ export function SignupPage() {
       className="signup-form"
       >
         <label htmlFor="email">Email</label>
+
+        {emailErrorMessage && <p className="error-message">{emailErrorMessage}</p>}
+
         <input
           id="email"
           type="text"
@@ -57,6 +69,7 @@ export function SignupPage() {
           onChange={handleInputChanges}
           className="user-field"
         />
+
         <label htmlFor="password">Password</label>
         <div className="login-password">
           <input

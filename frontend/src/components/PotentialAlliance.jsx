@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import AllianceRequestButton from "./AllianceRequestButton"
 
 const PotentialAlliance = ({ user }) => {
-    const [role, setRole] = useState(user.allianceRole)
+    // const [role, setRole] = useState(user.allianceRole)
 
-    const updateRole = newRole => {
-        setRole(newRole)
-    }
+    // const updateRole = newRole => {
+    //     setRole(newRole)
+    // }
+    console.log(user)
 
     return (
         <div className="">
