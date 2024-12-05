@@ -1,0 +1,17 @@
+.no-forge button {
+    font-family: 'EagleLake', cursive; /* Font for the button text */
+    font-size: 16px; /* Adjust font size */
+    color: #333; /* Text color */
+    background-color: white; /* White background inside the button */
+    border: 2px solid #333; /* Add a solid border */
+    border-radius: 5px; /* Optional: Rounded corners */
+    padding: 10px 20px; /* Add padding for better spacing */
+    cursor: pointer; /* Change cursor to indicate clickability */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.no-forge button:hover {
+    background-color: #f0f0f0; /* Slightly darker background on hover */
+    border-color: #666; /* Darken border color on hover */
+    color: #000; /* Darken text color on hover */
+}

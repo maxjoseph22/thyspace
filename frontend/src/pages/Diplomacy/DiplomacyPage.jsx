@@ -4,6 +4,7 @@ import { viewReceivedRequests } from "../../services/alliances"
 import { getPayloadFromToken } from "../../services/helperFunctions";
 import AllianceRequestContainer from '../../components/AllianceRequestsViewContainer'
 import NavBar from "../Nav/NavBar";
+import "./DiplomacyPage.css";
 
 export function DiplomacyPage() {
     const [receivedRequests, setReceivedRequests] = useState([]);
@@ -25,13 +26,23 @@ export function DiplomacyPage() {
         }
         fetchRequests();
     }, [navigate]);
+
+    useEffect(() => {
+        document.body.classList.add("diplomacy-background");
+        return () => {
+            document.body.classList.remove("diplomacy-background");
+        };
+    }, [])
+
     // TODO look into appropriate dependency array
     return (
         <>
         <NavBar />
+        <div className="Title">
             <h1>New allies flock to our ranks!</h1>
             <img src="https://c.tenor.com/43cc01Cj1JkAAAAd/tenor.gif" alt="Fun GIF"></img>
-            <h2>friend or foe?</h2>
+            <h1>Friend or foe?</h1>
+            </div>
                 <AllianceRequestContainer users={receivedRequests}/>
         </>
     )
