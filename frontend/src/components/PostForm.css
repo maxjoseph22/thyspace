@@ -5,7 +5,7 @@
     width: 100vw; 
     height: 100vh; 
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3rem); 
+    backdrop-filter: blur(1rem); 
     display: flex;
     justify-content: center; 
     align-items: center; 
@@ -41,12 +41,15 @@
     width: 100%;
     justify-content: space-between;
     margin-bottom: 0.9rem;
-    background-color: #9b1c31;
     border-radius: 2rem;
 }
 
 .post-side-heading {
     min-width: 3rem;
+}
+
+.post-form-close {
+    color: #f3e3c8
 }
 
 .post-form-close:hover {
@@ -61,65 +64,80 @@
 .post-image-container {
     display: flex;
     justify-content: center;
-    min-height: 5rem;
+    /* min-height: 5rem; */
     align-items: center;
-
 }
 
 .post-text-container {
-    width: 80%;
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin:20px;
+    border-radius: 5px;
 }
 
 .post-text {
+    margin: 0;
     height: 8rem;
     resize: none;
     box-sizing: border-box;
     flex-grow: 1;
-    background-color: #9b1c31;
+    border: none;
+    background-color: #56524a;
+    padding: 10px;
+    border-radius: 5px;
+    color: #f3e3c8;
+    font-family: 'EagleLake';
 }
 
 .post-text::placeholder {
-    color: #f5f5dc;
+    color: #f3e3c8;
+
 }
 
 .post-form-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 40vw;
+    width: 35vw;
 }
 
 .post-btn {
     margin: 0;
     border: none;
-    flex-grow: 1;
-    margin-right: 0.8rem;
+    align-self: center;
+    flex-grow: .9;
+    margin-left: 2.8rem;
     background-color: #9b1c31;
-
     border-radius: 2rem;
     color: #f5f5dc;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .post-btn:hover {
     cursor: pointer;
-    scale: 0.9;
 }
 
 .custom-file-upload {
-    margin: 0;
+    margin: 0.1rem;
+    scale: 1.35;
+    padding: 0.6rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #952424;
+    color: #f3e3c8;
+    border: 2px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+    transition: background-color 0.3s;
+    cursor: pointer;
 }
 
-.upload-icon:hover {
-    cursor: pointer;
-    scale: 0.9;
+.custom-file-upload:hover {
+    background-color: #d64f4f;
 }
 
 @keyframes spin {
