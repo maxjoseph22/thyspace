@@ -43,7 +43,7 @@ export function DiplomacyPage() {
             <img src="https://c.tenor.com/43cc01Cj1JkAAAAd/tenor.gif" alt="Fun GIF"></img>
             <h1>friend or foe?</h1>
                 <AllianceRequestContainer users={receivedRequests} setUsers={setReceivedRequests}/>
-
+        </div>
         </>
     )
 }
