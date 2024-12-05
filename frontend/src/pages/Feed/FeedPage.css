@@ -6,10 +6,12 @@ body {
 }
 
 .feed-page {
-    background-image: url('../../assets/Feedpage_Background.png');
+    background-image: url('../../assets/Background.png');
     background-attachment: fixed;
-    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
+    margin-right: 15rem;
 }
 
 h2 {
@@ -46,13 +48,6 @@ h2 {
 .feed button:hover{
     background-color: #d64f4f;
 }
-
-.post {
-    margin: 2.6rem;
-    margin-right: 15rem;
-}
-
-
 
 .feed {
     font-family: 'EagleLake';

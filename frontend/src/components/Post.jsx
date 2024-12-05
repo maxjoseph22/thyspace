@@ -9,6 +9,7 @@ import CommentsContainer from "./Comments/CommentsContainer";
 import { Link } from "react-router-dom";
 
 function Post({ post, setPosts, sendUpdate }) {
+
     const [update, setUpdate] = useState(false); 
     const [updateInput, setUpdateInput] = useState(post.message);
 
@@ -16,7 +17,8 @@ function Post({ post, setPosts, sendUpdate }) {
     const token = localStorage.getItem("token");
 
     const postToRemove = await deletePost(post._id, token)
-
+    
+    
     // makes the new list of posts without the one deleted..
     await setPosts((prev) => {
         // ..by filtering to show all but the one deleted
@@ -51,6 +53,7 @@ function Post({ post, setPosts, sendUpdate }) {
             return p._id === post._id ? { ...p, likes: updatedData.likes} : p
         }))
     }
+    
 
     // renders the post, with conditional rendering of Update and Delete buttons
     return (
