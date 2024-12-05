@@ -8,7 +8,6 @@ const AllianceRequestButton = (props) => {
     const [requested, request] = useState(() => {
         return status === "pending"
     })
-    console.log(`requested: ${requested}`)
 
     const sendRequest = async () => {
         try {

@@ -18,8 +18,11 @@ const MyProfile = () => {
 
     useEffect(() => {
         fetchUser();
-        fetchPosts();
         fetchAlliances();
+    }, [])
+
+    useEffect(() => {
+        fetchPosts();
     }, [user])
 
     const fetchUser = async () => {
@@ -46,7 +49,6 @@ const MyProfile = () => {
             if (!token) throw new Error("Please log in");
 
             const data = await viewForgedAlliances(token); // Fetch alliances
-            console.log("Alliances data:", data.alliances);
             setAlliances(data.alliances); // Update the alliances state
             setError(null);
         } catch (err) {

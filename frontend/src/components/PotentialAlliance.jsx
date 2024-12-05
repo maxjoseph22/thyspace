@@ -9,7 +9,6 @@ const PotentialAlliance = ({ user }) => {
     // const updateRole = newRole => {
     //     setRole(newRole)
     // }
-    console.log(user)
 
     return (
         <div className="">
