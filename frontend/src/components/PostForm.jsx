@@ -35,7 +35,7 @@ const PostForm = ({submitPost, setSeePostForm}) => {
 
     return (
         <div className="overlay">
-        <div className="popup-form">
+        {/* <div className="popup-form"> */}
             <form 
                 className="post-form"
                 onSubmit={(e) => {
@@ -47,7 +47,7 @@ const PostForm = ({submitPost, setSeePostForm}) => {
             }}>
                 <div className="post-form-header">
                     <div className="post-side-heading"></div>
-                    <label className="post-form-heading">Create Post</label><IoMdClose
+                    <label className="post-form-heading">Speak Your Words</label><IoMdClose
                     className="post-side-heading post-form-close" 
                     onClick={(e) => {
                         e.preventDefault()
@@ -90,7 +90,7 @@ const PostForm = ({submitPost, setSeePostForm}) => {
                     />
                 </div>
             </ form>
-        </div>
+        {/* </div> */}
         </div>
     )
 }

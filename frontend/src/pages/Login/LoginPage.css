@@ -19,7 +19,9 @@
     padding: 30px;
     border-radius: 0px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 5px solid #f1b83a;
+    border: 5px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
 }
 
 
@@ -63,7 +65,9 @@ input[type="submit"] {
     margin-top: 20px;
     background-color: #952424;
     color: #f3e3c8;
-    border: 2px solid #f1b83a;
+    border: 2px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
     border-radius: 0;
     font-size: 0.9rem;
     cursor: pointer;
@@ -73,6 +77,9 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #d64f4f;
+    border: 2px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
 }
 
 

@@ -1,16 +1,33 @@
 .post {
-    border: solid black 1px;
     padding: 0.8rem;
+    margin-left: 2.6rem;
+}
+
+.whole-post {
+    /* background-image: url('../assets/scrollFinal.png'); */
+    background-color: #2f2d2a;
+    border: 5px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+    width: 100%;
 }
 
 .post-header {
     display: flex;
     justify-content: space-between;
+    padding-left: 2rem;
 }
 
 .user-info {
     display: flex;
     align-items: center;
+}
+
+.post-btns {
+    margin-right: 1.3rem;
+}
+.username-date {
+    margin-left: 1.3rem;
 }
 
 .picture{
@@ -29,12 +46,14 @@
 .main-content-header {
     display: flex;
     justify-content: flex-end;
+    padding-right: 1rem;
 }
 
 .main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 .main-content img {
@@ -42,24 +61,35 @@
     height: 13rem;
 }
 
+a {
+    text-decoration: none;
+}
 .post-username {
     font-size: 0.8rem;
+    text-decoration: none;
+    color: #f3e3c8;
+    font-size: 1.1rem;
 }
 
 .post-date {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
+    color: #f3e3c8;
+    justify-self: left;
 }
 
 .edited-tag {
     font-size: 0.6rem;
+    color: #7e776b;
 }
 
 .post-message {
     margin: 0.8rem 0;
+    color: #f3e3c8;
 }
 
 .edit-post {
     margin: 0 0.4rem 0 0;
+    color: #f3e3c8;
 }
 
 .edit-post:hover {
@@ -67,6 +97,9 @@
     scale: 0.9;
 }
 
+.delete-post {
+    color: #f3e3c8;
+}
 .delete-post:hover {
     cursor: pointer;
     animation: spin 0.25s linear;
@@ -85,6 +118,38 @@
     cursor: pointer;
     animation: reverse-spin 0.5s forwards;
 }
+
+.post-cmts {
+    padding-bottom: 1.2rem;
+    display: flex;
+    justify-self: center;
+    padding-left: 1rem;
+    flex-direction: column;
+    width: 30%;
+    color:#f3e3c8
+}
+
+.post-cmts textarea {
+    margin: 0.5rem;
+    margin-top: 2rem;
+    height: 8rem;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+    flex-grow: 1;
+    border: none;
+    background-color: rgb(79, 79, 79);
+    padding: 10px;
+    border-radius: 5px;
+    color: #f3e3c8;
+    font-family: 'EagleLake';
+}
+
+.post-cmts p {
+    display:flex;
+    justify-self: left
+}
+
 
 @keyframes reverse-spin {
     0% {
