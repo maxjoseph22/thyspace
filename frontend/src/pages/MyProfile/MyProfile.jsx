@@ -155,7 +155,7 @@ const MyProfile = () => {
                             <p>No user found or you are not logged in.</p>
                         )
                     )}
-                    <div className="alliance section">
+                    <div className="alliance-section">
                         <h3>Your Alliances</h3>
                         {alliances.length > 0 ? (
                             alliances.map((alliance) => (

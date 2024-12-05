@@ -33,7 +33,7 @@ body.home {
 .home h1 {
   font-size: 4.9em;
   line-height: 1.1;
-  font-family: 'Magnific-Chaos';
+  font-family: 'EagleLake';
 }
 
 .user-auth a {
@@ -41,7 +41,11 @@ body.home {
   justify-content: space-around;
   gap: 50px;
   font-family: 'EagleLake';
-  color: #952424;
-  font-size: 1.5rem;
+  background-color: #952424;
+  border: 2px solid #f1b83a;
+  border-radius: 0;
+  color: #f3e3c8;
+  font-size: 1.2rem;
   text-decoration: none;
+  padding: 3px 22px 3px 22px;
 }
