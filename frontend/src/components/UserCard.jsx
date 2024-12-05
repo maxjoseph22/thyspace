@@ -5,7 +5,7 @@ const UserCard = ({ user }) => {
             <h3>{user && user.username}</h3>
             <h3>{user && user.firstname}</h3>
             <h3>{user && user.lastname}</h3>
-            <h3>{user && user.alliances}</h3>
+            {/* <h3>{user && user.alliances}</h3> */}
             <h3>{user && user.location}</h3>
         </div>
     )
