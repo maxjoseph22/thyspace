@@ -1,0 +1,43 @@
+.update-profile {
+    margin: 0.5rem;
+    margin-top: 2rem;
+    width: 50%;
+    box-sizing: border-box;
+    /* flex-grow: 1; */
+    border: none;
+    background-color: rgb(79, 79, 79);
+    padding: 10px;
+    border-radius: 5px;
+    color: #f3e3c8;
+    font-family: 'EagleLake';
+}
+
+.custom-file-upload-EP {
+    margin: 0.4rem;
+    /* scale: 1.35; */
+    padding: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #952424;
+    color: #f3e3c8;
+    border: 2px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.edit-profile-buttons {
+    padding: 12px;
+    background-color: #952424;
+    color: #f3e3c8;
+    border: 3px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+    border-radius: 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'EagleLake', sans-serif;
+}

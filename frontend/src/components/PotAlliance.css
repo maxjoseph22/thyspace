@@ -1,0 +1,12 @@
+.alliance {
+    background-color: #2f2d2a;
+    padding: 0.6rem;
+    background-color: #2f2d2a;
+    border: 5px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+}
+
+.alliance-info {
+    color: #f3e3c8;
+}

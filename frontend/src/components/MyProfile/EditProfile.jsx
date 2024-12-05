@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { dealWithCloudinarySend, getPayloadFromToken } from "../../services/helperFunctions";
-
+import './EditProfile.css'
 
 const EditProfile = ({user, onSave, onCancel }) => {
     const [formData, setFormData] = useState({...user });
@@ -56,6 +56,7 @@ const EditProfile = ({user, onSave, onCancel }) => {
                 />: null}
             </div>
             <input
+                className="update-profile"
                 type="text"
                 name="username"
                 placeholder="username"
@@ -63,6 +64,7 @@ const EditProfile = ({user, onSave, onCancel }) => {
                 onChange={handleChange}
                 />
             <input
+                className="update-profile"
                 type="text"
                 name="firstname"
                 placeholder="firstname"
@@ -70,6 +72,7 @@ const EditProfile = ({user, onSave, onCancel }) => {
                 onChange={handleChange}
                 />
             <input
+                className="update-profile"
                 type="text"
                 name="lastname"
                 placeholder="lastname"
@@ -77,6 +80,7 @@ const EditProfile = ({user, onSave, onCancel }) => {
                 onChange={handleChange}
                 />
             <input
+                className="update-profile"
                 type="text"
                 name="location"
                 placeholder="location"
@@ -85,7 +89,7 @@ const EditProfile = ({user, onSave, onCancel }) => {
                 />
 
             <label
-                htmlFor="file-upload" className="custom-file-upload"
+                htmlFor="file-upload" className="custom-file-upload-EP"
             >
                 <FaRegImage className="upload-icon"/>
             </label>
@@ -97,8 +101,12 @@ const EditProfile = ({user, onSave, onCancel }) => {
             type='file'
             style={{ display: 'none' }}
             />
-            <button type="submit">Save</button>
-            <button type="button" onClick={onCancel}>Cancel</button>
+            <button 
+            className="edit-profile-buttons"
+            type="submit">Save</button>
+            <button 
+            className="edit-profile-buttons"
+            type="button" onClick={onCancel}>Cancel</button>
         </form>
     );
 };

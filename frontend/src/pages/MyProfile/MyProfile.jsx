@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getUserById, updateUser, deleteUser } from "../../services/users";
-// import UserCard from "../../components/UserCard";
 import { getPayloadFromToken } from "../../services/helperFunctions";
 import EditProfile from "../../components/MyProfile/EditProfile";
 import NavBar from "../Nav/NavBar";
@@ -66,8 +65,7 @@ const MyProfile = () => {
             const token = localStorage.getItem('token')
 
             if (window.confirm("Warning! Are you sure you want to delete your profile?")) {
-                const response = await deleteUser(user._id, token);
-                console.log("Delete message:", response)
+                await deleteUser(user._id, token);
                 alert("Your profile has been deleted")
 
                 localStorage.removeItem("token");

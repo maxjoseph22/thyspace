@@ -46,7 +46,6 @@ export function FeedPage() {
         const imageUrlCheck = imageUrl ? imageUrl.secure_url: ''
         const newPost = await createPost(postInfo, decodedpayload.user_id, token, imageUrlCheck)
         setPosts((prev) => [newPost.post, ...prev])
-        console.log(newPost)
         localStorage.setItem('token', newPost.token)
     }
 

@@ -27,7 +27,7 @@ const NavBar = ({ profileInfo }) => {
                 <Link to='/feed'>
                 <div>
                     <img 
-                    src="public/ThySpace_Logo.png" 
+                    src="/public/ThySpace_Logo.png" 
                     width='180'
                     height='120'
                     alt="Thy Space Logo"

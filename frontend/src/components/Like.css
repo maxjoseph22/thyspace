@@ -1,0 +1,10 @@
+.like-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.like {
+    color: #f3e3c8;
+    margin: 0 0.4rem;
+}

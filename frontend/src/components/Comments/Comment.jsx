@@ -2,6 +2,7 @@ import { deleteComment, updateComment } from "../../services/comments";
 import { getPayloadFromToken } from "../../services/helperFunctions";
 import { useState } from "react";   
 import Like from "../Like";
+import './Comment.css'
 
 function Comment({ comment, setPosts, postId }) {
     const [ update, setUpdate ] = useState(false)
@@ -70,24 +71,31 @@ function Comment({ comment, setPosts, postId }) {
 
     return (
         <>
-        {comment.userId.profilePicture && <img src={comment.userId.profilePicture} />}
-        <p>{comment.userId.username}</p>
+        <div className="comment-who">
+            {comment.userId.profilePicture && <img 
+            className="comment-pic"
+            src={comment.userId.profilePicture} />}
+            <p>{comment.userId.username}</p>
+        </div>
         <div className="main-content-header">
             <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
         </div>
         {update? 
         <input value={updateInput}
         onChange={handleCommentUpdate}
+        className="update-comment"
         />
         :
-        <p>{comment.content}</p>}
+        <p className="comment-content">{comment.content}</p>}
 
         <Like  entity={comment} setPosts={setPosts} handleLikeUpdate={handleLikeUpdate} entityType='Comment' />
 
         {createdByCurrentUser() && 
         ( update ?
-            <div>
-                <button onClick={submitCommentChanges}>
+            <div className="submit-undo">
+                <button onClick={submitCommentChanges}
+                className="comment-buttons"
+                >
                     Submit
                     </button>
                 <button onClick={
@@ -96,12 +104,17 @@ function Comment({ comment, setPosts, postId }) {
                         setUpdate(false)
                     }
                 }
+                className="comment-buttons"
                 >Undo</button>
             </div>
             :
-            <div>
-                <button onClick={() => setUpdate(true)}>Update</button>
-                <button onClick={sendDeleteComment}>Delete</button>
+            <div className="update-delete">
+                <button onClick={() => setUpdate(true)}
+                    className="comment-buttons"
+                    >Update</button>
+                <button onClick={sendDeleteComment}
+                className="comment-buttons"
+                >Delete</button>
             </div>
         )
         }

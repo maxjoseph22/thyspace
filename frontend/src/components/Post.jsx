@@ -61,8 +61,8 @@ function Post({ post, setPosts, sendUpdate }) {
             <div className="whole-post">
             <div className="post-header">
                 <div className="user-info">
-                    <div className="picture">
-                        {post.user_id.profilePicture ? <img src={post.user_id.profilePicture} />: <p>Temporary</p>}
+                    <div className="picture-cont">
+                        {post.user_id.profilePicture ? <img className="post-pp" src={post.user_id.profilePicture} />: <p>Temporary</p>}
                     </div>
                     <div className="username-date">
                         <Link to={`/userprofile/${post.user_id._id}`}>
@@ -123,10 +123,10 @@ function Post({ post, setPosts, sendUpdate }) {
                     <p className="edited-tag">{checkIfEdited() ? null: 'Edited'}</p>
                 </div>
                 <div className="main-content">
-                    {post.image ? <img src={post.image}/>: null}
+                    {post.image ? <img className='post-img' src={post.image}/>: null}
                     {update ? 
                     <input
-                    className="post-message"
+                    className="update-post"
                     value={updateInput}
                     onChange={handleUpdateInput}/>
                     :
