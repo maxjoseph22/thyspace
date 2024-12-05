@@ -58,7 +58,7 @@ export function FeedPage() {
       style={{ position: 'absolute', top: '0', left: '0', zIndex: '1000' }} 
       /> */}
     <NavBar />
-      <h2>Feed</h2>
+      <h2>Thy Feed</h2>
       <div className="feed" role="feed">
         {seePostForm ? 
         <PostForm submitPost={submitPost} setSeePostForm={setSeePostForm}/>
