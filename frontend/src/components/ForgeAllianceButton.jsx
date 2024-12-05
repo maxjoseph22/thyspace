@@ -1,4 +1,5 @@
 import { forgeAlliance } from "../services/alliances"
+import "./forgeAllianceButton.css";
 
 
 const ForgeAllianceButton = (props) => {
@@ -19,7 +20,9 @@ const ForgeAllianceButton = (props) => {
         }
     }
     return (
+        <div className="forge">
         <button onClick={handleClick}>Complete the forging of this alliance?</button>
+        </div>
     );
 };
 
