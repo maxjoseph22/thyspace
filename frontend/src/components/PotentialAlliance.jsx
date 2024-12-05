@@ -12,11 +12,10 @@ const PotentialAlliance = ({ user }) => {
 
     return (
         <div className="">
-            <h2>{user.profilePicture ? user.profilePicture: 'Tom'}</h2>
+            {user.profilePicture && <img src={user.profilePicture}/>}
             <p>{`${user.firstname} ${user.lastname}`}</p>
             <p>{user.location}</p>
             {/* <p>Joined: {convertDate(user)}</p> */}
-            {console.log(user)}
             <AllianceRequestButton _id={user._id} status={user.status} role={user.allianceRole}/>
         </div>
     )

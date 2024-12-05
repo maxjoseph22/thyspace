@@ -1,8 +1,8 @@
 import { useState, useRef } from "react"
-const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
 import './PostForm.css'
 import { IoMdClose } from "react-icons/io";
 import { FaRegImage } from "react-icons/fa";
+import { dealWithCloudinarySend } from "../services/helperFunctions";
 
 const PostForm = ({submitPost, setSeePostForm}) => {
     const [ postContent, setPostContent ] = useState('')
@@ -26,36 +26,10 @@ const PostForm = ({submitPost, setSeePostForm}) => {
         fileReader.readAsDataURL(selectedFile)
     }
 
-    const dealWithCloudinarySend = async (userId) => {
-        let imageUrl
-        try {
-            if (imageFile) {
-                const formData = new FormData();
-                formData.append("file", imageFile);
-                formData.append("upload_preset", "post_images")
-                formData.append("folder", `post_images/${userId}`);
-                const response = await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
-                    {
-                        method: 'POST',
-                        body: formData
-                    }
-                )
-
-                if (!response.ok) {
-                    throw new Error("Failed to upload image to Cloudinary");
-                }
-
-                const data = await response.json();
-                imageUrl = data
-            }
-        }
-        catch (error) {
-            console.error(error);
-            alert("An error occurred. Please try again.");
-        }
+    const sendImagePic = async (userId) => {
+        const imageUrl = dealWithCloudinarySend(userId, imageFile, 'post_images')
         setImageFile(null)
-        fileInputRef.current.value = ''
+        if (fileInputRef.current) fileInputRef.current.value = ''
         return imageUrl
     }
 
@@ -66,9 +40,10 @@ const PostForm = ({submitPost, setSeePostForm}) => {
                 className="post-form"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    submitPost(postContent, dealWithCloudinarySend)
+                    submitPost(postContent, sendImagePic)
                     setPreviewImage('')
                     setPostContent('')
+                    setSeePostForm(false)
             }}>
                 <div className="post-form-header">
                     <div className="post-side-heading"></div>
@@ -105,7 +80,6 @@ const PostForm = ({submitPost, setSeePostForm}) => {
                     >
                         <FaRegImage className="upload-icon"/>
                     </label>
-                    
                     <input
                     id='file-upload'
                     ref={fileInputRef}

@@ -40,8 +40,9 @@ export function FeedPage() {
         const decodedpayload = getPayloadFromToken(token)
         const imageUrl = await dealingWithImages(decodedpayload.user_id)
         const imageUrlCheck = imageUrl ? imageUrl.secure_url: ''
-        const newPost = await createPost(postInfo, imageUrlCheck, decodedpayload.user_id, token)
+        const newPost = await createPost(postInfo, decodedpayload.user_id, token, imageUrlCheck)
         setPosts((prev) => [newPost.post, ...prev])
+        console.log(newPost)
         localStorage.setItem('token', newPost.token)
     }
 

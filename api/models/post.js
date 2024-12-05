@@ -7,6 +7,7 @@ const PostSchema = new mongoose.Schema({
   message: {type: String, required:true},
   user_id: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
   image: {type: String},
+  isEdited: { type: Boolean, default: false },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
   comments: [{type: mongoose.Schema.Types.ObjectId, ref: "Comment", default: []}]
 }, {timestamps: true});

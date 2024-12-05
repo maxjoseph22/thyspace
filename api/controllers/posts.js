@@ -7,10 +7,17 @@ async function getAllPosts(req, res) {
   // const posts = await Post.find().sort({createdAt: - 1}).populate('user_id', 'profilePicture username')
   const posts = await Post.find().sort({createdAt: - 1}).populate('user_id', 'profilePicture username').populate({
     path: "comments", // populate post with all comments 
-    populate: {
+    options: { sort: { createdAt: -1 } },
+    populate: [{
       path: "userId", // Populate users in each comment
       select: "profilePicture username", // Select only profilePicture and username fields for users
+    },
+    {
+      path: 'likes', // Populate likes within comments
+      select: 'username userId',
+      model: 'User'
     }
+  ]
   })
   .populate({
     path: 'likes',
@@ -33,14 +40,21 @@ async function createPost(req, res) {
 
 async function updatePost(req, res){ 
   const {id} = req.params;
-  const post = await Post.findByIdAndUpdate(id, {$set: req.body}, {new: true})
+  const post = await Post.findByIdAndUpdate(id, {$set: {...req.body, isEdited: true}}, {new: true})
     .populate('user_id', 'profilePicture username')
     .populate({
       path: "comments", // populate post with all comments 
-      populate: {
+      options: { sort: { createdAt: -1 } },
+      populate: [{
         path: "userId", // Populate users in each comment
         select: "profilePicture username", // Select only profilePicture and username fields for users
+    },
+    {
+      path: 'likes', // Populate likes within comments
+      select: 'username userId',
+      model: 'User'
     }
+  ]
   })
   .populate({
     path: 'likes',
@@ -66,9 +80,16 @@ async function deletePost(req, res){
 
 async function getUserPosts(req, res){
   const {id} = req.params
-  console.log("user id:", id)
   try{
     const posts = await Post.find({ user_id: id}).sort({createdAt: -1}).populate('user_id', 'profilePicture username')
+    .populate({
+      path: "comments", // populate post with all comments 
+      options: { sort: { createdAt: -1 } },
+      populate: {
+        path: "userId", // Populate users in each comment
+        select: "profilePicture username", // Select only profilePicture and username fields for users
+      }
+    })
     .populate({
       path: 'likes',
       select: 'username userId',

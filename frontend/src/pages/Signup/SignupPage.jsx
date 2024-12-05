@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { signup } from "../../services/authentication";
 import './SignupPage.css'
 
 export function SignupPage() {
+
+  useEffect(() => {
+    document.body.classList.add("signup-page");
+    return () => {
+      document.body.classList.remove("signup-page");
+    };
+  }, []);
+
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '',
@@ -12,6 +20,8 @@ export function SignupPage() {
     firstname: '',
     lastname: ''
   })
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate();
 
@@ -33,33 +43,49 @@ export function SignupPage() {
 
   return (
     <>
-      <h2>Signup</h2>
+      <h2>SIGNUP</h2>
       <form onSubmit={handleSubmit}
       className="signup-form"
       >
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           id="email"
           type="text"
           name='email'
           value={userInfo.email}
-          placeholder="email"
+          // placeholder="Email"
           onChange={handleInputChanges}
           className="user-field"
         />
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
+        <div className="login-password">
+          <input
+            // placeholder="Password"
+            id="password"
+            type={showPassword ? 'text': 'password'}
+            name='password'
+            value={userInfo.password}
+            onChange={handleInputChanges}
+            className="user-field"
+          />
+          {showPassword ?
+            <IoIosEyeOff
+            className="show-password" 
+            type='button'
+            onClick={(e) => {
+              e.preventDefault()
+              setShowPassword(!showPassword)}}/>
+          :
+            <IoIosEye 
+            className="show-password"
+            type='button'
+            onClick={(e) => {
+              e.preventDefault()
+              setShowPassword(!showPassword)}}/>
+        }</div>
+        <label htmlFor="username">Username</label>
         <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          name='password'
-          value={userInfo.password}
-          onChange={handleInputChanges}
-          className="user-field"
-        />
-        <label htmlFor="username">Username:</label>
-        <input
-          placeholder="username"
+          // placeholder="Username"
           id="username"
           type="text"
           name='username'
@@ -67,9 +93,9 @@ export function SignupPage() {
           onChange={handleInputChanges}
           className="user-field"
         />
-        <label htmlFor="firstname">First Name:</label>
+        <label htmlFor="firstname">First Name</label>
         <input
-          placeholder="firsname"
+          // placeholder="First Name"
           id="firstname"
           type="text"
           name='firstname'
@@ -77,9 +103,9 @@ export function SignupPage() {
           onChange={handleInputChanges}
           className="user-field"
         />
-        <label htmlFor="lastname">Last Name:</label>
+        <label htmlFor="lastname">Last Name</label>
         <input
-          placeholder="lastname"
+          // placeholder="Last Name"
           id="lastname"
           type="text"
           name='lastname'

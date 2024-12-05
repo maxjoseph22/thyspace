@@ -5,6 +5,7 @@ import './Post.css'
 import { FaPencilAlt, FaUndo } from "react-icons/fa";
 import { IoMdClose, IoMdSend } from "react-icons/io";
 import Like from "./Like";
+import CommentsContainer from "./Comments/CommentsContainer";
 import { Link } from "react-router-dom";
 
 function Post({ post, setPosts, sendUpdate }) {
@@ -41,10 +42,14 @@ function Post({ post, setPosts, sendUpdate }) {
         setUpdateInput(e.target.value);
     }
 
-
-
     const checkIfEdited = () => {
-        return post.createdAt === post.updatedAt
+        return !post.isEdited
+    }
+
+    const handleLikeUpdate = (updatedData) => {
+        setPosts(prevPosts => prevPosts.map(p => {
+            return p._id === post._id ? { ...p, likes: updatedData.likes} : p
+        }))
     }
 
     // renders the post, with conditional rendering of Update and Delete buttons
@@ -54,7 +59,7 @@ function Post({ post, setPosts, sendUpdate }) {
             <div className="post-header">
                 <div className="user-info">
                     <div className="picture">
-                        <p>{post.user_id.profilePicture ? post.user_id.profilePicture: 'Temporary'}</p>
+                        {post.user_id.profilePicture ? <img src={post.user_id.profilePicture} />: <p>Temporary</p>}
                     </div>
                     <div className="username-date">
                         <Link to={`/userprofile/${post.user_id._id}`}>
@@ -127,11 +132,13 @@ function Post({ post, setPosts, sendUpdate }) {
                     >{post.message}</p>}
                 </div>
             </div>
+
             <div className="post-int-btns">
-                <Like  post={post} setPosts={setPosts}/>
-                <button>Comment</button>
+                <Like  entity={post} setPosts={setPosts} handleLikeUpdate={handleLikeUpdate} entityType='Post'/>
             </div>
-            <div className="post-cmts"></div>
+            <div className="post-cmts">
+                <CommentsContainer comments={post.comments} setPosts={setPosts} postId={post._id} />
+            </div>
 
         </div>
         </div>

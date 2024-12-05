@@ -12,6 +12,8 @@ const ForgeAllianceButton = (props) => {
             }
             const response = await forgeAlliance(token, _id)
             console.log("Alliance Forged", response);
+            alert("⚔️🛡️ Alliance forged! Let the banners rise!");
+            window.location.reload();
         } catch (error) {
             console.error("Error forging alliance:", error)
         }

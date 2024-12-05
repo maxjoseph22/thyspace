@@ -1,9 +1,47 @@
+.homepage{
+  background-image: url('../../assets/Login_page.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
 .home {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 74vh;
+  width: 100%;
+  text-align: center;
 }
 
 .user-auth {
   display: flex;
   justify-content: space-around;
+  gap: 50px;
+}
+
+body.home {
+  display: block !important;
+}
+
+.home h1 {
+  font-size: 4.9em;
+  line-height: 1.1;
+  font-family: 'Fegakines';
+}
+
+.user-auth a {
+  display: flex;
+  justify-content: space-around;
+  gap: 50px;
+  font-family: 'EagleLake';
+  color: #952424;
+  font-size: 1.5rem;
+  text-decoration: none;
 }
