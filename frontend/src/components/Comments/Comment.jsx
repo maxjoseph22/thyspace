@@ -51,7 +51,7 @@ function Comment({ comment, setPosts, postId }) {
         setUpdate(false)
     }
 
-    const handleLikeUpdate = (updatedData) => {
+    const handleLikeUpdate = async (updatedData) => {
         setPosts(prevPosts => {
             return prevPosts.map(post => {
                 if (post._id === postId) {

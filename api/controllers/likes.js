@@ -25,7 +25,7 @@ async function toggleLike(req, res) {
 
             const updatedLikes = await Like.find({ entityId, entityType })
             .populate('userId', 'username _id')
-            await  Like.deleteOne({ entityId, entityType })
+            // await  Like.deleteOne({ entityId, entityType })
             // Flatten 
 
             return res.status(200).json({

@@ -29,7 +29,7 @@ const Like = ({ entity, entityType, handleLikeUpdate }) => {
             const updatedData = await toggleLikes( entity._id, userId, entityType, token)
             const alreadyLiked = isLikedByUser(updatedData.likes, userId)
             setIsLiked(alreadyLiked)
-            handleLikeUpdate(updatedData)
+            await handleLikeUpdate(updatedData)
         } catch (error) {
             console.error('Error toggling like:', error)
         }
