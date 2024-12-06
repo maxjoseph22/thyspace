@@ -148,7 +148,7 @@ const MyProfile = () => {
                                         className="shield-overlay"
                                     />
                                     <img className="avatar-image"
-                                        src={user.avatar || "http://via.placeholder.com/150"}
+                                        src={user.profilePicture || "http://via.placeholder.com/150"}
                                         alt={`${user.firstname || 'User'}'s Profile Pic`}
                                     />
                                     <h3>{user.firstname} {user.lastname}</h3>
