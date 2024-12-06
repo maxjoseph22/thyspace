@@ -39,6 +39,9 @@ const AllianceRequestButton = (props) => {
         }
     }
     const rejectRequest = async () => {
+        const audio = new Audio('/declineAlliance.mp3');
+        audio.volume = 0.5;
+        audio.play();
         try {
             const token = localStorage.getItem("token")
             if(!token) {
@@ -54,20 +57,25 @@ const AllianceRequestButton = (props) => {
     
     return (
         <div className="reject">
-        {requested && localRole==="receiver" && (
+        {localStatus === "accepted" && (
+            <h3 className="forged">Alliance forged!</h3>
+        )}
+        {requested && localRole === "receiver" && localStatus !== "accepted" && (
             <div>
                 <p className="alliance-info"> This user sent an envoy!</p>
-                <ForgeAllianceButton _id={_id}/> <br></br>
+                <ForgeAllianceButton 
+                    _id={_id}
+                    setLocalStatus={setLocalStatus}/> <br></br>
                 <button onClick={rejectRequest}>Reject this alliance request</button>
             </div>
         )}
-        {requested && localRole==="sender" && (
+        {requested && localRole==="sender" && localStatus !== "accepted" && (
             <div>
                 <p className="alliance-info">Envoy dispatched!</p>
                 <button onClick={withdrawRequest}>Withdraw alliance request?</button>
             </div>
         )}   
-        {!requested && <button onClick={sendRequest}>Request an alliance</button>}
+        {!requested && localStatus !== "accepted" && <button onClick={sendRequest}>Request an alliance</button>}
         </div>
     );
 };

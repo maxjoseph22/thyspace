@@ -3,7 +3,7 @@ import "./forgeAllianceButton.css";
 
 
 const ForgeAllianceButton = (props) => {
-    const { _id } = props
+    const { _id, setLocalStatus } = props
 
     
     
@@ -18,6 +18,7 @@ const ForgeAllianceButton = (props) => {
                 throw new Error("No token found")
             }
             await forgeAlliance(token, _id)
+            setLocalStatus("accepted")
             alert("⚔️🛡️ Alliance forged! Let the banners rise!");
             // window.location.reload();
             updateScreen()
