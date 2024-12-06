@@ -8,6 +8,11 @@ body {
 
 .diplomacy-background {
     background-image: url('../../assets/Background.png');
+    background-size: cover; /* Ensures the image covers the element without stretching */
+    background-position: center; /* Keeps the image centered */
+    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+    background-attachment: fixed;
+    height: 100vh; /* Makes sure the background covers the full viewport height */
 }
 
 .{
