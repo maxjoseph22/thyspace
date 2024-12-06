@@ -42,8 +42,11 @@ export function DiplomacyPage() {
             <h1>New allies flock to our ranks!</h1>
             <img src="https://c.tenor.com/43cc01Cj1JkAAAAd/tenor.gif" alt="Fun GIF"></img>
             <h1>Friend or foe?</h1>
-                <AllianceRequestContainer users={receivedRequests} setUsers={setReceivedRequests}/>
         </div>
+        <div className="alliances">
+            <AllianceRequestContainer users={receivedRequests} setUsers={setReceivedRequests}/>
+        </div>
+        
         </>
     )
 }
