@@ -1,0 +1,17 @@
+.avatar-image {
+    position: relative;
+    object-fit: cover;
+    height: 200px;
+    width: 200px;
+    clip-path: polygon(20% 18%, 28% 19%, 34% 17%, 41% 13%, 46% 10%, 50% 8%, 60% 15%, 66% 18%, 72% 20%, 79% 19%, 80% 27%, 80% 33%, 80% 40%, 80% 48%, 79% 54%, 77% 60%, 75% 65%, 72% 70%, 69% 76%, 63% 83%, 57% 88%, 50% 92%, 45% 89%, 40% 85%, 33% 79%, 28% 73%, 25% 67%, 22% 59%, 20% 51%, 20% 41%, 19% 33%);
+}
+
+.shield-overlay {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    width: 200px !important;
+    height: 180px !important;
+    z-index: 4;
+    object-fit: contain;
+}
