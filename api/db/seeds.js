@@ -302,15 +302,31 @@ const createAlliances = async () => {
             status: "pending"
         }),
         new Alliance({
-            sender: users[1]._id,
-            receiver: users[5]._id,
+            sender: users[5]._id,
+            receiver: users[1]._id,
             status: "pending"
         }),
         new Alliance({
             sender: users[1]._id,
             receiver: users[8]._id,
             status: "pending"
-        })
+        }),
+        new Alliance({
+            sender: users[6]._id,
+            receiver: users[1]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[7]._id,
+            receiver: users[1]._id,
+            status: "pending"
+        }),
+        new Alliance({
+            sender: users[8]._id,
+            receiver: users[1]._id,
+            status: "pending"
+        }),
+
     ]
     await Alliance.deleteMany({});
     await Alliance.insertMany(alliances);
