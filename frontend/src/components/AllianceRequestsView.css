@@ -1,5 +1,29 @@
 .alliance-request{
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'EagleLake';
+    position: relative;
+    background-color: #2f2d2a;
+    padding: 0.6rem;
+    background-color: #2f2d2a;
+    border: 5px solid #e3ad2f;
+    border-top-color: #fbd346;
+    border-left-color: #fbd346;
+    color: #f3e3c8;
 }
+.image-container {
+    position: relative; /* This will be the reference point for both the avatar and shield */
+    display: inline-block; /* Keeps both images within the same container */
+}
+.avatar-image {
+    position: relative;
+    object-fit: cover;
+    height: 200px;
+    width: 200px;
+    clip-path: polygon(20% 18%, 28% 19%, 34% 17%, 41% 13%, 46% 10%, 50% 8%, 60% 15%, 66% 18%, 72% 20%, 79% 19%, 80% 27%, 80% 33%, 80% 40%, 80% 48%, 79% 54%, 77% 60%, 75% 65%, 72% 70%, 69% 76%, 63% 83%, 57% 88%, 50% 92%, 45% 89%, 40% 85%, 33% 79%, 28% 73%, 25% 67%, 22% 59%, 20% 51%, 20% 41%, 19% 33%)
+}
+.shield-overlay {
+    position: absolute;
+    width: 200px !important;  /* Adjust based on shield size */
+    height: 180px !important;  /* Adjust based on shield size */
+    z-index: 4;  /* Ensure it's above the profile image */
+    object-fit: contain;  
+}
+
