@@ -7,6 +7,7 @@ import { IoMdClose, IoMdSend } from "react-icons/io";
 import Like from "./Like";
 import CommentsContainer from "./Comments/CommentsContainer";
 import { Link } from "react-router-dom";
+import SmallShield from "../assets/SmallShield.png"
 
 function Post({ post, setPosts, sendUpdate }) {
 
@@ -60,10 +61,26 @@ function Post({ post, setPosts, sendUpdate }) {
         <div className="post">
             <div className="whole-post">
             <div className="post-header">
-                <div className="user-info">
-                    <div className="picture-cont">
-                        {post.user_id.profilePicture ? <img className="post-pp" src={post.user_id.profilePicture} />: <p>Temporary</p>}
+                <div className="user-info" >
+                    <div className="profile-image-container"
+                        style={{ 
+                            width: '150px', // Fixed width
+                            position: 'relative',
+                            
+                        }}>
+                        <img
+                            src={SmallShield}
+                            alt="Shield"
+                            className="shield-overlay"
+                            style={{transform: 'scale(0.7)'}}
+                        />
+                        <img className="avatar-image" style={{transform: 'scale(0.7)'}}
+                            src={post.user_id.profilePicture || "http://via.placeholder.com/150"}
+                        />
                     </div>
+                    {/* <div className="picture-cont">
+                        {post.user_id.profilePicture ? <img className="post-pp" src={post.user_id.profilePicture} />: <p>Temporary</p>}
+                    </div> */}
                     <div className="username-date">
                         <Link to={`/userprofile/${post.user_id._id}`}>
                         <p className="post-username">{post.user_id.username}</p>
