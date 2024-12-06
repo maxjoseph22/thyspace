@@ -41,7 +41,7 @@ export function LoginPage() {
 
   return (
     <>
-    
+      <h2>LOGIN</h2>
       <form onSubmit={handleSubmit}
       className="login-form"
       >
