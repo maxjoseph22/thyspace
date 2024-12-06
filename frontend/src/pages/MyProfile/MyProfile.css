@@ -42,6 +42,7 @@ body {
     box-sizing: border-box; /* Add this to include padding and border in the element's total width and height */
     overflow: auto; /* Prevents content from overflowing */
     align-items: stretch; /* Ensures child elements stretch to fill the panel width */
+
 }
 
 /* .profile-panel {
@@ -77,7 +78,7 @@ body {
     height: 200px;
         /* Text styles */
     font-size: 16px; /* Specify the font size */
-    color: #333333; /* Specify the text color */
+    color: #f3e3c8 !important; /* Specify the text color */
 }
 
 .avatar-image {
@@ -146,18 +147,18 @@ body {
 
 .alliance-section {
     position: relative;
-    color: #2F2D2A;
     color: #f3e3c8
 
 }
 
-.alliance-section div p {
-    background: #e31010;
+.alliance-section {
+    background: #2F2D2A;
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
     margin: 0;
-    color: #f3e3c8 !important;
+    color: #f3e3c8 !important
+
 }
 
 .posts div p {

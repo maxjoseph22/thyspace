@@ -11,6 +11,20 @@
     position: relative; /* This will be the reference point for both the avatar and shield */
     display: inline-block; /* Keeps both images within the same container */
 }
+
+.user-profile-link {
+    color: #e3ad2f; /* Desired color */
+    text-decoration: none; /* No underline */
+}
+  
+.user-profile-link:hover {
+    color: #fbd346; /* Hover color */
+}
+  
+  .user-profile-link:focus {
+    outline: none; /* Optional: Remove focus outline */
+}
+
 .avatar-image {
     position: relative;
     object-fit: cover;

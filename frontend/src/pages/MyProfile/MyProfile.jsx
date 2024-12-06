@@ -158,7 +158,6 @@ const MyProfile = () => {
                                         <button onClick={deleteUserProfile}>Delete Profile</button>
                                     </div>
                                     
-                                
                                 <div className="alliance-section">
                                 <h3>Your Alliances</h3>
                                 {alliances.length > 0 ? (

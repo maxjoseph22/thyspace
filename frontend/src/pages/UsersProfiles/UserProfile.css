@@ -41,7 +41,43 @@ body {
     gap: 20px;
     min-height: 100%; 
 }
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+        /* Text styles */
+    font-size: 16px; /* Specify the font size */
+    color: #FFFFFF;
+    /* Specify the text color */
+}
 
+.avatar-image {
+    position: relative;
+    object-fit: cover;
+    height: 200px;
+    width: 200px;
+    clip-path: polygon(20% 18%, 28% 19%, 34% 17%, 41% 13%, 46% 10%, 50% 8%, 60% 15%, 66% 18%, 72% 20%, 79% 19%, 80% 27%, 80% 33%, 80% 40%, 80% 48%, 79% 54%, 77% 60%, 75% 65%, 72% 70%, 69% 76%, 63% 83%, 57% 88%, 50% 92%, 45% 89%, 40% 85%, 33% 79%, 28% 73%, 25% 67%, 22% 59%, 20% 51%, 20% 41%, 19% 33%)
+}
+.shield-overlay {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 0px;  /* Adjust as needed */
+    width: 200px !important;  /* Adjust based on shield size */
+    height: 180px !important;  /* Adjust based on shield size */
+    z-index: 4;  /* Ensure it's above the profile image */
+    object-fit: contain;  
+}
+
+.profile-container {
+    background: #2F2D2A;
+    border-radius: 15px;
+    border: 5px solid #E3AD2F;
+    border-top-color: #FBD346;
+    border-left-color: #FBD346;
+    padding: 20px;
+    color: #f3e3c8;
+}
 .profile-panel {
     background: #2F2D2A;
     border-radius: 15px;
