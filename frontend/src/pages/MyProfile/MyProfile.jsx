@@ -7,6 +7,7 @@ import { getPostsById } from "../../services/posts";
 import PostContainer from "../../components/PostContainer";
 import { viewForgedAlliances } from "../../services/alliances";
 import "./MyProfile.css";
+import Shield from "../../assets/Shield.png"
 
 const MyProfile = () => {
     const [user, setUser] = useState(null);
@@ -139,23 +140,48 @@ const MyProfile = () => {
                         />
                     ) : (
                         user ? (
-                            <div className="profile-panel">
-                                <img
-                                    src={user.avatar || "http://via.placeholder.com/150"}
-                                    alt={`${user.firstname || 'User'}'s Profile Pic`}
-                                />
-                                <h2>{user.firstname} {user.lastname}</h2>
-                                <p>{user.location}</p>
-                                <div className="profile-buttons">
-                                    <button onClick={() => setEditing(true)}>Edit Profile</button>
-                                    <button onClick={deleteUserProfile}>Delete Profile</button>
+                            <div className="profile-container">
+                                <div className="profile-image-container">
+                                    <img
+                                        src={Shield}
+                                        alt="Shield"
+                                        className="shield-overlay"
+                                    />
+                                    <img className="avatar-image"
+                                        src={user.avatar || "http://via.placeholder.com/150"}
+                                        alt={`${user.firstname || 'User'}'s Profile Pic`}
+                                    />
+                                    <h3>{user.firstname} {user.lastname}</h3>
+                                    <p>{user.location}</p>
+                                    <div className="profile-buttons">
+                                        <button onClick={() => setEditing(true)}>Edit Profile</button>
+                                        <button onClick={deleteUserProfile}>Delete Profile</button>
+                                    </div>
+                                    
+                                
+                                <div className="alliance-section">
+                                <h3>Your Alliances</h3>
+                                {alliances.length > 0 ? (
+                                    alliances.map((alliance) => (
+                                        <div key={alliance._id}>
+                                            <p>
+                                                {alliance.firstname} {alliance.lastname}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No alliances found.</p>
+                                )}
                                 </div>
                             </div>
+                        </div>
                         ) : (
                             <p>No user found or you are not logged in.</p>
+                            
                         )
+                        
                     )}
-                    <div className="alliance-section">
+                    {/* <div className="alliance-section">
                         <h3>Your Alliances</h3>
                         {alliances.length > 0 ? (
                             alliances.map((alliance) => (
@@ -168,7 +194,7 @@ const MyProfile = () => {
                         ) : (
                             <p>No alliances found.</p>
                         )}
-                    </div>
+                    </div> */}
                 </div>
                 <div className="post-content">
                     <div className="post-section">
