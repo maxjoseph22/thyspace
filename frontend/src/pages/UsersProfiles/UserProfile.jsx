@@ -6,6 +6,7 @@ import { getPostsById } from "../../services/posts";
 import PostContainer from "../../components/PostContainer";
 import { getPayloadFromToken } from "../../services/helperFunctions";
 import "./UserProfile.css"
+import Shield from "../../assets/Shield.png"
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -72,13 +73,20 @@ const UserProfile = () => {
             <div className="my-profile">
                 <div className="left-panel">
                     {user ? (
-                        <div className="profile-panel">
-                            <img
-                                src={user.avatar || "http://via.placeholder.com/150"}
-                                alt={`${user.firstname || 'User'}'s Profile Pic`}
-                            />
-                            <h2>{user.firstname} {user.lastname}</h2>
-                            <p>{user.location}</p>
+                        <div className="profile-container">
+                            <div className="profile-image-container">
+                                <img
+                                    src={Shield}
+                                    alt="Shield"
+                                    className="shield-overlay"
+                                />
+                                <img className="avatar-image"
+                                    src={user.profilePicture || "http://via.placeholder.com/150"}
+                                    alt={`${user.firstname || 'User'}'s Profile Pic`}
+                                />
+                                <h3>{user.firstname} {user.lastname}</h3>
+                                <p>{user.location}</p>
+                            </div>
                         </div>
                     ) : (
                         <p>User not found.</p>
