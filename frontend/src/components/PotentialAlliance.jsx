@@ -1,5 +1,6 @@
 import AllianceRequestButton from "./AllianceRequestButton"
 import './PotAlliance.css'
+import Shield from "../assets/Shield.png"
 
 const PotentialAlliance = ({ user }) => {
     // const [role, setRole] = useState(user.allianceRole)
@@ -10,7 +11,17 @@ const PotentialAlliance = ({ user }) => {
 
     return (
         <div className="alliance">
-            {user.profilePicture && <img src={user.profilePicture}/>}
+            <div className="image-container">
+                <img
+                    src={Shield}
+                    alt="Shield"
+                    className="shield-overlay"
+                />
+                <img className="avatar-image"
+                    src={user.profilePicture || "http://via.placeholder.com/150"}
+                    alt={`${user.firstname || 'User'}'s Profile Pic`}
+                />
+            </div>
             <p className="alliance-info">{`${user.firstname} ${user.lastname}`}</p>
             <p className="alliance-info">{user.location}</p>
             {/* <p>Joined: {convertDate(user)}</p> */}
