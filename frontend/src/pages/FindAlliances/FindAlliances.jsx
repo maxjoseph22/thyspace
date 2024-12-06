@@ -51,24 +51,26 @@ const FindAlliance = () => {
     return (
         <>
             <NavBar />
+            <div className="searchBar">
+                <h1>Find Alliances</h1>
+                <select 
+                name='searchArea'
+                onChange={handleOptionChange}
+                >
+                    <option value='firstname'>First Name</option>
+                    <option value='lastname'>Last Name</option>
+                    <option value='location'>Location</option>
+                </select>
+                <input 
+                name='searchCriteria'
+                type='text'
+                placeholder="Search for alliances"
+                onChange={handleOptionChange}
+                value={searchBy.searchCriteria}
+                />
+                <button onClick={submitSearch}>Search</button>
+            </div>
             <div className="title">
-            <h1>Find Alliances</h1>
-            <select 
-            name='searchArea'
-            onChange={handleOptionChange}
-            >
-                <option value='firstname'>First Name</option>
-                <option value='lastname'>Last Name</option>
-                <option value='location'>Location</option>
-            </select>
-            <input 
-            name='searchCriteria'
-            type='text'
-            placeholder="Search for alliances"
-            onChange={handleOptionChange}
-            value={searchBy.searchCriteria}
-            />
-            <button onClick={submitSearch}>Search</button>
             <PotentialAllianceContainer users={everyUser}/>
             </div>
         </>
