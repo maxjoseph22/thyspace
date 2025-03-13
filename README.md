@@ -26,58 +26,15 @@ Our primary goal was to explore core web development concepts (routing, data mod
 - Express.js: Handles server-side logic and routing.
 - React: Front-end library for building an interactive user interface.
 - Node.js: JavaScript runtime that powers the server and overall app logic.
-  
-# Installation & Setup
 
-1️⃣ Install MongoDB (macOS with Homebrew)
-Tap the MongoDB Homebrew Repo
+# Contributors
 
-brew tap mongodb/brew
-Install MongoDB
-
-brew install mongodb-community@6.0
-Note: If you see a message such as
-"If you need to have mongodb-community@6.0 first in your PATH, run:"
-follow that instruction, then restart your terminal.
-
-Start MongoDB
-
-brew services start mongodb-community@6.0
-Alternatively, if you’re on a different operating system or prefer another method, follow the MongoDB official installation guide for your environment.
-
-2️⃣ Clone the Repository
-git clone https://github.com/your-username/thyspace.git
-cd thyspace
-3️⃣ Install Dependencies
-# Install backend dependencies
-cd server
-npm install
-
-# Install frontend dependencies
-cd ../client
-npm install
-4️⃣ Set Up Environment Variables
-Create a .env file in the server directory with the following variables:
-
-MONGO_URI – Your MongoDB connection string (e.g., mongodb://localhost:27017/thyspace)
-PORT (optional, defaults to 5000)
-JWT_SECRET (for authentication, choose a secure value)
-5️⃣ Run the Application
-# In one terminal, start the backend
-cd server
-npm run dev
-
-# In another terminal, start the frontend
-cd ../client
-npm start
-Then open http://localhost:3000 to explore ThySpace.
-
-Contributors
 Doug Fairfield
 Shola Forbes
 Khalid Ham
 Cezary Karwoski-Budd
 Safaa Imran
 Max Joseph
+
 We appreciate your interest in ThySpace and may your alliances be ever strong!!
 
