@@ -1,4 +1,4 @@
-🏰 ThySpace 🏰
+## 🏰 ThySpace 🏰
 Overview
 ThySpace is a medieval-themed social networking web application inspired by Facebook. We developed it during our time at Makers as part of a collaborative bootcamp project. This was the first time we tackled JavaScript and React after just two weeks of learning the basics of both.
 
