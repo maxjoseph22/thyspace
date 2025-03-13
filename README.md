@@ -29,12 +29,12 @@ Our primary goal was to explore core web development concepts (routing, data mod
 
 # Contributors
 
-Doug Fairfield
-Shola Forbes
-Khalid Ham
-Cezary Karwoski-Budd
-Safaa Imran
-Max Joseph
+- Doug Fairfield
+- Max Joseph
+- Shola Forbes
+- Khalid Ham
+- Cezary Karwoski-Budd
+- Safaa Imran
 
 We appreciate your interest in ThySpace and may your alliances be ever strong!!
 
